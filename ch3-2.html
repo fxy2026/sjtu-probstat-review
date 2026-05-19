@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.2 二维条件分布 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch3-1.html">← 3.1</a><a href="ch3-3.html">3.3-3.4 独立性 →</a></div>
+<h1>3.2 二维条件分布 ⭐⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 12 套（86%）。每年大题第 14 题（9 分）的核心子问。<br>
+<b>典型出题</b>：23-24-2 $e^{-x}$ + 域 $y<x$ · 23-24-1 $cxy$ + 域 $x<y$ · 22-23-2 $27x^2y^2/4$ · 20-21-2 $6e^{-2x-3y}$ · 18-19-1 $3x$ 密度。
+</div>
+
+<h2 id="s1">一、离散型条件分布律</h2>
+<div class="card">
+<div class="fb">
+<p>$P(Y = y_j) > 0$ 时：</p>
+$$P(X = x_i\mid Y = y_j) = \dfrac{p_{ij}}{p_{\cdot j}},\quad p_{\cdot j} = P(Y = y_j)$$
+<p>固定 $y_j$ 后，所有 $P(X = x_i\mid Y = y_j)$ 关于 $i$ 求和为 1。</p>
+</div>
+
+<div class="fb"><div class="t">乘法 / 全概率（离散版）</div>
+$$p_{ij} = p_{\cdot j} P(X = x_i\mid Y = y_j) = p_{i\cdot} P(Y = y_j\mid X = x_i)$$
+$$P(X = x_i) = \sum_j p_{\cdot j} P(X = x_i\mid Y = y_j)$$
+</div>
+
+<div class="ex"><strong>例 1（嵌套均匀）</strong>：$X$ 在 $\{1,2,3,4\}$ 等可能取值；给定 $X = n$，$Y$ 在 $\{1, 2, \ldots, n\}$ 等可能。求 $X\mid Y = 1$ 的分布。
+<div class="sol"><div class="st">解</div>
+<p>$P(X = n, Y = 1) = \dfrac{1}{4}\cdot\dfrac{1}{n}$，$n = 1, 2, 3, 4$。</p>
+<p>$P(Y = 1) = \dfrac{1}{4}(1+\frac{1}{2}+\frac{1}{3}+\frac{1}{4}) = \dfrac{25}{48}$。</p>
+<p>$P(X = n\mid Y = 1) = \dfrac{1/(4n)}{25/48} = \dfrac{12}{25n}$，$n = 1, 2, 3, 4$（即 $12/25, 6/25, 4/25, 3/25$）。</p>
+</div></div>
+</div>
+
+<h2 id="s2">二、连续型条件密度</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">⭐ 定义</div>
+<p>$f_Y(y) > 0$ 时</p>
+$$f_{X\mid Y}(x\mid y) = \dfrac{f(x, y)}{f_Y(y)}$$
+<p>对 $x$ 积分等于 1。条件分布函数</p>
+$$F_{X\mid Y}(x\mid y) = \int_{-\infty}^x f_{X\mid Y}(u\mid y)\dd u = \dfrac{1}{f_Y(y)}\int_{-\infty}^x f(u, y)\dd u$$
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 反推联合密度（乘积形式）</div>
+$$f(x,y) = f_{Y\mid X}(y\mid x)\,f_X(x) = f_{X\mid Y}(x\mid y)\,f_Y(y)$$
+<p>类似乘法公式。题目常给条件密度反求联合。</p>
+</div>
+
+<div class="ex"><strong>例 2（单位圆均匀）</strong>：$(X, Y)$ 在单位圆 $x^2+y^2\leq 1$ 上均匀分布。求 $f_{Y\mid X}(y\mid x)$。
+<div class="sol"><div class="st">解</div>
+<p>$f(x, y) = 1/\pi$，$f_X(x) = \dfrac{2\sqrt{1-x^2}}{\pi},\ |x| < 1$。</p>
+$$f_{Y\mid X}(y\mid x) = \dfrac{1/\pi}{2\sqrt{1-x^2}/\pi} = \dfrac{1}{2\sqrt{1-x^2}},\quad|y|\leq\sqrt{1-x^2}$$
+<p>结论：$Y\mid X = x\sim U(-\sqrt{1-x^2}, \sqrt{1-x^2})$，<strong>条件分布是均匀的</strong>。注意支撑随 $x$ 变化！</p>
+</div></div>
+
+<div class="ex"><strong>例 3（反推联合密度）</strong>：$X\sim U(0,1)$；给定 $X = x$，$Y\mid X = x\sim U(0, x)$。求联合密度。
+<div class="sol"><div class="st">解</div>
+<p>$f_X(x) = 1,\ 0 < x < 1$。$f_{Y\mid X}(y\mid x) = 1/x,\ 0 < y < x$。</p>
+$$f(x, y) = f_X(x)\cdot f_{Y\mid X}(y\mid x) = \dfrac{1}{x},\quad 0 < y < x < 1$$
+<p>$f_Y(y) = \int_y^1\dfrac{1}{x}\dd x = -\ln y,\ 0 < y < 1$。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★ 23-24-2 第 14 题（指数族条件密度）</strong>：$(X, Y)$ 联合密度 $f(x, y) = e^{-x}$，区域 $0 < y < x$。
+<ol>
+<li>求 $f_{Y\mid X}(y\mid x)$ 与 $f_Y(y)$。</li>
+<li>区分 $P(Y\leq 1\mid X\leq 2)$ 与 $\int_0^1 f_{Y\mid X}(y\mid 2)\dd y$。</li>
+</ol>
+<div class="sol"><div class="st">解</div>
+<p><strong>(1)</strong> $f_X(x) = \int_0^x e^{-x}\dd y = xe^{-x},\ x > 0$。</p>
+$$f_{Y\mid X}(y\mid x) = \dfrac{e^{-x}}{xe^{-x}} = \dfrac{1}{x},\quad 0 < y < x$$
+<p>即 $Y\mid X = x\sim U(0, x)$（均匀！）。</p>
+<p>$f_Y(y) = \int_y^\infty e^{-x}\dd x = e^{-y},\ y > 0$，即 $Y\sim E(1)$。</p>
+<p><strong>(2)</strong> 这两个量<strong>完全不同</strong>！</p>
+<ul>
+<li>$P(Y\leq 1\mid X\leq 2) = \dfrac{P(Y\leq 1, X\leq 2)}{P(X\leq 2)}$ —— 事件条件概率，用二重积分</li>
+<li>$\int_0^1 f_{Y\mid X}(y\mid 2)\dd y = \int_0^1\dfrac{1}{2}\dd y = \dfrac{1}{2}$ —— 这是 $P(Y\leq 1\mid X = 2)$（$X$ 取定值时）</li>
+</ul>
+<p><strong>解 (2) 第一个</strong>：</p>
+<p>分母 $P(X\leq 2) = \int_0^2 xe^{-x}\dd x = 1-3e^{-2}$（分部积分）</p>
+<p>分子 $P(Y\leq 1, X\leq 2) = \iint_{0<y\leq 1, y<x\leq 2} e^{-x}\dd x\,\dd y$（$y\leq 1$ 直接限定 $y$ 上界）：</p>
+$$\int_0^1\dd y\int_y^2 e^{-x}\dd x = \int_0^1(e^{-y}-e^{-2})\dd y = (1-e^{-1})-e^{-2} = 1-e^{-1}-e^{-2}$$
+<p>$P(Y\leq 1\mid X\leq 2) = \dfrac{1-e^{-1}-e^{-2}}{1-3e^{-2}}\approx\dfrac{0.497}{0.594}\approx 0.836$</p>
+<p><strong>对比</strong>：条件密度积分给 $0.5$（$X=2$ 时 $Y\mid X=2\sim U(0,2)$，落入 $[0,1]$ 概率 $1/2$）；事件条件概率给 $0.836$。两者完全不同！</p>
+<p><strong>这是 23-24-2 真题专门测试的概念区分点！</strong></p>
+</div></div>
+</div>
+
+<h2 id="s3">三、⭐ 二维正态的条件分布（满分笔记重点）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>若 $(X, Y)\sim N(\mu_1, \mu_2, \sigma_1^2, \sigma_2^2, \rho)$，则</p>
+$$X\mid Y = y\sim N\!\left(\mu_1+\rho\dfrac{\sigma_1}{\sigma_2}(y-\mu_2),\,\sigma_1^2(1-\rho^2)\right)$$
+$$Y\mid X = x\sim N\!\left(\mu_2+\rho\dfrac{\sigma_2}{\sigma_1}(x-\mu_1),\,\sigma_2^2(1-\rho^2)\right)$$
+<p><strong>结构</strong>：</p>
+<ul>
+<li>条件均值 = "本身均值 + 回归项 $\rho\dfrac{\sigma_1}{\sigma_2}\cdot$ 偏差"</li>
+<li>条件方差 = "本身方差 $\times$ 衰减因子 $(1-\rho^2)$"</li>
+</ul>
+<p>当 $|\rho| = 1$ 时条件方差为 0，$X$ 完全由 $Y$ 线性决定。</p>
+</div>
+
+<div class="ex"><strong>题</strong>：$(X, Y)\sim N(1, 4, 1, 4, 0.5)$，求 $E(X\mid Y = 3)$ 与 $D(X\mid Y = 3)$。
+<div class="sol"><div class="st">解</div>
+<p>$\sigma_1 = \sigma_2 = 2$，$\rho = 0.5$。</p>
+<p>$E(X\mid Y = 3) = 1+0.5\cdot\dfrac{2}{2}\cdot(3-1) = 1+1 = 2$</p>
+<p>$D(X\mid Y = 3) = 4\cdot(1-0.25) = 3$</p>
+</div></div>
+</div>
+
+<h2 id="s4">四、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>条件密度支撑随条件变量变化</strong>：算 $f_{Y\mid X}(y\mid x)$ 后定义域是 $y\in[\text{依赖 } x \text{ 的范围}]$，不要漏</li>
+<li><strong>$P(X<a\mid Y>b)$ 类</strong>：用普通条件概率定义 $P(X<a, Y>b)/P(Y>b)$，<strong>不能</strong>用条件密度积分</li>
+<li><strong>$P(X<a\mid Y=b)$</strong>：用条件密度 $\int_{-\infty}^a f_{X|Y}(x|b)\dd x$。两者不同！</li>
+<li><strong>二维正态条件方差忘 $(1-\rho^2)$</strong>：每次都要记得乘衰减因子</li>
+<li><strong>$f_Y(y) = 0$ 时</strong>：条件密度无定义，要排除</li>
+</ul>
+</div>
+
+<div class="note"><strong>23-24-2 真题专测点</strong>：区分 $P(Y\leq a\mid X\leq b)\neq\int_{-\infty}^a f_{Y|X}(y|b)\dd y$。
+<ul>
+<li>左边：事件条件概率 → 用二重积分</li>
+<li>右边：$X = b$ 给定时的条件分布 → 用条件密度</li>
+</ul>
+两者只有在特殊情况下才相等。
+</div>
+</div>
+
+<h2 id="s5">五、真题题 14 满分模板</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<ol>
+<li><strong>画区域图</strong>（决定积分上下限的关键！）</li>
+<li><strong>求归一化常数 $c$</strong>：$\iint c\cdot g(x,y)\mathbf 1_D\,\dd x\dd y = 1$</li>
+<li><strong>求边缘</strong> $f_X(x) = \int f(x,y)\dd y$（注意积分上下限随 $x$ 变化）</li>
+<li><strong>求条件密度</strong> $f_{Y\mid X} = f / f_X$</li>
+<li><strong>算条件概率/分布函数</strong>：判断是 $P(\cdot|X=x_0)$（条件密度积分）还是 $P(\cdot|X\in A)$（二重积分比）</li>
+</ol>
+</div>
+</div>
+
+<h2 id="patterns">六、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>题型五步法（题 14 满分模板）</h3>
+<div class="fb" style="border-color:#27ae60"><div class="t">⭐ 标准流程</div>
+<ol>
+<li><strong>画区域图</strong>（决定积分上下限的唯一保障！）</li>
+<li>求归一化常数 $c$（$\iint c\cdot g(x,y)\,\dd x\dd y = 1$）</li>
+<li>求边缘 $f_X(x) = \int f(x,y)\dd y$（积分上下限随 $x$ 变）</li>
+<li>条件密度 $f_{Y\mid X} = f/f_X$（注意支撑随条件变量变化！）</li>
+<li>算目标量：辨识是 $P(\cdot\mid X = x_0)$（条件密度积分）还是 $P(\cdot\mid X\in A)$（二重积分比）</li>
+</ol>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>二维正态条件分布仍正态</strong>：$X\mid Y=y\sim N(\mu_1+\rho\dfrac{\sigma_1}{\sigma_2}(y-\mu_2),\,\sigma_1^2(1-\rho^2))$</li>
+<li><strong>条件均值的回归项</strong>：偏离 $\mu_2$ 一个 $\sigma_2$，则 $X$ 偏离 $\mu_1$ 大约 $\rho\sigma_1$</li>
+<li><strong>条件方差衰减因子</strong>：$(1-\rho^2)$，越相关越小</li>
+<li><strong>单位圆均匀的条件分布</strong>：$Y\mid X=x\sim U(-\sqrt{1-x^2},\sqrt{1-x^2})$</li>
+<li><strong>反推联合密度</strong>：$f(x,y) = f_X(x)\,f_{Y\mid X}(y\mid x)$（条件密度法）</li>
+<li><strong>条件期望线性性</strong>：$E(aX+b\mid Y) = aE(X\mid Y)+b$</li>
+<li><strong>$P(Y\leq a\mid X\leq b)\neq\int_{-\infty}^a f_{Y\mid X}(y\mid b)\dd y$</strong>（23-24-2 第 14 题专测）</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>$f_{X\mid Y}$ 的支撑总是变化的</strong>：随 $y$ 变；条件密度看似"切片"</li>
+<li><strong>识别 $P(\cdot\mid B)$ 是事件还是单点</strong>：$\{Y\leq 1\}$ 是事件 → 二重积分；$\{Y = 1\}$ 是单点 → 条件密度</li>
+<li><strong>二维正态条件分布直接套公式</strong>，不要展开密度算积分</li>
+<li><strong>对称性应用</strong>：若 $f(x,y) = f(y,x)$，则 $X, Y$ 同分布</li>
+<li><strong>反推联合密度后验算</strong>：$f_{Y\mid X}\cdot f_X = f$，对边缘积分等于 $f_Y$ 检验</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>条件密度支撑写错</strong>：$Y\mid X=x\sim$ 某分布，定义域随 $x$ 变化</li>
+<li><strong>$P(X<a\mid Y<b)$ 直接用条件密度积分</strong> —— 错！应该用 $P(X<a, Y<b)/P(Y<b)$ 即二重积分比</li>
+<li><strong>二维正态条件方差忘 $(1-\rho^2)$</strong></li>
+<li><strong>$f_Y(y) = 0$ 时</strong>：条件密度无定义，要排除</li>
+<li><strong>支撑非矩形时把可拆密度判独立</strong>：必须先检查支撑！</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

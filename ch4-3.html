@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4.3 协方差与相关系数 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch4-2.html">← 4.2</a><a href="ch4-4.html">4.4 高阶矩 →</a></div>
+<h1>4.3 协方差与相关系数 ⭐⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 11 套（79%）。常作为题 14 的子问或选择题（每年 2-3 题）。<br>
+<b>典型出题</b>：判断不相关 vs 独立的反例 · 求 $\rho_{XZ}$ 当 $Z=aX+bY$ · 二维正态下"不相关 ⇔ 独立"的证明应用。
+</div>
+
+<h2 id="s1">一、协方差</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">⭐ 定义</div>
+$$\Cov(X, Y) = E[(X-EX)(Y-EY)] = E(XY)-E(X)E(Y)$$
+<p>$\Cov(X, X) = D(X)$。</p>
+</div>
+
+<div class="fb"><div class="t">协方差的性质</div>
+<ul>
+<li><strong>对称</strong>：$\Cov(X, Y) = \Cov(Y, X)$</li>
+<li><strong>双线性</strong>：$\Cov(aX+c, bY+d) = ab\,\Cov(X, Y)$（常数无影响）</li>
+<li>$\Cov(X\pm Y, Z) = \Cov(X, Z)\pm\Cov(Y, Z)$</li>
+<li><strong>方差公式</strong>：$D(X\pm Y) = D(X)+D(Y)\pm 2\Cov(X, Y)$</li>
+<li>独立 $\Rightarrow\Cov = 0$（反向<strong>不真</strong>）</li>
+<li>$|\Cov(X,Y)|\leq\sqrt{D(X)D(Y)}$（Cauchy-Schwarz）</li>
+</ul>
+</div>
+
+<div class="fb"><div class="t">⭐ 速算公式（必背）</div>
+$$\Cov(X, Y) = \dfrac{1}{2}[D(X+Y)-D(X)-D(Y)] = \dfrac{1}{2}[D(X)+D(Y)-D(X-Y)]$$
+<p>用途：若直接算 $E(XY)$ 困难，可通过 $D(X\pm Y)$ 反推。</p>
+</div>
+</div>
+
+<h2 id="s2">二、相关系数</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+$$\rho_{XY} = \dfrac{\Cov(X, Y)}{\sqrt{D(X)D(Y)}}$$
+<p><strong>Cauchy-Schwarz</strong>：$|\rho_{XY}|\leq 1$。</p>
+<p>$|\rho| = 1\Leftrightarrow$ $X, Y$ 有<strong>线性关系</strong> $Y = aX+b$ 几乎处处。$\rho = 1$ 同向、$\rho = -1$ 反向。</p>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 不相关 ⇔ 四种等价说法</div>
+<ol>
+<li>$\rho_{XY} = 0$</li>
+<li>$\Cov(X, Y) = 0$</li>
+<li>$E(XY) = E(X)E(Y)$</li>
+<li>$D(X+Y) = D(X)+D(Y)$</li>
+</ol>
+<p>这四个说法<strong>完全等价</strong>。考试常给一个让你判断其他。</p>
+</div>
+
+<div class="fb"><div class="t">线性预测的最优解</div>
+<p>用 $a+bX$ 预测 $Y$，使均方误差 $E[(Y-a-bX)^2]$ 最小：</p>
+$$\hat b = \rho\dfrac{\sigma_Y}{\sigma_X},\quad\hat a = EY-\hat b\,EX$$
+<p>最优均方误差 $= D(Y)(1-\rho^2)$。这是回归直线，与二维正态条件均值一致。</p>
+</div>
+</div>
+
+<h2 id="s3">三、独立 vs 不相关 ⭐⭐⭐</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p><strong>独立 ⇒ 不相关</strong>，反之不真。</p>
+<p><strong>例外：二维正态</strong> $(X, Y)\sim N(\cdots; \rho)$ 时，</p>
+$$\text{独立}\Leftrightarrow\text{不相关}\Leftrightarrow\rho = 0$$
+<p>三者完全等价（<strong>仅在此分布</strong>下！）。</p>
+</div>
+
+<div class="ex"><strong>反例 1（高频考！$\cos\theta + \sin\theta$）</strong>：$\theta\sim U(0, 2\pi)$，$X = \cos\theta,\,Y = \sin\theta$。
+<div class="sol"><div class="st">分析</div>
+<p>$E(X) = \int_0^{2\pi}\cos\theta/(2\pi)\dd\theta = 0$；$E(Y) = 0$。</p>
+<p>$E(XY) = E(\cos\theta\sin\theta) = \dfrac{1}{2}E(\sin 2\theta) = 0$。$\Cov = 0$，$\rho = 0$，<strong>不相关</strong>。</p>
+<p>但 $X^2+Y^2 = 1$，存在非线性关系，<strong>不独立</strong>！</p>
+<p>多年真题考此反例：选择题 "$X, Y$ 不相关 + $X, Y$ 独立 + $D(X-Y) = D(X)+D(Y)$"，正确者除独立外都对。</p>
+</div></div>
+
+<div class="ex"><strong>反例 2（双侧指数）</strong>：$X$ 密度 $f(x) = \dfrac{1}{2}e^{-|x|}$，$Y = |X|$。
+<div class="sol"><div class="st">分析</div>
+<p>$E(X) = 0$（奇）；$E(XY) = E(X|X|) = 0$（奇 × 偶 = 奇）。$\Cov(X, Y) = 0$，<strong>不相关</strong>。</p>
+<p>但 $Y$ 完全由 $X$ 决定，<strong>绝对不独立</strong>。</p>
+</div></div>
+
+<div class="ex"><strong>反例 3（单位圆均匀）</strong>：$(X, Y)$ 在单位圆均匀分布。
+<div class="sol"><div class="st">分析</div>
+<p>$E(X) = E(Y) = 0$（对称）；$E(XY) = \iint_{x^2+y^2\leq 1}xy/\pi\dd x\dd y = 0$（被积奇）。<strong>不相关</strong>。</p>
+<p>但 $f(x, y) = 1/\pi$ 在单位圆，$f_X(x) = 2\sqrt{1-x^2}/\pi$，$f_X\cdot f_Y\neq f$，<strong>不独立</strong>。</p>
+<p>多年真题以此为背景。</p>
+</div></div>
+</div>
+
+<h2 id="s4">四、典型例题</h2>
+<div class="card">
+<div class="ex"><strong>例（夹角 $\rho$ 公式）</strong>：$\theta\sim U(0, 2\pi)$，$X = \cos\theta,\,Y = \cos(\theta+\alpha)$。求 $\rho_{XY}$。
+<div class="sol"><div class="st">解</div>
+<p>$E(X) = E(Y) = 0$。$D(X) = E(X^2) = E(\cos^2\theta) = 1/2$，同 $D(Y) = 1/2$。</p>
+<p>$E(XY) = E[\cos\theta\cos(\theta+\alpha)] = \dfrac{1}{2}E[\cos\alpha+\cos(2\theta+\alpha)] = \dfrac{\cos\alpha}{2}$（第二项均值 0）。</p>
+$$\rho_{XY} = \dfrac{\cos\alpha/2}{\sqrt{1/2\cdot 1/2}} = \cos\alpha$$
+<p>$\alpha = 0$ 时 $\rho = 1$；$\alpha = \pi/2$ 时 $\rho = 0$（不相关，但 $X^2+Y^2 = ?$）。</p>
+</div></div>
+
+<div class="ex"><strong>例（二维正态线性组合）</strong>：$(X, Y)\sim N(1, 4, 1, 4, 0.5)$。$Z = X+Y$，求 $\rho_{XZ}$。
+<div class="sol"><div class="st">解</div>
+<p>$D(X) = D(Y) = 4$，$\Cov(X, Y) = 0.5\cdot 2\cdot 2 = 2$。</p>
+<p>$\Cov(X, Z) = \Cov(X, X+Y) = D(X)+\Cov(X, Y) = 4+2 = 6$</p>
+<p>$D(Z) = D(X)+D(Y)+2\Cov = 4+4+4 = 12$</p>
+$$\rho_{XZ} = \dfrac{6}{\sqrt{4\cdot 12}} = \dfrac{6}{4\sqrt 3} = \dfrac{\sqrt 3}{2}$$
+</div></div>
+
+<div class="ex"><strong>题 ★★（23-24-2 第 1/7 题，$N(0,1; 0,4; -0.5)$）</strong>：$(X, Y)\sim N(0, 1, 0, 4, -0.5)$。
+<ul>
+<li>求 $\rho_{XY}$, $D(2X-Y)$, $\Cov(X, 2X-Y)$</li>
+<li>判断 $X, Y$ 独立性</li>
+</ul>
+<div class="sol"><div class="st">解</div>
+<p>$\rho_{XY} = -0.5$（即参数）。$\sigma_X = 1, \sigma_Y = 2$，$\Cov(X, Y) = -0.5\cdot 1\cdot 2 = -1$。</p>
+<p>$D(2X-Y) = 4\cdot 1+4-2\cdot 2\cdot(-1) = 4+4+4 = 12$</p>
+<p>$\Cov(X, 2X-Y) = 2D(X)-\Cov(X, Y) = 2-(-1) = 3$</p>
+<p>二维正态下 $\rho\neq 0$ → <strong>不独立</strong>（也不相关）。</p>
+<p>这是 23-24-2 同时考两道选择题的"参数组合"。</p>
+</div></div>
+</div>
+
+<h2 id="s5">五、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>"不相关 = 独立"——错！</strong> 只有二维正态下等价</li>
+<li><strong>$\rho$ 分母</strong>：是 $\sqrt{D(X)\cdot D(Y)}$ 而<strong>不是</strong> $D(X)\cdot D(Y)$</li>
+<li><strong>$\Cov$ 的双线性符号</strong>：$\Cov(X-Y, Z) = \Cov(X, Z)-\Cov(Y, Z)$，正负号要小心</li>
+<li><strong>常数项不影响 Cov</strong>：$\Cov(aX+c, bY+d) = ab\Cov(X, Y)$，但常数对 $E, D$ 有影响</li>
+<li><strong>$|\rho| = 1$ 是线性</strong>：不是说 $\rho$ 接近 1 就 "几乎线性"</li>
+<li><strong>用 $E(XY) = E(X)E(Y)$ 判不相关</strong>：要注意双线性可能让计算变易</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li><strong>"不相关 = $\rho = 0$ = $\Cov = 0$ = $E(XY) = E(X)E(Y)$ = $D(X+Y) = D(X)+D(Y)$"</strong></li>
+<li><strong>"独立 → 不相关；反向只在二维正态"</strong></li>
+<li><strong>"$|\rho| = 1$ ⇔ $Y = aX+b$"</strong></li>
+</ul>
+</div>
+</div>
+
+<h2 id="s6">六、与方差/协方差矩阵的联系</h2>
+<div class="card">
+<div class="fb">
+<p>对 $(X_1, \ldots, X_n)$，协方差矩阵 $\mathbb C = (\Cov(X_i, X_j))$。</p>
+$$D\!\left(\sum t_iX_i\right) = \mathbf t^T\mathbb C\mathbf t$$
+<p>性质：<strong>对称 + 半正定</strong>。</p>
+<p>$n$ 维正态下：$\mathbb C$ 对角 ⇔ 各 $X_i$ 相互独立（这是 $n$ 维正态的特殊性）。</p>
+</div>
+</div>
+
+<h2 id="patterns">七、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>题型决策树</h3>
+<div class="fb" style="border-color:#27ae60">
+<table>
+<thead><tr><th>问什么</th><th>用什么</th></tr></thead>
+<tbody>
+<tr><td>$\Cov(X, Y)$</td><td>$E(XY)-E(X)E(Y)$ 或 $\frac{1}{2}[D(X+Y)-D(X)-D(Y)]$</td></tr>
+<tr><td>$\rho_{XY}$</td><td>$\Cov(X,Y)/\sqrt{D(X)D(Y)}$</td></tr>
+<tr><td>$\Cov(aX+bY, cZ+dW)$</td><td>双线性展开</td></tr>
+<tr><td>判独立</td><td>不能用 $\rho=0$（除二维正态）；用 $f(x,y) = f_X(x)f_Y(y)$</td></tr>
+<tr><td>判不相关</td><td>4 个等价说法任选其一</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>速算公式</strong>：$\Cov(X,Y) = \frac{1}{2}[D(X+Y)-D(X)-D(Y)] = \frac{1}{2}[D(X)+D(Y)-D(X-Y)]$</li>
+<li><strong>双线性</strong>：$\Cov(aX+c, bY+d) = ab\Cov(X,Y)$，常数无关</li>
+<li><strong>分配</strong>：$\Cov(X+Y, Z) = \Cov(X, Z) + \Cov(Y, Z)$</li>
+<li><strong>$\Cov(X, X) = D(X)$</strong></li>
+<li><strong>Cauchy-Schwarz</strong>：$|\Cov(X,Y)|\leq\sqrt{D(X)D(Y)}$，$|\rho|\leq 1$</li>
+<li><strong>$|\rho| = 1$ ⇔ $Y = aX+b$ a.s.</strong>（线性关系）</li>
+<li><strong>二维正态下"独立 ⇔ 不相关 ⇔ $\rho = 0$"</strong>（仅此分布！）</li>
+<li><strong>不相关 4 个等价说法</strong>：$\rho=0\Leftrightarrow\Cov=0\Leftrightarrow E(XY)=E(X)E(Y)\Leftrightarrow D(X+Y)=D(X)+D(Y)$</li>
+<li><strong>二维正态参数 $\rho$ 就是 $\rho_{XY}$</strong>（无需另算）</li>
+<li><strong>线性回归</strong>：用 $a+bX$ 预测 $Y$，最优 $\hat b = \rho\sigma_Y/\sigma_X$，最优均方误差 $D(Y)(1-\rho^2)$</li>
+</ol>
+</div>
+
+<h3>反例（不相关但不独立）—— 选择题高频</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>$\theta\sim U(0,2\pi),\,X=\cos\theta,\,Y=\sin\theta$</strong>：$\rho=0$ 但 $X^2+Y^2=1$</li>
+<li><strong>$f(x) = \frac{1}{2}e^{-|x|},\,Y=|X|$</strong>：$\Cov = 0$ 但 $Y$ 完全由 $X$ 决定</li>
+<li><strong>$(X,Y)$ 单位圆均匀分布</strong>：$\rho = 0$ 但 $X^2+Y^2\leq 1$</li>
+<li><strong>$\theta\sim U(0,2\pi),\,X=\cos\theta,\,Y=\cos(\theta+\alpha)$</strong>：$\rho = \cos\alpha$（$\alpha=\pi/2$ 时不相关）</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>看到方差和 $D(X+Y) = D(X)+D(Y)$</strong> → 立刻判为 "$X,Y$ 不相关"（不是独立！）</li>
+<li><strong>看到 $E(XY)\neq E(X)E(Y)$</strong> → 立刻 $\Cov\neq 0$，不独立</li>
+<li><strong>二维正态求 $\rho_{aX+bY, cX+dY}$</strong>：先算 $\Cov$ 再除 $\sqrt{D\cdot D}$，简单代入</li>
+<li><strong>$\Cov$ 双线性展开</strong>：把"和、差、常数倍"展开成基本协方差的线性组合</li>
+<li><strong>$D(X+Y) = D(X) + D(Y) + 2\Cov(X,Y)$</strong> —— 反求 $\Cov$ 的常用公式</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>"$\rho = 0$ → 独立"</strong>错！只有二维正态等价</li>
+<li><strong>$\rho$ 分母</strong>：是 $\sqrt{D(X)D(Y)}$ 不是 $D(X)D(Y)$</li>
+<li><strong>$\Cov$ 双线性正负号</strong>：$\Cov(X-Y, Z) = \Cov(X,Z)-\Cov(Y,Z)$</li>
+<li><strong>常数项不影响 Cov</strong>：$\Cov(aX+c, bY+d) = ab\Cov(X,Y)$</li>
+<li><strong>$|\rho|$ 接近 1 但 $\neq 1$ 时</strong>：不能说"几乎线性"，必须等于 1 才有线性关系</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📋 公式速查 & 七大分布总表 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="cheatsheet.html">考前救命卡 →</a></div>
+<h1>📋 公式速查 & 七大分布总表</h1>
+
+<h2>一、七大分布总表（必背！）</h2>
+<div class="card">
+<table>
+<thead><tr><th>分布</th><th>记号</th><th>分布律/密度</th><th>$E(X)$</th><th>$D(X)$</th><th>特性</th></tr></thead>
+<tbody>
+<tr><td>0-1</td><td>—</td><td>$p^k(1-p)^{1-k},k=0,1$</td><td>$p$</td><td>$p(1-p)$</td><td>—</td></tr>
+<tr><td>二项</td><td>$B(n,p)$</td><td>$C_n^k p^k(1-p)^{n-k}$</td><td>$np$</td><td>$np(1-p)$</td><td>可加（同 $p$）</td></tr>
+<tr><td>Poisson</td><td>$P(\lambda)$</td><td>$\lambda^k e^{-\lambda}/k!$</td><td>$\lambda$</td><td>$\lambda$</td><td>可加，$E=D$</td></tr>
+<tr><td>几何</td><td>$G(p)$</td><td>$p(1-p)^{k-1},k\geq 1$</td><td>$1/p$</td><td>$(1-p)/p^2$</td><td>无记忆性</td></tr>
+<tr><td>超几何</td><td>—</td><td>$C_M^k C_{N-M}^{n-k}/C_N^n$</td><td>$nM/N$</td><td>—</td><td>$n\ll N$ 近似二项</td></tr>
+<tr><td>均匀</td><td>$U(a,b)$</td><td>$1/(b-a),a<x<b$</td><td>$(a+b)/2$</td><td>$(b-a)^2/12$</td><td>—</td></tr>
+<tr><td>指数</td><td>$E(\lambda)$</td><td>$\lambda e^{-\lambda x},x\geq 0$</td><td>$1/\lambda$</td><td>$1/\lambda^2$</td><td>无记忆性</td></tr>
+<tr><td>正态</td><td>$N(\mu,\sigma^2)$</td><td>$\frac{1}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/(2\sigma^2)}$</td><td>$\mu$</td><td>$\sigma^2$</td><td>可加</td></tr>
+<tr><td>卡方</td><td>$\chi^2(n)$</td><td>—</td><td>$n$</td><td>$2n$</td><td>$\sum Z_i^2,\,Z_i\sim N(0,1)$，可加</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>二、第一章公式速查</h2>
+<div class="card">
+<div class="fb"><div class="t">概率性质</div>
+<ul>
+<li>$P(\bar A)=1-P(A)$</li>
+<li>$P(B-A)=P(B)-P(AB)$</li>
+<li>$P(A\cup B)=P(A)+P(B)-P(AB)$</li>
+<li>三事件容斥（注意 $+P(ABC)$）</li>
+</ul>
+</div>
+
+<div class="fb"><div class="t">条件 / 全概率 / Bayes</div>
+$$P(A\mid B)=\frac{P(AB)}{P(B)},\quad P(AB)=P(A)P(B\mid A)$$
+$$P(A)=\sum_i P(B_i)P(A\mid B_i)$$
+$$P(B_i\mid A)=\frac{P(B_i)P(A\mid B_i)}{P(A)}$$
+</div>
+
+<div class="fb"><div class="t">独立性</div>
+$$A,B\text{ 独立}\Leftrightarrow P(AB)=P(A)P(B)$$
+<p>独立 $\Rightarrow\{A,\bar B\},\{\bar A,B\},\{\bar A,\bar B\}$ 也独立</p>
+<p>独立时 $P(\cup A_i)=1-\prod(1-P(A_i))$</p>
+</div>
+</div>
+
+<h2>三、第二章公式速查</h2>
+<div class="card">
+<div class="fb"><div class="t">分布函数 / 概率计算</div>
+<ul>
+<li>$F(x)=P(X\leq x)$，右连续不减</li>
+<li>$P(a<X\leq b)=F(b)-F(a)$</li>
+<li>$P(X=a)=F(a)-F(a-0)$（跳跃高度）</li>
+<li>$P(X<a)=F(a-0)$</li>
+</ul>
+</div>
+
+<div class="fb"><div class="t">正态标准化</div>
+$$X\sim N(\mu,\sigma^2)\Rightarrow\frac{X-\mu}{\sigma}\sim N(0,1)$$
+$$\Phi(-x)=1-\Phi(x),\quad u_{1-\alpha}=-u_\alpha$$
+<p>$3\sigma$ 原则：$P(|X-\mu|<3\sigma)\approx 0.9974$</p>
+</div>
+
+<div class="fb"><div class="t">$Y=g(X)$ 的密度（单调时）</div>
+$$f_Y(y)=f_X(h(y))|h'(y)|,\quad h=g^{-1}$$
+<p>线性变换：$Y=aX+b\Rightarrow f_Y(y)=\dfrac{1}{|a|}f_X\!\left(\dfrac{y-b}{a}\right)$</p>
+</div>
+</div>
+
+<h2>四、第三章公式速查</h2>
+<div class="card">
+<div class="fb"><div class="t">边缘分布</div>
+<ul>
+<li>$f_X(x)=\int f(x,y)\dd y$</li>
+<li>$p_{i\cdot}=\sum_j p_{ij}$</li>
+</ul>
+</div>
+
+<div class="fb"><div class="t">条件密度</div>
+$$f_{Y\mid X}(y\mid x)=\frac{f(x,y)}{f_X(x)}$$
+<p>二维正态条件分布：$X\mid Y=y\sim N\!\left(\mu_1+\rho\frac{\sigma_1}{\sigma_2}(y-\mu_2),\sigma_1^2(1-\rho^2)\right)$</p>
+</div>
+
+<div class="fb"><div class="t">独立性</div>
+<ul>
+<li>$X,Y$ 独立 $\Leftrightarrow f(x,y)=f_X(x)f_Y(y)$</li>
+<li>二维正态独立 $\Leftrightarrow\rho=0$（仅此分布！）</li>
+<li>独立时 $u(X),v(Y)$ 也独立</li>
+</ul>
+</div>
+
+<div class="fb"><div class="t">和、极值分布</div>
+<p>独立时卷积：$f_{X+Y}(z)=\int f_X(x)f_Y(z-x)\dd x$</p>
+<p>极值：$F_{\max}=\prod F_{X_i}$，$F_{\min}=1-\prod(1-F_{X_i})$</p>
+</div>
+</div>
+
+<h2>五、第四章公式速查</h2>
+<div class="card">
+<div class="fb"><div class="t">期望</div>
+<ul>
+<li>$E(aX+b)=aE(X)+b$</li>
+<li>$E(X+Y)=E(X)+E(Y)$（无需独立）</li>
+<li>$E(XY)=E(X)E(Y)$（需独立）</li>
+<li>$E[g(X)]=\sum g(x_k)p_k$ 或 $\int g(x)f(x)\dd x$</li>
+<li>示性函数：$E(I_A)=P(A)$</li>
+</ul>
+</div>
+
+<div class="fb"><div class="t">方差与协方差</div>
+$$D(X)=E(X^2)-[E(X)]^2$$
+$$\Cov(X,Y)=E(XY)-E(X)E(Y),\quad\Cov(X,X)=D(X)$$
+$$D(X\pm Y)=D(X)+D(Y)\pm 2\Cov(X,Y)$$
+$$\rho_{XY}=\frac{\Cov(X,Y)}{\sqrt{D(X)D(Y)}}\in[-1,1]$$
+$$D\!\left(\sum t_iX_i\right)=\mathbf t^T\mathbb C\mathbf t$$
+</div>
+
+<div class="fb"><div class="t">不相关 ⇔ 四种说法</div>
+<ol><li>$\rho=0$</li><li>$\Cov=0$</li><li>$E(XY)=E(X)E(Y)$</li><li>$D(X+Y)=D(X)+D(Y)$</li></ol>
+</div>
+</div>
+
+<h2>六、第五章公式速查</h2>
+<div class="card">
+<div class="fb">
+<p>Chebyshev：$P(|X-\mu|\geq\epsilon)\leq\sigma^2/\epsilon^2$；$P(|X-\mu|<k\sigma)\geq 1-1/k^2$。</p>
+<p>大数定律：$\bar X_n\xrightarrow{P}\mu$（i.i.d.）；$M_k\xrightarrow{P}\E(X^k)$。</p>
+<p>CLT（Lindeberg-Lévy）：</p>
+$$\sum X_i\overset{近似}{\sim}N(n\mu,n\sigma^2),\quad\bar X\overset{近似}{\sim}N(\mu,\sigma^2/n)$$
+<p>DeMoivre-Laplace：$B(n,p)\to N(np,np(1-p))$（$n$ 大、$p$ 适中）。</p>
+</div>
+</div>
+
+<h2>七、第六/七/八章公式速查（统计部分）</h2>
+<div class="card">
+<div class="fb"><div class="t">基础</div>
+<ul>
+<li>$\bar X=\frac{1}{n}\sum X_i$，$S^2=\frac{1}{n-1}\sum(X_i-\bar X)^2$</li>
+<li>$E(\bar X)=\mu,\,D(\bar X)=\sigma^2/n,\,E(S^2)=\sigma^2$</li>
+</ul>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 三大抽样分布关系</div>
+<ul>
+<li>$\chi^2(n)$：$\sum_{i=1}^n Z_i^2$，$Z_i\sim N(0,1)$ i.i.d.；$E=n,D=2n$</li>
+<li>$t(n)$：$Z/\sqrt{Y/n}$，$Z\sim N(0,1),Y\sim\chi^2(n)$，独立</li>
+<li>$F(m,n)$：$\dfrac{X/m}{Y/n}$，$X\sim\chi^2(m),Y\sim\chi^2(n)$，独立</li>
+<li>$T\sim t(n)\Rightarrow T^2\sim F(1,n)$</li>
+<li>$1/F(m,n)\sim F(n,m)$；$F_{1-\alpha}(m,n)=1/F_\alpha(n,m)$</li>
+</ul>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 正态总体核心定理</div>
+<p>一个正态总体 $X\sim N(\mu,\sigma^2)$：</p>
+<ol>
+<li>$\bar X\sim N(\mu,\sigma^2/n)$</li>
+<li>$\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$</li>
+<li>$\bar X$ 与 $S^2$ 独立</li>
+<li>$\dfrac{\bar X-\mu}{S/\sqrt n}\sim t(n-1)$</li>
+</ol>
+<p>两个正态总体：$\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(n_1-1,n_2-1)$，方差合并用 $S_w$。</p>
+</div>
+
+<div class="fb"><div class="t">估计</div>
+<ul>
+<li><strong>矩估计</strong>：$\mu_k=M_k$ 反解</li>
+<li><strong>MLE</strong>：$\ell(\theta)=\sum\ln f(X_i;\theta)$ 求 $\partial\ell/\partial\theta=0$</li>
+<li><strong>无偏</strong>：$\bar X$ 估 $\mu$，$S^2$ 估 $\sigma^2$</li>
+<li><strong>$\mu$ 置信区间（$\sigma$ 未知）</strong>：$\bar X\pm t_{\alpha/2}(n-1)\dfrac{S}{\sqrt n}$</li>
+<li><strong>$\sigma^2$ 置信区间</strong>：$\left[\dfrac{(n-1)S^2}{\chi^2_{\alpha/2}},\dfrac{(n-1)S^2}{\chi^2_{1-\alpha/2}}\right]$</li>
+</ul>
+</div>
+
+<div class="fb"><div class="t">假设检验拒绝域（双侧 $\alpha$）</div>
+<ul>
+<li>$\mu=\mu_0$，$\sigma$ 已知：$|U|>u_{\alpha/2}$，$U=(\bar X-\mu_0)/(\sigma/\sqrt n)$</li>
+<li>$\mu=\mu_0$，$\sigma$ 未知：$|T|>t_{\alpha/2}(n-1)$，$T=(\bar X-\mu_0)/(S/\sqrt n)$</li>
+<li>$\sigma^2=\sigma_0^2$：$\chi^2$ 不对称双侧</li>
+</ul>
+</div>
+</div>
+
+<h2>八、常用查表值（背一些）</h2>
+<div class="card">
+<table>
+<thead><tr><th>$\alpha$</th><th>$u_\alpha$（单侧）</th><th>$u_{\alpha/2}$（双侧）</th></tr></thead>
+<tbody>
+<tr><td>0.10</td><td>1.28</td><td>1.645</td></tr>
+<tr><td>0.05</td><td>1.645</td><td>1.96</td></tr>
+<tr><td>0.025</td><td>1.96</td><td>2.24</td></tr>
+<tr><td>0.01</td><td>2.33</td><td>2.575</td></tr>
+</tbody>
+</table>
+<p>$\Phi(1)\approx 0.8413,\,\Phi(2)\approx 0.9772,\,\Phi(3)\approx 0.9987$</p>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

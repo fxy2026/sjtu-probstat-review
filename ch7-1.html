@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7.1 点估计 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch6-2.html">← 6.2</a><a href="ch7-2.html">7.2 区间估计 →</a></div>
+<h1>7.1 点估计：矩估计 + MLE + 评价 ⭐⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：<strong>14/14 套真题命中（100%！）</strong>。每年大题第 17-18 题（合计 18 分），是占分最多的章节。<br>
+<b>典型出题</b>：23-24-2 估计量"差到好"排序 · 22-23-2 协方差矩估计 · 20-21-2 带平移指数 MLE · 19-20-1 比较 $T_1, T_2$。
+</div>
+
+<h2 id="s1">一、矩估计法</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 基本思想</div>
+<p>用样本 $k$ 阶矩 $M_k = \dfrac{1}{n}\sum X_i^k$ 估计总体 $k$ 阶矩 $\mu_k = E(X^k)$（由大数定律，$M_k\xrightarrow{P}\mu_k$）。</p>
+<p><strong>三步法</strong>：</p>
+<ol>
+<li>用 $\theta_1, \ldots, \theta_m$ 表达 $\mu_1, \ldots, \mu_m$（前 $m$ 阶总体矩）</li>
+<li>令 $\mu_k = M_k$（$k = 1, \ldots, m$），得方程组</li>
+<li>反解出 $\hat\theta_j$</li>
+</ol>
+</div>
+
+<h3>七大分布矩估计速查</h3>
+<div class="card">
+<table>
+<thead><tr><th>分布</th><th>关系式</th><th>$\hat\theta$</th></tr></thead>
+<tbody>
+<tr><td>$B(1, p)$</td><td>$E(X) = p$</td><td>$\hat p = \bar X$</td></tr>
+<tr><td>$B(m, p)$ ($m$ 知)</td><td>$E(X) = mp$</td><td>$\hat p = \bar X/m$</td></tr>
+<tr><td>$P(\lambda)$</td><td>$E(X) = \lambda$</td><td>$\hat\lambda = \bar X$</td></tr>
+<tr><td>$G(p)$</td><td>$E(X) = 1/p$</td><td>$\hat p = 1/\bar X$</td></tr>
+<tr><td>$U(a, b)$</td><td>$E = (a+b)/2,\,D = (b-a)^2/12$</td><td>$\hat a = \bar X-\sqrt{3 S_n^2},\,\hat b = \bar X+\sqrt{3 S_n^2}$</td></tr>
+<tr><td>$E(\lambda)$</td><td>$E(X) = 1/\lambda$</td><td>$\hat\lambda = 1/\bar X$</td></tr>
+<tr><td>$N(\mu, \sigma^2)$</td><td>$E = \mu,\,D = \sigma^2$</td><td>$\hat\mu = \bar X,\,\hat\sigma^2 = S_n^2$</td></tr>
+</tbody>
+</table>
+<p>$S_n^2 = \dfrac{1}{n}\sum(X_i-\bar X)^2$（注意是 $n$，不是 $n-1$）。</p>
+</div>
+
+<div class="ex"><strong>例 1（双参数矩估计）</strong>：$X\sim N(\mu, \sigma^2)$，求 $\mu, \sigma^2$ 矩估计。
+<div class="sol"><div class="st">解</div>
+<p>$\mu_1 = \mu = \bar X\Rightarrow\hat\mu = \bar X$。</p>
+<p>$\mu_2 - \mu_1^2 = \sigma^2 = M_2 - \bar X^2 = \dfrac{1}{n}\sum X_i^2 - \bar X^2 = \dfrac{1}{n}\sum(X_i-\bar X)^2 = S_n^2$。</p>
+<p>所以 $\hat\sigma^2 = S_n^2$（用 $n$，不是 $n-1$）。</p>
+</div></div>
+</div>
+
+<h2 id="s2">二、最大似然估计（MLE）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 基本思想</div>
+<p>"找使观察样本概率最大的参数值"。</p>
+<p><strong>四步法</strong>：</p>
+<ol>
+<li><strong>写似然函数</strong> $L(\theta) = \prod_{i=1}^n f(X_i; \theta)$（连续）或 $\prod P(X_i; \theta)$（离散）</li>
+<li><strong>取对数</strong> $\ell(\theta) = \ln L = \sum\ln f(X_i; \theta)$</li>
+<li><strong>求导置零</strong> $\dfrac{\dd\ell}{\dd\theta} = 0$，解得 $\hat\theta$</li>
+<li><strong>验证极大</strong>（二阶导 &lt; 0，或看单调性）</li>
+</ol>
+</div>
+
+<h3>七大分布 MLE 速查</h3>
+<div class="card">
+<table>
+<thead><tr><th>分布</th><th>$\ln L$ 关键项</th><th>$\hat\theta_{\text{MLE}}$</th></tr></thead>
+<tbody>
+<tr><td>$B(1, p)$</td><td>$\sum X_i\ln p+(n-\sum X_i)\ln(1-p)$</td><td>$\hat p = \bar X$</td></tr>
+<tr><td>$P(\lambda)$</td><td>$\sum X_i\ln\lambda-n\lambda$</td><td>$\hat\lambda = \bar X$</td></tr>
+<tr><td>$G(p)$</td><td>$(n-\sum X_i)\ln(1-p)+n\ln p$</td><td>$\hat p = 1/\bar X$</td></tr>
+<tr><td>$U(0, \theta)$</td><td>$-n\ln\theta$（关于 $\theta$ 单调减）</td><td><strong>$\hat\theta = \max X_i$</strong>（边界！）</td></tr>
+<tr><td>$E(\lambda)$</td><td>$n\ln\lambda-\lambda\sum X_i$</td><td>$\hat\lambda = 1/\bar X$</td></tr>
+<tr><td>$N(\mu, \sigma^2)$</td><td>$-\frac{n}{2}\ln(2\pi\sigma^2)-\frac{1}{2\sigma^2}\sum(X_i-\mu)^2$</td><td>$\hat\mu = \bar X,\,\hat\sigma^2 = S_n^2$</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ MLE 不变性原理（满分笔记重点）</div>
+<p>若 $\hat\theta$ 是 $\theta$ 的 MLE，$g(\theta)$ 是 $\theta$ 的（单值）函数，则 $g(\hat\theta)$ 是 $g(\theta)$ 的 MLE。</p>
+<p>用途：问 $\sqrt\sigma, \ln\lambda, e^p$ 等的 MLE，直接代 $\hat\theta_{\text{MLE}}$ 即可。</p>
+</div>
+
+<div class="ex"><strong>题 ★★★ 20-21-2 第 18 题（带平移指数 MLE）</strong>：$X$ 密度 $f(x; \alpha, \beta) = \beta e^{-\beta(x-\alpha)},\,x\geq\alpha$。求 $\alpha, \beta$ 的 MLE。
+<div class="sol"><div class="st">解</div>
+<p>似然 $L(\alpha, \beta) = \beta^n e^{-\beta\sum(X_i-\alpha)}\mathbf 1_{\alpha\leq\min X_i}$。</p>
+<p><strong>对 $\alpha$</strong>：$\beta n\alpha$ 是单调增（$\beta>0$），但约束 $\alpha\leq\min X_i$，故 $\hat\alpha_{\text{MLE}} = \min X_i$（边界 MLE！求导失效）。</p>
+<p><strong>对 $\beta$</strong>：固定 $\alpha = \hat\alpha$，$\ln L = n\ln\beta-\beta\sum(X_i-\hat\alpha) = n\ln\beta-\beta n(\bar X-\hat\alpha)$。</p>
+<p>$\partial_\beta\ell = \dfrac{n}{\beta}-n(\bar X-\hat\alpha) = 0\Rightarrow\hat\beta_{\text{MLE}} = \dfrac{1}{\bar X-\min X_i}$。</p>
+</div></div>
+
+<div class="warn"><strong>边界 MLE 识别</strong>：定义域含 $\theta$（如 $X\leq\theta$ 或 $X\geq\theta$），似然函数关于 $\theta$ 单调 → 不要求导，看单调性！这是 MLE 题<strong>最常见的陷阱</strong>。</div>
+</div>
+
+<h2 id="s3">三、估计量评价 ⭐⭐⭐</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 三大评价标准</div>
+<ol>
+<li><strong>无偏性</strong>：$E(\hat\theta) = \theta$（对所有 $\theta$ 成立）</li>
+<li><strong>有效性</strong>：两个无偏估计比较，方差小者更有效</li>
+<li><strong>一致性 / 相合性</strong>：$\hat\theta_n\xrightarrow{P}\theta$（$n\to\infty$）</li>
+</ol>
+</div>
+
+<div class="fb"><div class="t">必背无偏性结论</div>
+<ul>
+<li>$\bar X$ 是 $\mu$ 的无偏估计（<strong>任意分布</strong>）</li>
+<li>$S^2 = \dfrac{1}{n-1}\sum(X_i-\bar X)^2$ 是 $\sigma^2$ 的无偏估计（<strong>任意分布</strong>）</li>
+<li>$S_n^2 = \dfrac{1}{n}\sum(X_i-\bar X)^2$ <strong>不无偏</strong>：$E(S_n^2) = \dfrac{n-1}{n}\sigma^2$</li>
+<li>样本标准差 $S$ <strong>不</strong>是 $\sigma$ 的无偏估计（Jensen 不等式）</li>
+<li>$M_k = \dfrac{1}{n}\sum X_i^k$ 是 $E(X^k)$ 的无偏估计（任意分布）</li>
+</ul>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 必背关键公式（连考 3 套！）</div>
+$$E(\bar X^2) = D(\bar X)+(E\bar X)^2 = \dfrac{\sigma^2}{n}+\mu^2$$
+<p>这个公式在 23-24-2、23-24-1、22-23-2 连续 3 套真题中反复使用。题型："$\bar X^2$ 是不是 $\mu^2$ 的无偏估计？"</p>
+</div>
+
+<div class="ex"><strong>题 ★★★★★ 23-24-2 第 17 题（"差到好"排序，连续 3 套都考！）</strong>：$X\sim N(0, \sigma^2)$ 简单样本 $X_1, \ldots, X_n$。判断三个统计量是否为 $\sigma^2$ 的无偏估计，不是请矫正，再对矫正后估计量"差到好"排序：
+$$S_1^2 = \dfrac{1}{n}\sum X_i^2,\quad S_2^2 = \dfrac{1}{n}\sum(X_i-\bar X)^2,\quad S_3^2 = \bar X^2$$
+<div class="sol"><div class="st">解（满分模板）</div>
+<p><strong>(a) 无偏性判断</strong>（$\mu = 0$）：</p>
+<ul>
+<li>$E(S_1^2) = \dfrac{1}{n}\sum E(X_i^2) = \dfrac{1}{n}\cdot n\sigma^2 = \sigma^2$ → <strong>无偏</strong></li>
+<li>$E(S_2^2) = \dfrac{n-1}{n}\sigma^2$ → 有偏</li>
+<li>$E(S_3^2) = E(\bar X^2) = D(\bar X)+(E\bar X)^2 = \sigma^2/n+0 = \sigma^2/n$ → 有偏</li>
+</ul>
+<p><strong>(b) 矫正</strong>：</p>
+<ul>
+<li>$\hat S_2^2 = \dfrac{n}{n-1}S_2^2$（即标准 $S^2$）</li>
+<li>$\hat S_3^2 = n\bar X^2$</li>
+</ul>
+<p><strong>(c) 方差比较</strong>（用 $X_i\sim N(0, \sigma^2)\Rightarrow X_i^2/\sigma^2\sim\chi^2(1)$，$E(X_i^2) = \sigma^2,\,D(X_i^2) = 2\sigma^4$）：</p>
+<ul>
+<li>$D(S_1^2) = \dfrac{1}{n^2}\sum D(X_i^2) = \dfrac{1}{n^2}\cdot n\cdot 2\sigma^4 = \dfrac{2\sigma^4}{n}$</li>
+<li>$\hat S_2^2 = \dfrac{n}{n-1}S_2^2 = \dfrac{1}{n-1}\sum(X_i-\bar X)^2 = S^2$（标准样本方差）。由 $\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$ 得 $D(S^2) = \dfrac{\sigma^4}{(n-1)^2}\cdot 2(n-1) = \dfrac{2\sigma^4}{n-1}$。故 $D(\hat S_2^2) = \dfrac{2\sigma^4}{n-1}$</li>
+<li>$\bar X\sim N(0, \sigma^2/n)\Rightarrow n\bar X^2/\sigma^2\sim\chi^2(1)$，故 $D(n\bar X^2) = \sigma^4\cdot 2 = 2\sigma^4$</li>
+</ul>
+<p><strong>排序</strong>（小 → 大 即 好 → 差）：</p>
+$$D(S_1^2) = \dfrac{2\sigma^4}{n} < D(\hat S_2^2) = \dfrac{2\sigma^4}{n-1} < D(\hat S_3^2) = 2\sigma^4$$
+<p>即 $S_1^2$ 最有效，$\hat S_3^2 = n\bar X^2$ 最差。</p>
+<p><strong>本题考点全集</strong>：① 用 $E(\bar X^2) = \sigma^2/n+\mu^2$ 公式判无偏 ② 用 $\chi^2$ 算方差 ③ 比较选最优。</p>
+</div></div>
+</div>
+
+<h2 id="s4">四、Rao-Cramer 不等式（满分笔记重点）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>$\hat\theta$ 是 $\theta$ 的无偏估计，则</p>
+$$D(\hat\theta)\geq\dfrac{1}{nE\!\left[\left(\dfrac{\partial\ln f(X;\theta)}{\partial\theta}\right)^2\right]}$$
+<p>右边称为 <strong>Rao-Cramer 下界</strong>（信息不等式）。达到下界的 $\hat\theta$ 是 <strong>有效估计量</strong>。</p>
+</div>
+
+<div class="fb"><div class="t">常见有效估计量（直接背！）</div>
+<ul>
+<li>$B(1, p)$：$\bar X$ 是 $p$ 的有效估计</li>
+<li>$P(\lambda)$：$\bar X$ 是 $\lambda$ 的有效估计</li>
+<li>$E(\lambda)$（写法 $f = \lambda e^{-\lambda x}$）：$\bar X$ 是 $1/\lambda$ 的有效估计</li>
+<li>$N(\mu, \sigma^2)$：$\bar X$ 是 $\mu$ 的有效估计</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s5">五、矩估计 vs MLE 对比</h2>
+<div class="card">
+<table>
+<thead><tr><th>方法</th><th>思想</th><th>优势</th><th>劣势</th></tr></thead>
+<tbody>
+<tr><td>矩估计</td><td>样本矩 = 总体矩</td><td>计算简单；无需知道分布族细节</td><td>可能有偏；未必最优；不唯一</td></tr>
+<tr><td>MLE</td><td>使样本概率最大</td><td>大样本下渐近无偏、渐近有效（CR 下界）</td><td>边界 MLE 求导失效；计算较复杂</td></tr>
+</tbody>
+</table>
+<p><strong>结论</strong>：实际应用中 MLE 更常用，但教学上两者都要会。</p>
+</div>
+
+<h2 id="s6">六、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>MLE 求导可能不到极值</strong>：边界型必须单独看单调性（$U(0, \theta)$、$f=\beta e^{-\beta(x-\alpha)}$ 等）</li>
+<li><strong>$\hat\sigma^2_{\text{MLE}} = S_n^2$（用 $n$）≠ $S^2$（用 $n-1$）</strong>：常考"MLE 是不是无偏"</li>
+<li><strong>判无偏要 $E(\hat\theta) = \theta$ 对所有 $\theta$</strong>：不能只验一个特殊值</li>
+<li><strong>$g(\hat\theta)$ 不一定是 $g(\theta)$ 的无偏估计</strong>（如 $S$ 不是 $\sigma$ 的无偏）</li>
+<li><strong>不变性原理只对 MLE</strong>：对矩估计不一定成立</li>
+<li><strong>Rao-Cramer 不等式条件</strong>：需要 $f$ 关于 $\theta$ 可微 + 分布族正则性</li>
+<li><strong>$E(\bar X^2) = \sigma^2/n+\mu^2$ 漏写一项</strong></li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li><strong>"矩估计 → 总体矩 = 样本矩，反解"</strong></li>
+<li><strong>"MLE → 似然 → 对数似然 → 求导 → 验极大；定义域含 $\theta$ 时看单调"</strong></li>
+<li><strong>"$\bar X$ 估 $\mu$ 永远无偏；$S^2$ 估 $\sigma^2$ 永远无偏"</strong></li>
+<li><strong>"$E(\bar X^2) = \sigma^2/n+\mu^2$，连考 3 套必考"</strong></li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">七、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>矩估计套路（3 步法）</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li>列出总体的 $k$ 阶矩（用 $\theta$ 表达）</li>
+<li>设方程 $E(X^k) = M_k = \dfrac{1}{n}\sum X_i^k$（双参数用 $\mu_1, \mu_2$）</li>
+<li>反解 $\hat\theta$</li>
+</ol>
+</div>
+
+<h3>MLE 套路（4 步法）</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li>写似然 $L(\theta) = \prod f(x_i; \theta)$</li>
+<li>取对数 $\ell(\theta) = \sum\ln f(x_i; \theta)$</li>
+<li>求导 $\dfrac{\dd\ell}{\dd\theta} = 0$ 解 $\hat\theta$</li>
+<li>验极大（二阶导 $<0$；<strong>定义域含 $\theta$ → 看单调性</strong>）</li>
+</ol>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>$E(\bar X^2) = \sigma^2/n+\mu^2$</strong>（连考 3 套，必背！）</li>
+<li><strong>$\bar X$ 是 $\mu$ 的无偏估计</strong>（<strong>任意分布</strong>）</li>
+<li><strong>$S^2 = \frac{1}{n-1}\sum(X_i-\bar X)^2$ 是 $\sigma^2$ 的无偏估计</strong>（<strong>任意分布</strong>）</li>
+<li><strong>$S_n^2 = \frac{1}{n}\sum(X_i-\bar X)^2$ 有偏</strong>：$E(S_n^2) = \frac{n-1}{n}\sigma^2$</li>
+<li><strong>样本标准差 $S$ 不是 $\sigma$ 的无偏</strong>（Jensen）</li>
+<li><strong>MLE 不变性</strong>：$g(\hat\theta)_{\text{MLE}} = g(\hat\theta_{\text{MLE}})$</li>
+<li><strong>正态 MLE 与矩估计同</strong>：$\hat\mu = \bar X,\,\hat\sigma^2 = S_n^2$</li>
+<li><strong>有效估计量</strong>（常见）：$B(1,p)$ 的 $\hat p = \bar X$；$P(\lambda)$ 的 $\hat\lambda = \bar X$；$N(\mu,\sigma^2)$ 的 $\hat\mu = \bar X$；$E(\lambda)$ 的 $\bar X$ 是 $1/\lambda$ 的有效估计</li>
+<li><strong>Rao-Cramer 下界</strong>：$D(\hat\theta)\geq\dfrac{1}{nE[(\partial\ln f/\partial\theta)^2]}$</li>
+<li><strong>边界 MLE</strong>：$U(0,\theta)$ 的 $\hat\theta = \max X_i$；$f(x) = \beta e^{-\beta(x-\alpha)}$ 的 $\hat\alpha = \min X_i$</li>
+<li><strong>$\chi^2(1)$ 方差</strong>：$D(\chi^2(1)) = 2$ → 推出 $D(X^2) = 2\sigma^4$ 当 $X\sim N(0,\sigma^2)$</li>
+<li><strong>相合估计判别</strong>：无偏 + $D(\hat\theta_n)\to 0$ 时相合（用 Chebyshev）</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>看到 $X\sim$ 单参数分布且 $E(X) = g(\theta)$，直接 $\hat\theta = g^{-1}(\bar X)$</strong></li>
+<li><strong>MLE 求 $\ln L$ 时先化简</strong>：把指数函数、阶乘等无关项分离</li>
+<li><strong>定义域含 $\theta$（$x\geq\theta$ 或 $x\leq\theta$）立刻警惕边界 MLE</strong></li>
+<li><strong>判无偏：$E(\hat\theta) = \theta$</strong>（不是某一个 $\theta$，是<strong>所有</strong>）</li>
+<li><strong>矫正系数</strong>：若 $E(T) = c\theta$，则矫正后 $\hat\theta = T/c$</li>
+<li><strong>比较方差时用 $\chi^2$</strong>：$X\sim N(0,\sigma^2)\Rightarrow X^2 = \sigma^2\chi^2(1),\,D(X^2) = 2\sigma^4$</li>
+<li><strong>$D(\bar X^2)$ 计算</strong>：$\bar X\sim N(\mu,\sigma^2/n)$，再算 $D(\bar X^2) = 2(\sigma^2/n)^2+4\mu^2(\sigma^2/n)$（一般公式）</li>
+<li><strong>有效性"差到好"排序</strong>：先矫正成无偏，再算方差排序</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>MLE 边界陷阱</strong>：$U(0,\theta)$ 求导得 $\hat\theta = 0$ 是错的，必须看单调性</li>
+<li><strong>$\hat\sigma^2_{\text{MLE}} = S_n^2$（用 $n$，有偏）</strong>，与 $S^2$（用 $n-1$，无偏）不同</li>
+<li><strong>判无偏要对所有 $\theta$</strong>，不能只验一个</li>
+<li><strong>$g(\hat\theta)$ 不一定是 $g(\theta)$ 的无偏估计</strong>（如 $S$ 不是 $\sigma$ 的无偏）</li>
+<li><strong>不变性只对 MLE</strong>，对矩估计不一定</li>
+<li><strong>$E(\bar X^2) = \sigma^2/n+\mu^2$ 漏一项</strong>（典型陷阱）</li>
+<li><strong>Rao-Cramer 适用条件</strong>：分布族正则性（连续可微等）</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

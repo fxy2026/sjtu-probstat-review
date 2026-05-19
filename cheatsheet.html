@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔥 考前救命卡 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="formulas.html">← 公式速查</a><a href="guide.html">备考指南 →</a></div>
+<h1>🔥 考前救命卡（最后 24 小时必看）</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+基于 14 套真题（17-18 ~ 23-24）总结。最重要的 30 条二级结论、必考题型识别、致命易错清单。
+</div>
+
+<h2>🎯 一、必出题型清单（按位置）</h2>
+<div class="card">
+<table>
+<thead><tr><th>位置</th><th>题型</th><th>分值</th><th>命中率</th></tr></thead>
+<tbody>
+<tr><td>选 1-12</td><td>概念辨析（独立/不相关、抽样分布、估计性质）</td><td>36</td><td>100%</td></tr>
+<tr><td>题 13</td><td>全概率 + Bayes（多源产品 / 信道 / 医学）</td><td>9</td><td>13/14</td></tr>
+<tr><td>题 14</td><td>二维条件密度 / 边缘分布</td><td>9</td><td>12/14</td></tr>
+<tr><td>题 15</td><td>$Y=g(X)$ 函数分布 / $Z=X+Y$ 卷积</td><td>9</td><td>13/14</td></tr>
+<tr><td>题 16</td><td>Chebyshev + CLT 联考</td><td>9</td><td>14/14</td></tr>
+<tr><td>题 17</td><td>矩估计 + MLE</td><td>9</td><td>14/14</td></tr>
+<tr><td>题 18</td><td>估计量无偏/有效性比较</td><td>9</td><td>13/14</td></tr>
+<tr><td>题 19</td><td>假设检验（P 值 + 临界值）/ 区间估计 / 抽样分布证明</td><td>10</td><td>13/14</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>💎 二、30 条必背二级结论</h2>
+<div class="card">
+
+<h3>第 1 章</h3>
+<ol>
+<li>De Morgan：$\overline{A\cup B}=\bar A\bar B,\,\overline{AB}=\bar A\cup\bar B$</li>
+<li>三事件容斥带 $+P(ABC)$</li>
+<li>"至少一个发生"用对立 $1-\prod(1-P)$ 更简单</li>
+<li>独立 ⇏ 互斥（$0<P<1$ 时矛盾）</li>
+<li>两两独立 ⇏ 相互独立（需四个等式）</li>
+<li>Bayes 公式分母必须展开成全概率</li>
+</ol>
+
+<h3>第 2 章</h3>
+<ol start="7">
+<li>分布函数<strong>右连续</strong>，跳跃高度 = 该点概率</li>
+<li>$B(n,p)$ 最可能值 $k^*=\lfloor(n+1)p\rfloor$</li>
+<li>Poisson 适用：$n\geq 20,p\leq 0.05$</li>
+<li>$E(\lambda)$ 无记忆性：$P(X>s+t\mid X>s)=P(X>t)$</li>
+<li>正态标准化分母用 $\sigma$ 不是 $\sigma^2$</li>
+<li>$\Phi(-x)=1-\Phi(x)$</li>
+<li>$X\sim N(0,1)\Rightarrow X^2\sim\chi^2(1)$，密度 $\dfrac{1}{\sqrt{2\pi y}}e^{-y/2}$</li>
+</ol>
+
+<h3>第 3 章</h3>
+<ol start="14">
+<li>边缘分布不能唯一决定联合分布</li>
+<li>可分离 + 矩形支撑 ⇔ 独立</li>
+<li>二维正态独立 ⇔ $\rho=0$（<strong>仅此分布</strong>）</li>
+<li>二维正态条件方差缩 $(1-\rho^2)$</li>
+<li>独立可加性需<strong>同 $p$</strong>（二项）或同分布族（正态/Poisson/卡方）</li>
+<li>$n$ 个独立 $E(\lambda)$ min $\sim E(n\lambda)$</li>
+<li>$X,Y\sim N(0,1)$ 独立 $\Rightarrow X^2+Y^2\sim E(1/2)=\chi^2(2)$</li>
+</ol>
+
+<h3>第 4 章</h3>
+<ol start="21">
+<li>$E(X+Y)=E(X)+E(Y)$ 无需独立，但 $E(XY)=E(X)E(Y)$ 需要</li>
+<li>示性函数：$E(I_A)=P(A)$（计数期望神器）</li>
+<li>$D(X\pm Y)=D(X)+D(Y)\pm 2\Cov$（同号！）</li>
+<li>独立 $\Rightarrow$ 不相关，反之仅在二维正态成立</li>
+<li>$|\rho|=1$ ⇔ 线性关系 a.s.</li>
+</ol>
+
+<h3>第 5 章</h3>
+<ol start="26">
+<li>Chebyshev 给"下界"，与 CLT "精确"对比</li>
+<li>CLT 标准化：$Z=\dfrac{\sum X_i-n\mu}{\sqrt n\sigma}$（$\sqrt n$ 不是 $n$）</li>
+</ol>
+
+<h3>第 6-8 章</h3>
+<ol start="28">
+<li>$\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$，$\bar X$ 与 $S^2$ <strong>独立</strong></li>
+<li>$\sigma$ 未知用 $t(n-1)$，已知用 $N(0,1)$</li>
+<li>$F$ 倒数关系：$F_{1-\alpha}(m,n)=1/F_\alpha(n,m)$</li>
+</ol>
+</div>
+
+<h2>⚠️ 三、致命易错清单（每年都有人栽）</h2>
+<div class="card">
+<div class="warn"><strong>⚠️ 概率部分</strong>
+<ul>
+<li>"不都发生"≠"都不发生"（$\overline{ABC}$ vs $\bar A\bar B\bar C$）</li>
+<li>差事件 $A-B$ 不要求 $B\subset A$</li>
+<li>Bayes 分母直接写 $P(A)$ 没展开 → 扣过程分</li>
+<li>古典概型必须等可能</li>
+</ul>
+</div>
+
+<div class="warn"><strong>⚠️ 一维 / 二维分布</strong>
+<ul>
+<li>分布函数右连续，$P(X<a)=F(a-0)$</li>
+<li>连续型 $P(X=a)=0$ 但不表示事件不可能</li>
+<li>函数分布忘记分段（$Y=X^2$ 必须 $y>0$）</li>
+<li>正态标准化分母用 $\sigma$，$\Phi(-x)=1-\Phi(x)$ 漏减号</li>
+<li>看到可拆形式 $r(x)g(y)$ 立刻判独立 → 必须先看支撑是否矩形！</li>
+</ul>
+</div>
+
+<div class="warn"><strong>⚠️ 数字特征</strong>
+<ul>
+<li>$D(X-Y)$ 独立时 = $D(X)+D(Y)$（同号！）</li>
+<li>$E(XY)=E(X)E(Y)$ 乱套（未确认独立）</li>
+<li>不相关 ≠ 独立（除非二维正态）</li>
+<li>$\Cov$ 双线性符号搞反</li>
+</ul>
+</div>
+
+<div class="warn"><strong>⚠️ 极限定理</strong>
+<ul>
+<li>CLT 分母 $\sqrt n\sigma$（不是 $n\sigma$，不是 $\sqrt n\sigma^2$）</li>
+<li>$\bar X$ 方差 = $\sigma^2/n$（除以 $n$ 不是 $\sqrt n$）</li>
+<li>Chebyshev 估计有时给出 $\leq 0$，无意义</li>
+</ul>
+</div>
+
+<div class="warn"><strong>⚠️ 统计 / 估计 / 检验</strong>
+<ul>
+<li>$\chi^2$ 与 $S^2$ 关联自由度是 $n-1$（用 $\bar X$ 代替 $\mu$）；$\mu$ 已知是 $n$</li>
+<li>$t$ 分布分子分母<strong>必须独立</strong></li>
+<li>$F$ 倒数 / 分位数对偶混淆</li>
+<li>$\hat\sigma^2_{MLE}=S_n^2$（$n$）≠ $S^2$（$n-1$）</li>
+<li>$\chi^2$ 区间 / 双侧检验<strong>不对称</strong>，上下分位数不同</li>
+<li>$\sigma$ 未知 → $t$ 不要错用 $u$</li>
+<li>单侧 vs 双侧分位数：$\alpha$ vs $\alpha/2$</li>
+<li>边界型 MLE（如 $U(0,\theta)$）求导失效，看单调性</li>
+</ul>
+</div>
+</div>
+
+<h2>🎲 四、答题速算技巧</h2>
+<div class="card">
+<div class="tip"><strong>组合恒等式</strong>：
+<ul>
+<li>$\sum_{k=0}^n C_n^k=2^n$</li>
+<li>$C_n^k=C_n^{n-k}$</li>
+<li>$kC_n^k=nC_{n-1}^{k-1}$</li>
+</ul>
+</div>
+
+<div class="tip"><strong>积分技巧</strong>：
+<ul>
+<li>$\int_0^\infty x^n e^{-x}\dd x=n!$</li>
+<li>$\int_{-\infty}^\infty e^{-x^2/2}\dd x=\sqrt{2\pi}$</li>
+<li>正态 $\int_{-\infty}^\infty xe^{-(x-\mu)^2/(2\sigma^2)}\dd x=\sqrt{2\pi}\sigma\cdot\mu$</li>
+<li>分部积分对指数+多项式：$\int x e^{-\lambda x}\dd x=-\frac{x+1/\lambda}{\lambda}e^{-\lambda x}+C$</li>
+</ul>
+</div>
+
+<div class="tip"><strong>常用极限</strong>：
+<ul>
+<li>$\left(1-\frac{x}{n}\right)^n\to e^{-x}$</li>
+<li>$\binom{n}{k}\sim n^k/k!$（$n$ 大）</li>
+<li>Stirling：$n!\sim\sqrt{2\pi n}(n/e)^n$</li>
+</ul>
+</div>
+</div>
+
+<h2>📌 五、最后 30 分钟看这些</h2>
+<div class="card">
+<div class="note"><strong>1. 全概率 / Bayes 模板</strong><br>
+"设事件 $B_i$ 表示 $\ldots$（验证划分），则 $P(A)=\sum P(B_i)P(A\mid B_i)=\ldots$；后验 $P(B_i\mid A)=\dfrac{P(B_i)P(A\mid B_i)}{P(A)}=\ldots$"
+</div>
+
+<div class="note"><strong>2. CLT 模板</strong><br>
+"$X_i$ i.i.d.，$E(X_i)=\ldots$，$D(X_i)=\ldots$，由 CLT，$\sum X_i\approx N(n\mu,n\sigma^2)$；标准化 $Z=(S-n\mu)/(\sqrt n\sigma)\approx N(0,1)$，所求 $P(\ldots)=\Phi(\ldots)-\Phi(\ldots)=\ldots$"
+</div>
+
+<div class="note"><strong>3. MLE 模板</strong><br>
+"似然 $L(\theta)=\prod f(X_i;\theta)=\ldots$；对数 $\ell=\ln L=\ldots$；$\dfrac{d\ell}{d\theta}=0\Rightarrow\hat\theta=\ldots$；验证二阶导<0。"
+</div>
+
+<div class="note"><strong>4. 假设检验模板</strong><br>
+"① $H_0:\theta=\theta_0$ vs $H_1:\ldots$；② 统计量 $T=\ldots\sim\ldots$；③ 拒绝域 $\{|T|>\ldots\}$；④ 计算 $T_{\text{obs}}=\ldots$；⑤ $T_{\text{obs}}$ ∈/∉ 拒绝域 → 拒绝 / 接受 $H_0$。"
+</div>
+
+<div class="note"><strong>5. 抽样分布构造模板</strong><br>
+"$X_i$ i.i.d. $\sim N(0,\sigma^2)$。线性组合 $aX_1+bX_2\sim N(0,(a^2+b^2)\sigma^2)$ 标准化平方 $\sim\chi^2(1)$；多个组合相加 $\sim\chi^2(k)$。"
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

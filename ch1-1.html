@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.1 随机事件及其运算 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch1-2.html">1.2 概率定义 →</a></div>
+<h1>1.1 随机事件及其运算 ⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 8 套，多以选择题 1-2 题出现。<br>
+<b>典型出题</b>：用 $A,B,C$ 表示复合事件（"恰一个发生"等）· 化简事件 · 判断包含 / 互斥关系 · De Morgan 应用。
+</div>
+
+<h2 id="s1">一、基本概念</h2>
+<div class="card">
+<div class="fb"><div class="t">随机试验 $E$ 的三条件</div>
+<ol>
+<li>可在相同条件下<strong>重复</strong>进行；</li>
+<li>所有可能结果<strong>事先已知</strong>且不止一个；</li>
+<li>每次试验前<strong>无法预知</strong>哪个结果。</li>
+</ol>
+</div>
+
+<div class="fb"><div class="t">样本空间 / 样本点 / 事件</div>
+<ul>
+<li>样本空间 $\Omega$ = $E$ 所有可能结果的集合 $= \{\omega\}$</li>
+<li>样本点 $\omega$ = $E$ 的直接结果（基本事件）</li>
+<li>随机事件 $A, B, \ldots$ = $\Omega$ 的子集</li>
+<li>必然事件 $\Omega$；不可能事件 $\varnothing$</li>
+</ul>
+</div>
+
+<div class="ex"><strong>典型样本空间</strong>
+<ul>
+<li>掷一颗骰子：$\Omega = \{1, 2, 3, 4, 5, 6\}$</li>
+<li>射击命中环数：$\Omega = \{0, 1, \ldots, 10\}$</li>
+<li>测量误差：$\Omega = \mathbb R$</li>
+<li>电话呼叫次数：$\Omega = \{0, 1, 2, \ldots\}$</li>
+<li>等公交时间：$\Omega = [0, +\infty)$</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s2">二、事件的七种关系运算（必背）</h2>
+<div class="card">
+<table>
+<thead><tr><th>名称</th><th>记号</th><th>含义</th></tr></thead>
+<tbody>
+<tr><td>包含</td><td>$A\subset B$</td><td>$A$ 发生必导致 $B$ 发生</td></tr>
+<tr><td>相等</td><td>$A = B$</td><td>$A\subset B$ 且 $B\subset A$</td></tr>
+<tr><td>和（并）</td><td>$A\cup B$</td><td>至少一个发生</td></tr>
+<tr><td>积（交）</td><td>$AB = A\cap B$</td><td>同时发生</td></tr>
+<tr><td>差</td><td>$A-B = A\bar B$</td><td>$A$ 发生 $B$ 不发生</td></tr>
+<tr><td>互斥</td><td>$AB = \varnothing$</td><td>不能同时发生</td></tr>
+<tr><td>对立</td><td>$\bar A$（$A\bar A=\varnothing,A\cup\bar A=\Omega$）</td><td>恰有一个发生</td></tr>
+</tbody>
+</table>
+
+<div class="warn"><strong>对立 vs 互斥</strong>：对立必互斥（$A\bar A=\varnothing$），但互斥未必对立（缺 $A\cup B=\Omega$ 条件）。</div>
+</div>
+
+<h2 id="s3">三、运算律（必背！）</h2>
+<div class="card">
+<div class="fb">
+<ul>
+<li><strong>交换律</strong>：$A\cup B = B\cup A$；$AB = BA$</li>
+<li><strong>结合律</strong>：$(A\cup B)\cup C = A\cup(B\cup C)$</li>
+<li><strong>分配律</strong>：$(A\cup B)\cap C = (AC)\cup(BC)$</li>
+<li><strong>重余律</strong>：$\overline{\bar A} = A$</li>
+<li><strong>幂等律</strong>：$A\cup A = A$；$AA = A$</li>
+<li><strong>吸收律</strong>：$A\cup\Omega = \Omega$；$A\cap\Omega = A$；$A\cup\varnothing = A$；$A\cap\varnothing = \varnothing$</li>
+<li><strong>差化积</strong>：$A-B = A\bar B = A-AB$</li>
+</ul>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ De Morgan 对偶律（最重要！）</div>
+$$\overline{A\cup B} = \bar A\cap\bar B,\quad\overline{A\cap B} = \bar A\cup\bar B$$
+$$\overline{\bigcup_{i=1}^n A_i} = \bigcap_{i=1}^n\bar A_i,\quad\overline{\bigcap_{i=1}^n A_i} = \bigcup_{i=1}^n\bar A_i$$
+<p>可推广到可列。<strong>"对一组事件求否定 → 翻每项 + 反转交并"</strong></p>
+</div>
+
+<div class="tip"><strong>满分笔记技巧：化简顺序</strong>：<strong>先对立 → 再互交 → 最后并/差</strong>。即先用 De Morgan 把所有补号往里推，再合并交集，最后处理并和差。</div>
+</div>
+
+<h2 id="s4">四、典型题型</h2>
+<div class="card">
+<h3>题型 1：用 $A, B, C$ 表示复合事件（每年选择题）</h3>
+<div class="ex"><strong>必背模板</strong>：
+<ul>
+<li>$A$ 发生而 $B, C$ 都不发生：$A\bar B\bar C$</li>
+<li>$A, B, C$ <strong>都不</strong>发生：$\bar A\bar B\bar C = \overline{A\cup B\cup C}$</li>
+<li>$A, B, C$ <strong>不都</strong>发生：$\overline{ABC} = \bar A\cup\bar B\cup\bar C$</li>
+<li>恰有<strong>一个</strong>发生：$A\bar B\bar C\cup\bar AB\bar C\cup\bar A\bar BC$</li>
+<li>恰有<strong>两个</strong>发生：$AB\bar C\cup A\bar BC\cup\bar ABC$</li>
+<li>至少<strong>一个</strong>发生：$A\cup B\cup C$</li>
+<li>至少<strong>两个</strong>发生：$AB\cup AC\cup BC$</li>
+<li>至多<strong>一个</strong>发生：$\overline{AB\cup AC\cup BC}$ = "至少两个发生的对立"</li>
+</ul>
+</div>
+
+<div class="warn"><strong>极易混淆</strong>：
+<ul>
+<li>"<strong>不都</strong>发生" = "至少一个不发生" = $\overline{ABC}$</li>
+<li>"<strong>都不</strong>发生" = $\bar A\bar B\bar C = \overline{A\cup B\cup C}$</li>
+</ul>
+两者完全不同！前者只需漏一个就算；后者必须三个都没发生。<strong>每年选择题必出</strong>。
+</div>
+
+<h3>题型 2：化简事件</h3>
+<div class="ex"><strong>例</strong>：化简 $\overline{\bar A\bar B}\cup CAB$。
+<div class="sol"><div class="st">解</div>
+<p>$\overline{\bar A\bar B} = A\cup B$（De Morgan）。$ABC\subset A\subset A\cup B$，故</p>
+$$\overline{\bar A\bar B}\cup ABC = (A\cup B)\cup ABC = A\cup B$$
+<p>结论：吸收掉 $ABC$，结果 $= A\cup B$。</p>
+</div></div>
+</div>
+
+<h2 id="s5">五、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li>"不都发生" ≠ "都不发生"</li>
+<li>差事件 $A-B$ <strong>不要求</strong> $B\subset A$</li>
+<li>"互斥" ≠ "对立"（对立有额外条件 $A\cup B = \Omega$）</li>
+<li>De Morgan 应用时漏补号</li>
+<li>用文氏图辅助理解（推荐画三圆交叠）</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li><strong>"否定一组事件 = 翻成对立 + 反转并交"</strong></li>
+<li><strong>"恰 $k$ 个发生：先选 $k$ 个发生，剩下取补，再并"</strong></li>
+<li><strong>"至少 $k$ 个 → 对立至多 $k-1$ 个"</strong></li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">六、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>"恰 $k$ 个发生"通用模板</h3>
+<div class="fb" style="border-color:#27ae60"><div class="t">⭐ 三事件 $A, B, C$</div>
+<table>
+<thead><tr><th>题型</th><th>表达式</th></tr></thead>
+<tbody>
+<tr><td>都发生</td><td>$ABC$</td></tr>
+<tr><td>都不发生</td><td>$\bar A\bar B\bar C = \overline{A\cup B\cup C}$</td></tr>
+<tr><td>不都发生</td><td>$\overline{ABC} = \bar A\cup\bar B\cup\bar C$</td></tr>
+<tr><td>恰一个发生</td><td>$A\bar B\bar C\cup\bar AB\bar C\cup\bar A\bar BC$</td></tr>
+<tr><td>恰两个发生</td><td>$AB\bar C\cup A\bar BC\cup\bar ABC$</td></tr>
+<tr><td>至少一个</td><td>$A\cup B\cup C$</td></tr>
+<tr><td>至少两个</td><td>$AB\cup AC\cup BC$</td></tr>
+<tr><td>至多两个</td><td>$\overline{ABC}$ = "至少一个不发生"</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>De Morgan</strong>：$\overline{A\cup B} = \bar A\bar B$；$\overline{AB} = \bar A\cup\bar B$</li>
+<li><strong>差化积</strong>：$A-B = A\bar B = A-AB$</li>
+<li><strong>包含传递</strong>：$A\subset B\Rightarrow\bar B\subset\bar A$</li>
+<li><strong>对立 vs 互斥</strong>：对立必互斥，反之未必</li>
+<li><strong>互斥的补不一定互斥</strong>：$AB = \varnothing$ 不蕴含 $\bar A\bar B = \varnothing$</li>
+<li><strong>"恰 $k$ 个发生"的对称性</strong>：在 $n$ 事件中"恰 $k$ 个"和"恰 $n-k$ 个"的事件个数相同</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>化简优先用 De Morgan</strong>："先对立 → 再互交 → 最后并/差"</li>
+<li><strong>"不都" vs "都不"区分</strong>：写英文 not-all vs all-not</li>
+<li><strong>"至少 $k$" 用对立 "至多 $k-1$"</strong>，往往更简洁</li>
+<li><strong>画文氏图辅助</strong>：复杂事件用三圆交叠图理解</li>
+<li><strong>事件互不相同时</strong>：$A_iA_j$ 形如交集要逐一展开</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>"不都发生" ≠ "都不发生"</strong>（每年选择题至少 1 题考此区分）</li>
+<li>差事件 $A-B$ <strong>不要求</strong> $B\subset A$</li>
+<li>"互斥" ≠ "对立"</li>
+<li>De Morgan 应用时漏补号</li>
+<li>"恰 $k$ 个"忘了枚举所有组合（$n=3, k=1$ 时有 3 种）</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2.2 离散型随机变量 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch2-1.html">← 2.1</a><a href="ch2-3.html">2.3 连续型 →</a></div>
+<h1>2.2 离散型随机变量 ⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 11 套（79%）。每年选择/填空 1-2 道。<br>
+<b>典型出题</b>：Poisson 求 $\lambda$ · $E(e^{aX})$ · 二项近似 Poisson · 几何分布无记忆性 · 求分布律的归一化常数。
+</div>
+
+<h2 id="s1">一、分布律</h2>
+<div class="card">
+<div class="fb"><div class="t">定义</div>
+<p>$X$ 取离散值 $x_1, x_2, \ldots$，分布律 $p_k = P(X = x_k)$，满足</p>
+<ul><li>$p_k\geq 0$</li><li>$\sum_k p_k = 1$</li></ul>
+<p>分布函数：$F(x) = \sum_{x_k\leq x}p_k$（阶梯函数）。</p>
+</div>
+</div>
+
+<h2 id="s2">二、五大常见离散分布（必记！）</h2>
+
+<div class="card">
+<h3>1. 0-1 分布（Bernoulli）</h3>
+<div class="fb">
+<p>$P(X = 1) = p,\ P(X = 0) = 1-p$，$0 < p < 1$。</p>
+<p>$E(X) = p,\quad D(X) = p(1-p)$</p>
+<p>这是 Bernoulli 试验的单次结果。</p>
+</div>
+</div>
+
+<div class="card">
+<h3>2. 二项分布 $B(n, p)$</h3>
+<div class="fb">
+<p>$n$ 重 Bernoulli 试验中成功次数：</p>
+$$P(X = k) = C_n^k p^k(1-p)^{n-k},\quad k = 0, 1, \ldots, n$$
+<p>$E(X) = np,\quad D(X) = np(1-p)$</p>
+</div>
+
+<div class="fb"><div class="t">⭐ 最可能值公式（满分笔记重点）</div>
+<p>$X\sim B(n, p)$，最可能值 $k^*$：</p>
+<ul>
+<li>若 $(n+1)p$ <strong>是整数</strong>：<strong>$k^* = (n+1)p$ 或 $(n+1)p-1$</strong>（两个最可能值！）</li>
+<li>否则：$k^* = \lfloor(n+1)p\rfloor$（单一最大）</li>
+</ul>
+<p><strong>这个细节多数教材一笔带过，选择题常埋雷</strong>。</p>
+</div>
+
+<div class="ex"><strong>题</strong>：甲乙比赛 10 局，甲每局胜概率 0.6。求甲胜 6 局以上的概率及最可能甲胜局数。
+<div class="sol"><div class="st">解</div>
+<p>$(n+1)p = 11\times 0.6 = 6.6$，非整数，$k^* = \lfloor 6.6\rfloor = 6$。</p>
+<p>$P(X\geq 6) = \sum_{k=6}^{10}C_{10}^k 0.6^k 0.4^{10-k}\approx 0.633$。</p>
+</div></div>
+</div>
+
+<div class="card">
+<h3>3. Poisson 分布 $P(\lambda)$ ⭐</h3>
+<div class="fb">
+$$P(X = k) = \dfrac{\lambda^k e^{-\lambda}}{k!},\quad k = 0, 1, 2, \ldots,\,\lambda > 0$$
+<p>$E(X) = \lambda,\quad D(X) = \lambda$（<strong>期望 = 方差</strong>！）</p>
+<p>描述单位时间/空间内稀有事件发生次数。</p>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ Poisson 极限定理</div>
+<p>$n$ 大、$p$ 小、$np = \lambda$ 适中时：</p>
+$$C_n^k p^k(1-p)^{n-k}\approx \dfrac{\lambda^k e^{-\lambda}}{k!}$$
+<p><strong>实用范围</strong>：$n\geq 20$ 且 $p\leq 0.05$。</p>
+<p><strong>推导</strong>（满分笔记）：</p>
+$$\lim_{n\to\infty}C_n^k\left(\dfrac{\lambda}{n}\right)^k\left(1-\dfrac{\lambda}{n}\right)^{n-k} = \dfrac{\lambda^k}{k!}\cdot 1\cdot e^{-\lambda}\cdot 1 = \dfrac{\lambda^k e^{-\lambda}}{k!}$$
+</div>
+
+<div class="ex"><strong>题 ★（设备故障）</strong>：90 台设备每台故障率 0.01，配 $N$ 工人。求至少需配几人使"故障数 > $N$"的概率 < 0.01。
+<div class="sol"><div class="st">解</div>
+<p>$X\sim B(90, 0.01)\approx P(0.9)$。$P(X\leq 4) = \sum_{k=0}^4\frac{0.9^k e^{-0.9}}{k!}\approx 0.9977$。</p>
+<p>$P(X\geq 5) = 1-0.9977 = 0.0023 < 0.01$，所以 $N = 4$ 足够。</p>
+</div></div>
+</div>
+
+<div class="card">
+<h3>4. 几何分布 $G(p)$</h3>
+<div class="fb">
+<p>首次成功所需试验次数：</p>
+$$P(X = k) = p(1-p)^{k-1},\quad k = 1, 2, \ldots$$
+<p>$E(X) = 1/p,\quad D(X) = (1-p)/p^2$</p>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 无记忆性（离散唯一！）</div>
+$$P(X > m+n\mid X > m) = P(X > n)$$
+<p>"已经等了 $m$ 次没成功，再等 $n$ 次成功的概率与从头等 $n$ 次一样"。</p>
+<p><strong>结论</strong>：离散分布中<strong>唯一</strong>具有无记忆性的是几何分布。</p>
+</div>
+</div>
+
+<div class="card">
+<h3>5. 超几何分布</h3>
+<div class="fb">
+<p>$N$ 件含 $M$ 个次品，不放回抽 $n$ 件，次品数 $X$：</p>
+$$P(X = k) = \dfrac{C_M^k C_{N-M}^{n-k}}{C_N^n}$$
+<p>$E(X) = nM/N$；$n\ll N$ 时近似 $B(n, M/N)$。</p>
+</div>
+</div>
+
+<div class="card">
+<h3>6. 帕斯卡（负二项）分布</h3>
+<div class="fb">
+<p>第 $r$ 次成功所需试验次数：</p>
+$$P(X = k) = C_{k-1}^{r-1}p^r(1-p)^{k-r},\quad k = r, r+1, \ldots$$
+<p>$E(X) = r/p$。$r = 1$ 时退化为几何分布。</p>
+</div>
+</div>
+
+<h2 id="s3">三、分布比较</h2>
+<div class="card">
+<table>
+<thead><tr><th>分布</th><th>$P(X=k)$</th><th>$E$</th><th>$D$</th><th>实际背景</th></tr></thead>
+<tbody>
+<tr><td>0-1</td><td>$p^k(1-p)^{1-k}$</td><td>$p$</td><td>$p(1-p)$</td><td>单次试验</td></tr>
+<tr><td>$B(n,p)$</td><td>$C_n^k p^k(1-p)^{n-k}$</td><td>$np$</td><td>$np(1-p)$</td><td>$n$ 次独立试验成功数</td></tr>
+<tr><td>$P(\lambda)$</td><td>$\lambda^k e^{-\lambda}/k!$</td><td>$\lambda$</td><td>$\lambda$</td><td>稀有事件计数</td></tr>
+<tr><td>$G(p)$</td><td>$p(1-p)^{k-1}$</td><td>$1/p$</td><td>$(1-p)/p^2$</td><td>首次成功时间</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="s4">四、可加性</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<ul>
+<li>$B(n_1, p) + B(n_2, p) = B(n_1+n_2, p)$（独立、<strong>同 $p$</strong>！）</li>
+<li>$P(\lambda_1) + P(\lambda_2) = P(\lambda_1+\lambda_2)$（独立）</li>
+<li>几何分布无可加性，但 $r$ 个独立 $G(p)$ 的和服从负二项 $NB(r, p)$</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s5">五、典型例题（LOTUS）</h2>
+<div class="card">
+<div class="ex"><strong>题</strong>：$X\sim P(\lambda)$，求 $E(3^X)$。
+<div class="sol"><div class="st">解</div>
+$$E(3^X) = \sum_{k=0}^\infty 3^k\dfrac{\lambda^k e^{-\lambda}}{k!} = e^{-\lambda}\sum_{k=0}^\infty\dfrac{(3\lambda)^k}{k!} = e^{-\lambda}\cdot e^{3\lambda} = e^{2\lambda}$$
+<p>更一般：$E(e^{aX}) = e^{\lambda(e^a-1)}$ —— 这是 Poisson 分布的<strong>矩母函数</strong>。</p>
+</div></div>
+
+<div class="ex"><strong>题</strong>：$X\sim B(n, p)$，求 $E(e^{3X})$。
+<div class="sol"><div class="st">解</div>
+$$E(e^{3X}) = \sum_{k=0}^n e^{3k}C_n^k p^k(1-p)^{n-k} = (pe^3+1-p)^n$$
+<p>二项分布的矩母函数。</p>
+</div></div>
+</div>
+
+<h2 id="s6">六、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li>二项 vs Poisson 适用条件辨析</li>
+<li>几何分布"首次成功"次数<strong>从 1 开始</strong>（不是 0）</li>
+<li>负二项 $P(X = k) = C_{k-1}^{r-1}p^r(1-p)^{k-r}$，起始 $k = r$</li>
+<li>二项最可能值 $(n+1)p$ 是整数时有<strong>两个</strong>最可能值</li>
+<li>$E(X^2) \neq [E(X)]^2$（"平方的期望" vs "期望的平方"）</li>
+<li>Poisson 期望 = 方差 = $\lambda$</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li>"<strong>0-1 → 二项 → Poisson</strong>"（关系链）</li>
+<li>"<strong>$n$ 大 $p$ 小 → Poisson 近似</strong>"</li>
+<li>"<strong>几何分布无记忆，离散唯一</strong>"</li>
+<li>"<strong>Poisson：$E = D = \lambda$</strong>"</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">七、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>识别分布的速查表</h3>
+<div class="fb" style="border-color:#27ae60">
+<table>
+<thead><tr><th>问题特征</th><th>对应分布</th></tr></thead>
+<tbody>
+<tr><td>单次试验，成功 / 失败</td><td>0-1 分布</td></tr>
+<tr><td>$n$ 次独立试验，成功次数</td><td>$B(n,p)$</td></tr>
+<tr><td>稀有事件计数，单位时间发生数</td><td>$P(\lambda)$</td></tr>
+<tr><td>首次成功时间 / 次数</td><td>$G(p)$</td></tr>
+<tr><td>第 $r$ 次成功时间</td><td>负二项 / Pascal</td></tr>
+<tr><td>$N$ 中含 $M$ 次品，不放回抽 $n$</td><td>超几何</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>$E$ 与 $D$ 总表</strong>：0-1 → $p, p(1-p)$；$B(n,p)$ → $np, np(1-p)$；$P(\lambda)$ → $\lambda, \lambda$；$G(p)$ → $1/p, (1-p)/p^2$</li>
+<li><strong>二项最可能值</strong>：$(n+1)p$ 是整数时双峰（$k^*$ 与 $k^*-1$）；非整数时 $k^* = \lfloor(n+1)p\rfloor$</li>
+<li><strong>Poisson 近似</strong>：$n\geq 20, p\leq 0.05$ 时 $B(n,p)\approx P(np)$</li>
+<li><strong>几何无记忆性</strong>：$P(X>m+n\mid X>m) = P(X>n)$（离散唯一！）</li>
+<li><strong>$E(e^{aX})$ 矩母函数</strong>：</li>
+<ul>
+<li>$X\sim B(n,p)$：$(pe^a+1-p)^n$</li>
+<li>$X\sim P(\lambda)$：$e^{\lambda(e^a-1)}$</li>
+<li>$X\sim G(p)$：$pe^a/(1-(1-p)e^a)$</li>
+</ul>
+<li><strong>Poisson 拆分</strong>：$X\sim P(\lambda)$，每次试验独立按 $p$ 拆 → 拆出的 $X_1\sim P(\lambda p)$</li>
+<li><strong>可加性</strong>：$B(n_1,p)+B(n_2,p)=B(n_1+n_2,p)$；$P(\lambda_1)+P(\lambda_2) = P(\lambda_1+\lambda_2)$</li>
+<li><strong>$D = E(X^2)-(EX)^2$</strong>，$E(X(X-1))$ 拆分技巧</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>识别分布 → 直接套 $E, D$</strong>，不用算积分/求和</li>
+<li><strong>Poisson 求 $E(e^{aX})$</strong>：直接套 $e^{\lambda(e^a-1)}$</li>
+<li><strong>大 $n$ 二项近似选 Poisson 还是正态</strong>：$p$ 小用 Poisson，$p$ 适中用正态</li>
+<li><strong>泊松流的间隔时间</strong>：服从 $E(\lambda)$（链接到下一节）</li>
+<li><strong>查表速算</strong>：教材附表给 Poisson 分布表，按 $\lambda$ 和 $k$ 查</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>几何分布从 1 开始</strong>（不是 0）</li>
+<li><strong>$(n+1)p$ 整数时双峰</strong>—— 选择题常考</li>
+<li><strong>二项 vs Poisson 适用</strong>：$p$ 不小时不能用 Poisson 近似</li>
+<li><strong>$E(X^2) = D(X)+(EX)^2$</strong>—— 不要忘第二项</li>
+<li><strong>Poisson 期望 = 方差</strong>（独有特性）</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

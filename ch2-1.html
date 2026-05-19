@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2.1 随机变量及其分布函数 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch1-4.html">← 1.4</a><a href="ch2-2.html">2.2 离散型 →</a></div>
+<h1>2.1 随机变量及其分布函数 ⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 6 套。选择/填空，常考分布函数性质判断。<br>
+<b>典型出题</b>：判断函数是否为分布函数 · 求待定常数 · $P(a<X<b)$ 等各种概率计算。
+</div>
+
+<h2 id="s1">一、随机变量</h2>
+<div class="card">
+<div class="fb"><div class="t">定义</div>
+<p>样本空间 $\Omega$ 上的<strong>实值函数</strong> $X(\omega):\Omega\to\mathbb R$ 称为随机变量。</p>
+<p>把"事件"提升到"数值"，便于用微积分工具研究。</p>
+</div>
+
+<div class="tip">三种类型：
+<ul>
+<li><strong>离散型</strong>：$X$ 取值至多可列（如 $\{0, 1, 2, \ldots\}$）</li>
+<li><strong>连续型</strong>：分布函数 $F(x)$ 可写为某非负函数的变上限积分</li>
+<li><strong>混合型 / 一般型</strong>：既非纯离散也非纯连续（如 $\min(X, c)$）</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s2">二、分布函数 $F(x)$</h2>
+<div class="card">
+<div class="fb"><div class="t">定义</div>
+$$F(x) = P(X\leq x),\quad x\in\mathbb R$$
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 分布函数三大性质（必背！）</div>
+<ol>
+<li><strong>单调不减</strong>：$x_1<x_2\Rightarrow F(x_1)\leq F(x_2)$</li>
+<li><strong>右连续</strong>：$F(x+0) = F(x)$（注意不是左连续！）</li>
+<li><strong>极限</strong>：$F(-\infty) = 0$，$F(+\infty) = 1$</li>
+</ol>
+<p>反之，任何满足这三条的函数都是某随机变量的分布函数。</p>
+</div>
+
+<div class="fb"><div class="t">基本概率计算（必背）</div>
+<ul>
+<li>$P(a<X\leq b) = F(b)-F(a)$</li>
+<li>$P(X = a) = F(a)-F(a-0)$（=分布函数在 $a$ 的跳跃高度）</li>
+<li>$P(X<a) = F(a-0)$</li>
+<li>$P(X\geq a) = 1-F(a-0)$；$P(X>a) = 1-F(a)$</li>
+<li>$P(a\leq X\leq b) = F(b)-F(a-0)$；$P(a<X<b) = F(b-0)-F(a)$</li>
+</ul>
+</div>
+
+<div class="warn"><strong>易错</strong>：分布函数<strong>右连续</strong>，所以含等号的边界归到右值。$P(X\leq a) = F(a)$，$P(X<a) = F(a-0)$，差别就是这一点的质点概率。</div>
+</div>
+
+<h2 id="s3">三、典型例题</h2>
+<div class="card">
+<div class="ex"><strong>题 ★（待定常数）</strong>：$F(x) = A+B\arctan x$ 是某随机变量的分布函数，求 $A, B$ 及 $P(|X|<1)$。
+<div class="sol"><div class="st">解</div>
+<p>$F(-\infty) = A-B\pi/2 = 0$，$F(+\infty) = A+B\pi/2 = 1$，解得 $A = 1/2,\,B = 1/\pi$。</p>
+$$P(|X|<1) = F(1-0)-F(-1) = F(1)-F(-1) = \dfrac{1}{2}+\dfrac{1}{4}-\left(\dfrac{1}{2}-\dfrac{1}{4}\right) = \dfrac{1}{2}$$
+<p>这是 Cauchy 分布！</p>
+</div></div>
+
+<div class="ex"><strong>题（线性组合是否为分布函数）</strong>：已知 $F_1, F_2$ 是分布函数。$aF_1(x)+bF_2(x)$ 是分布函数的充要条件？
+<div class="sol"><div class="st">解</div>
+<p>$F(+\infty) = a+b = 1$；非减需 $a, b\geq 0$。结论：$a, b\geq 0$ 且 $a+b = 1$（凸组合）。</p>
+<p>$F(-\infty) = 0$ 自动成立。</p>
+</div></div>
+
+<div class="ex"><strong>题（混合型分布函数）</strong>：$F(x) = \begin{cases}0,&x<0\\x/4,&0\leq x<1\\(x+2)/4,&1\leq x<2\\1,&x\geq 2\end{cases}$
+求 $P(X = 1)$，$P(X\leq 1)$，$P(0.5<X<1.5)$。
+<div class="sol"><div class="st">解</div>
+<p>$F(1-0) = 1/4$，$F(1) = 3/4$，所以 $P(X = 1) = F(1)-F(1-0) = 1/2$。这一点有跳跃，是混合型。</p>
+<p>$P(X\leq 1) = F(1) = 3/4$。</p>
+<p>$P(0.5<X<1.5) = F(1.5-0)-F(0.5) = 3.5/4 - 1/8 = 7/8 - 1/8 = 6/8 = 3/4$。</p>
+<p>验证：$F$ 在 $[0,1)$ 上从 0 增到 $1/4$，在 $x=1$ 跳到 $3/4$，在 $[1,2)$ 上从 $3/4$ 增到 $1$，合法。</p>
+</div></div>
+</div>
+
+<h2 id="s4">四、考试要点</h2>
+<div class="card">
+<div class="tip"><strong>本节常出</strong>：判断函数是否为分布函数（验三个性质）、求待定常数（用边界 $F(-\infty)=0, F(+\infty)=1$）、概率计算。</div>
+
+<div class="warn"><strong>易错点</strong>：
+<ul>
+<li>把"右连续"写成"左连续"</li>
+<li>$P(X<a)$ 错写成 $F(a)$（应是 $F(a-0)$）</li>
+<li>忘了 $F(\infty) = 1$ 的归一化条件</li>
+<li>混合型分布的跳跃点处理错</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li>"<strong>非减 + 右连续 + $0\to 1$</strong>"——分布函数三性质</li>
+<li>"<strong>$P(X=a)$ = 跳跃高度</strong>"</li>
+<li>"<strong>$P(X\leq a) = F(a)$；$P(X<a) = F(a-0)$</strong>"（含等号还是不含）</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">五、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>分布函数三性质</strong>：单调不减 + 右连续 + $F(-\infty)=0, F(+\infty)=1$</li>
+<li><strong>$P(X=a) = F(a)-F(a-0)$</strong>（跳跃高度）—— 离散点的概率</li>
+<li><strong>$P(X<a) = F(a-0)$</strong>（不含 $a$）；$P(X\leq a) = F(a)$（含 $a$）</li>
+<li><strong>$P(a<X\leq b) = F(b)-F(a)$</strong>；$P(a\leq X\leq b) = F(b)-F(a-0)$</li>
+<li><strong>$P(X>a) = 1-F(a)$</strong>；$P(X\geq a) = 1-F(a-0)$</li>
+<li><strong>连续型 $P(X=a) = 0$</strong>，所以含/不含端点不影响概率</li>
+<li><strong>$aF_1+bF_2$ 是分布函数 ⇔ $a, b\geq 0$ 且 $a+b=1$</strong>（凸组合）</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>求待定常数</strong>：用 $F(-\infty)=0$ 和 $F(+\infty)=1$ 列方程</li>
+<li><strong>判断是分布函数</strong>：检查 3 性质，最快是边界条件</li>
+<li><strong>含/不含等号的边界</strong>：右连续 → 含 $=$ 归右值</li>
+<li><strong>混合型识别</strong>：$F$ 既有连续部分又有跳跃</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>"右连续"写成"左连续"</strong>（最常见错）</li>
+<li><strong>$P(X<a)$ 错写成 $F(a)$</strong>（应是 $F(a-0)$）</li>
+<li>忘 $F(\infty) = 1$ 的归一化条件</li>
+<li>混合型分布的跳跃点处理</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

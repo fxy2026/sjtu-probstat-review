@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📝 历年真题精选 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="cheatsheet.html">考前救命卡 →</a></div>
+<h1>📝 历年真题精选与解析（从 14 套提炼）</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#c0392b);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+源自 17-18 ~ 23-24 共 14 套 SJTU 概率统计期末真题。按"题型 → 典型题 → 完整解答"组织。所选题目都是真题且重复出现，命中率高。
+</div>
+
+<h2>必做大题 19 道（按题型分类）</h2>
+
+<h3 id="bayes">题型 A：全概率 + Bayes（每年题 13）</h3>
+<div class="card">
+<div class="ex">
+<strong>题 A1（23-24-2 第 13 题 ★★★★★）</strong>：甲乙丙三门炮独立射击，命中率 0.4 / 0.5 / 0.7。若仅一门击中，摧毁概率 0.2；两门击中 0.6；三门全中 1。
+<ol>
+<li>求目标被摧毁的概率。</li>
+<li>已知目标被摧毁，恰两门击中的概率。</li>
+</ol>
+<div class="sol">
+<div class="st">解</div>
+<p>设 $B_k$ = "恰 $k$ 门击中"，$A$ = "目标被摧毁"。</p>
+<p>$P(B_0) = 0.6\cdot 0.5\cdot 0.3 = 0.09$</p>
+<p>$P(B_1) = 0.4\cdot 0.5\cdot 0.3+0.6\cdot 0.5\cdot 0.3+0.6\cdot 0.5\cdot 0.7 = 0.06+0.09+0.21 = 0.36$</p>
+<p>$P(B_2) = 0.4\cdot 0.5\cdot 0.3+0.4\cdot 0.5\cdot 0.7+0.6\cdot 0.5\cdot 0.7 = 0.06+0.14+0.21 = 0.41$</p>
+<p>$P(B_3) = 0.4\cdot 0.5\cdot 0.7 = 0.14$</p>
+<p>(1) 全概率：$P(A) = 0\cdot 0.09 + 0.2\cdot 0.36 + 0.6\cdot 0.41 + 1\cdot 0.14 = 0.072 + 0.246 + 0.14 = 0.458$</p>
+<p>(2) Bayes：$P(B_2\mid A) = \dfrac{P(B_2)P(A\mid B_2)}{P(A)} = \dfrac{0.41\cdot 0.6}{0.458} = \dfrac{0.246}{0.458}\approx 0.537$</p>
+</div>
+</div>
+
+<div class="ex">
+<strong>题 A2（22-23-2 第 13 题）</strong>：某地驾驶员分新手（25%）、熟练（45%）、老司机（30%）三类，年事故概率分别为 0.04 / 0.02 / 0.01。
+<ol>
+<li>任一驾驶员一年内出事故的概率。</li>
+<li>已知出事故，求是新手的概率。</li>
+</ol>
+<div class="sol">
+<div class="st">解</div>
+<p>$P(A) = 0.25\cdot 0.04 + 0.45\cdot 0.02 + 0.3\cdot 0.01 = 0.01 + 0.009 + 0.003 = 0.022$</p>
+<p>$P(\text{新手}\mid A) = \dfrac{0.25\cdot 0.04}{0.022} = \dfrac{0.01}{0.022}\approx 0.455$</p>
+</div>
+</div>
+
+<div class="tip"><strong>模板</strong>：① 划分 $\{B_i\}$（验证两两互斥且并为 $\Omega$）；② 列已知 $P(B_i),\,P(A\mid B_i)$；③ 全概率 $P(A)=\sum P(B_i)P(A\mid B_i)$；④ Bayes 反推。</div>
+</div>
+
+<h3 id="cond">题型 B：二维联合 / 条件密度（每年题 14）</h3>
+<div class="card">
+<div class="ex">
+<strong>题 B1（23-24-1 第 14 题）</strong>：$(X,Y)$ 联合密度 $f(x,y)=cxy$，区域 $D=\{(x,y):0<x<y<1\}$。
+<ol>
+<li>求 $c$。</li>
+<li>求边缘密度 $f_X(x),f_Y(y)$。</li>
+<li>求 $f_{X|Y}(x|y)$。</li>
+<li>判断 $X,Y$ 是否独立。</li>
+</ol>
+<div class="sol">
+<div class="st">解</div>
+<p>(1) $\iint f=c\int_0^1\!\int_0^y xy\,\dd x\,\dd y=c\int_0^1\!\dfrac{y^3}{2}\dd y=\dfrac{c}{8}=1\Rightarrow c=8$。</p>
+<p>(2) $f_X(x)=\int_x^1 8xy\,\dd y=4x(1-x^2)$，$0<x<1$。<br>
+$f_Y(y)=\int_0^y 8xy\,\dd x=4y^3$，$0<y<1$。</p>
+<p>(3) $f_{X|Y}(x|y)=\dfrac{8xy}{4y^3}=\dfrac{2x}{y^2}$，$0<x<y$（注意支撑随 $y$ 变化）。</p>
+<p>(4) $f_X\cdot f_Y=16xy(1-x^2)y^3\neq 8xy=f$，<strong>不独立</strong>。本质：支撑 $\{x<y\}$ 非矩形。</p>
+</div>
+</div>
+
+<div class="ex">
+<strong>题 B2（23-24-2 第 14 题 ★★★★★）</strong>：$(X,Y)$ 联合密度 $f(x,y)=e^{-x}$，区域 $0<y<x$。
+<ol>
+<li>求 $f_{Y|X}(y|x)$ 与 $f_Y(y)$。</li>
+<li>区分 $P(Y\leq 1\mid X\leq 2)$ 与 $\int_0^1 f_{Y|X}(y|2)\dd y$。</li>
+</ol>
+<div class="sol">
+<div class="st">解</div>
+<p>$f_X(x)=\int_0^x e^{-x}\dd y=xe^{-x}$，$x>0$。</p>
+<p>$f_{Y|X}(y|x)=\dfrac{e^{-x}}{xe^{-x}}=\dfrac{1}{x}$，$0<y<x$ —— $Y|X=x\sim U(0,x)$。</p>
+<p>$f_Y(y)=\int_y^\infty e^{-x}\dd x=e^{-y}$，$y>0$，即 $Y\sim E(1)$。</p>
+<p>(2) <strong>两者完全不同！</strong></p>
+<ul>
+<li>$P(Y\leq 1\mid X\leq 2)=\dfrac{P(Y\leq 1,X\leq 2)}{P(X\leq 2)}=\dfrac{\int_0^2\int_0^{\min(1,x)}e^{-x}\dd y\dd x}{\int_0^2 xe^{-x}\dd x}$</li>
+<li>$\int_0^1 f_{Y|X}(y|2)\dd y=\int_0^1\dfrac{1}{2}\dd y=\dfrac{1}{2}$（这是 $P(Y\leq 1|X=2)$ 即 $X=2$ 给定时的）</li>
+</ul>
+<p>用普通条件概率定义算第一个：区域 $\{0<y\leq 1, y<x\leq 2\}$，分子 = $\int_0^1\int_y^2 e^{-x}\dd x\,\dd y = \int_0^1(e^{-y}-e^{-2})\dd y = 1-e^{-1}-e^{-2}$；分母 = $\int_0^2 xe^{-x}\dd x = 1-3e^{-2}$。比值 $\approx 0.836$，<strong>≠ 0.5</strong>。</p>
+</div>
+</div>
+
+<div class="warn"><strong>易错</strong>：$P(Y\leq a\mid X\leq b)\neq\int_{-\infty}^a f_{Y|X}(y\mid b)\dd y$。前者是事件条件概率（用二重积分），后者是 $X=b$ 上的条件密度积分。</div>
+</div>
+
+<h3 id="conv">题型 C：函数分布 / 卷积（每年题 15）</h3>
+<div class="card">
+<div class="ex">
+<strong>题 C1（22-23-2 第 4 题，$Y=X^2$ 双侧指数）</strong>：$X$ 密度 $f(x)=\dfrac{1}{2}e^{-|x|}$（双侧指数），求 $Y=X^2$ 的密度。
+<div class="sol">
+<div class="st">解</div>
+<p>分布函数法。$y\leq 0$：$F_Y=0$。$y>0$：</p>
+$$F_Y(y)=P(X^2\leq y)=P(-\sqrt y\leq X\leq\sqrt y)=\int_{-\sqrt y}^{\sqrt y}\frac{1}{2}e^{-|x|}\dd x=1-e^{-\sqrt y}$$
+$$f_Y(y)=F_Y'(y)=\frac{e^{-\sqrt y}}{2\sqrt y},\;y>0$$
+</div>
+</div>
+
+<div class="ex">
+<strong>题 C2（卷积经典）</strong>：$X,Y$ 独立 $\sim U(0,1)$，求 $Z=X+Y$ 密度。
+<div class="sol"><div class="st">解</div>
+<p>$f_Z(z)=\int_{-\infty}^{\infty}f_X(x)f_Y(z-x)\dd x$。需 $0<x<1$ 且 $0<z-x<1$。</p>
+<ul>
+<li>$0\leq z\leq 1$：$x\in(0,z)$，$f_Z=z$</li>
+<li>$1<z\leq 2$：$x\in(z-1,1)$，$f_Z=2-z$</li>
+<li>否则 $f_Z=0$</li>
+</ul>
+<p>三角分布。</p>
+</div>
+</div>
+
+<div class="ex">
+<strong>题 C3（极值经典，指数串并联）</strong>：$n$ 个独立元件寿命 $\sim E(\lambda)$，求串联和并联的寿命分布。
+<div class="sol"><div class="st">解</div>
+<p><strong>串联（min）</strong>：$F_N(z)=1-(1-F(z))^n=1-e^{-n\lambda z}$，即 $N\sim E(n\lambda)$。</p>
+<p><strong>并联（max）</strong>：$F_M(z)=F(z)^n=(1-e^{-\lambda z})^n$，无简单形式。</p>
+<p><strong>结论</strong>：$n$ 个 i.i.d. $E(\lambda)$ 取 min 仍是指数分布，参数变为 $n\lambda$。</p>
+</div>
+</div>
+</div>
+
+<h3 id="clt">题型 D：Chebyshev + CLT 双胞胎（每年题 16）</h3>
+<div class="card">
+<div class="ex">
+<strong>题 D1（23-24-2 第 16 题）</strong>：某品牌家用电脑年故障率 0.1，独立。某地区 400 户使用。
+<ol>
+<li>用 Chebyshev 估计"故障数在 30~50 之间"的概率下界。</li>
+<li>用 CLT 估计同一概率。</li>
+</ol>
+<div class="sol">
+<div class="st">解</div>
+<p>$S\sim B(400,0.1)$，$E(S)=40,\,D(S)=36$，$\sigma=6$。事件 $30\leq S\leq 50$ 即 $|S-40|\leq 10$。</p>
+<p>(1) Chebyshev：$P(|S-40|<10)\geq 1-\dfrac{36}{100}=0.64$，<strong>下界 0.64</strong>。</p>
+<p>(2) CLT：$Z=\dfrac{S-40}{6}\approx N(0,1)$。</p>
+$$P(|S-40|<10)\approx P(|Z|<10/6)=2\Phi(1.667)-1\approx 2\cdot 0.952-1=0.904$$
+<p><strong>对比</strong>：Chebyshev 给出粗下界 0.64，CLT 给出精确值约 0.90。CLT 更准。</p>
+</div>
+</div>
+
+<div class="ex">
+<strong>题 D2（CLT 反查 n）</strong>：每次测量误差 $\sim U(-1,1)$ 独立。希望 $n$ 次平均误差落入 $[-0.1,0.1]$ 的概率不低于 0.95，求最少 $n$。
+<div class="sol"><div class="st">解</div>
+<p>$E=0,\,D=1/3,\,\sigma=1/\sqrt 3$。$\bar X\approx N(0,1/(3n))$。</p>
+$$P(|\bar X|<0.1)\approx 2\Phi(0.1\sqrt{3n})-1\geq 0.95\Rightarrow\Phi(0.1\sqrt{3n})\geq 0.975$$
+<p>查表 $\Phi^{-1}(0.975)=1.96$。$0.1\sqrt{3n}\geq 1.96\Rightarrow n\geq 1.96^2/(0.01\cdot 3)\approx 128.05$，取 $n=129$。</p>
+</div>
+</div>
+</div>
+
+<h3 id="estim">题型 E：估计量评价（题 17）</h3>
+<div class="card">
+<div class="ex">
+<strong>题 E1（23-24-2 第 17 题 ★★★★★，连续 3 套都考）</strong>：$X\sim N(0,\sigma^2)$ 简单样本 $X_1,\ldots,X_n$。对以下三个统计量进行 (a) 无偏性判断 (b) 矫正成无偏估计 (c) 比较矫正后的方差。
+$$S_1^2=\frac{1}{n}\sum X_i^2,\quad S_2^2=\frac{1}{n}\sum(X_i-\bar X)^2,\quad S_3^2=\bar X^2$$
+<div class="sol">
+<div class="st">解</div>
+<p><strong>(a)+(b) 无偏性</strong>：</p>
+<ul>
+<li>$E(S_1^2)=\dfrac{1}{n}\sum E(X_i^2)=\dfrac{1}{n}\cdot n\sigma^2=\sigma^2$ → <strong>无偏</strong>（$\mu=0$）</li>
+<li>$E(S_2^2)=\dfrac{n-1}{n}\sigma^2$ → 有偏，矫正 $\hat S_2^2=\dfrac{n}{n-1}S_2^2$</li>
+<li>$E(S_3^2)=E(\bar X^2)=D(\bar X)+(E\bar X)^2=\sigma^2/n$ → 有偏，矫正 $\hat S_3^2=n\bar X^2$</li>
+</ul>
+<p><strong>(c) 方差比较</strong>（用 $X_i^2/\sigma^2\sim\chi^2(1)$，$E(X_i^2)=\sigma^2,\,D(X_i^2)=2\sigma^4$）：</p>
+<ul>
+<li>$D(S_1^2)=\dfrac{1}{n^2}\cdot n\cdot 2\sigma^4=\dfrac{2\sigma^4}{n}$</li>
+<li>$\hat S_2^2 = \dfrac{n}{n-1}S_2^2 = S^2$（标准样本方差），由 $\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$ 得 $D(\hat S_2^2)=D(S^2)=\dfrac{2\sigma^4}{n-1}$</li>
+<li>$\bar X\sim N(0,\sigma^2/n)\Rightarrow n\bar X^2/\sigma^2\sim\chi^2(1)$，$D(n\bar X^2)=\sigma^4\cdot 2=2\sigma^4$</li>
+</ul>
+<p>排序（小→大 即 好→差）：$D(S_1^2)<D(\hat S_2^2)<D(n\bar X^2)$，即 $S_1^2$ 最有效。</p>
+</div>
+</div>
+
+<div class="tip"><strong>关键结论</strong>：$E(\bar X^2)=\sigma^2/n+\mu^2$。这是近 3 套都在反复考的核心公式！</div>
+</div>
+
+<h3 id="mle">题型 F：矩估计 + MLE（题 18）</h3>
+<div class="card">
+<div class="ex">
+<strong>题 F1（20-21-2 第 18 题，带平移指数）</strong>：$X$ 密度 $f(x;\alpha,\beta)=\beta e^{-\beta(x-\alpha)}$，$x\geq\alpha$。求 $\alpha,\beta$ 的矩估计和 MLE。
+<div class="sol">
+<div class="st">解</div>
+<p><strong>矩估计</strong>：$X-\alpha\sim E(\beta)$，$E(X)=\alpha+1/\beta,\,D(X)=1/\beta^2$。</p>
+<p>令 $\mu_1=\bar X, \mu_2-\mu_1^2=S_n^2$：</p>
+<ul>
+<li>$\hat\beta=1/S_n$（$S_n^2=\dfrac{1}{n}\sum(X_i-\bar X)^2$）</li>
+<li>$\hat\alpha=\bar X-S_n=\bar X-1/\hat\beta$</li>
+</ul>
+<p><strong>MLE</strong>：似然</p>
+$$L(\alpha,\beta)=\beta^n e^{-\beta\sum(X_i-\alpha)}\mathbf 1_{\alpha\leq\min X_i}$$
+<p>对 $\alpha$：$L$ 关于 $\alpha$ 单调递增（指数项 $\beta n\alpha$ 是增），但受约束 $\alpha\leq\min X_i$，故 $\hat\alpha_{\text{MLE}}=\min X_i$（边界 MLE！）。</p>
+<p>对 $\beta$：固定 $\alpha=\hat\alpha$，$\ln L=n\ln\beta-\beta\sum(X_i-\hat\alpha)$，$\partial_\beta=0$ 得 $\hat\beta_{\text{MLE}}=\dfrac{1}{\bar X-\min X_i}$。</p>
+<p><strong>易错</strong>：定义域含 $\alpha$ 时 MLE 必须看单调性而不是求导！</p>
+</div>
+</div>
+
+<div class="ex">
+<strong>题 F2（指数分布矩 + MLE）</strong>：$X\sim E(\lambda)$ 样本，求 $\lambda$ 估计。
+<div class="sol"><div class="st">解</div>
+<p>矩：$E(X)=1/\lambda=\bar X\Rightarrow\hat\lambda=1/\bar X$。</p>
+<p>MLE：$L=\lambda^n e^{-\lambda\sum X_i}$，$\ln L=n\ln\lambda-\lambda n\bar X$，$\hat\lambda=1/\bar X$。</p>
+<p>结论：两种方法<strong>给出相同结果</strong>。</p>
+</div>
+</div>
+</div>
+
+<h3 id="test">题型 G：假设检验（题 19 压轴）</h3>
+<div class="card">
+<div class="ex">
+<strong>题 G1（23-24-2 第 19 题 ★★★★★，P 值 + 经典法 + 频数表）</strong>：车轴直径 $X\sim N(\mu,\sigma^2)$。要求均值 $\mu=4.0$、方差 $\sigma^2\leq 0.1$。25 件样本频数表给出。
+<ol>
+<li>用 P 值法检验 $H_0:\mu=4.0$ vs $H_1:\mu\neq 4.0$，$\alpha=0.05$。</li>
+<li>用经典拒绝域法检验 $H_0:\sigma^2\leq 0.1$ vs $H_1:\sigma^2>0.1$，$\alpha=0.05$。</li>
+</ol>
+<div class="sol">
+<div class="st">解</div>
+<p>设 $\bar x,\,s^2$ 已算出（题目给频数表用 $\bar x=\sum n_ix_i/25,\,s^2=\dfrac{1}{24}\sum n_i(x_i-\bar x)^2$）。</p>
+<p>(1) $\sigma^2$ 未知用 $t$ 检验：$T=\dfrac{\bar x-4}{s/\sqrt{25}}\sim t(24)$。</p>
+<ul>
+<li>设 $T_{\text{obs}}=1.5$（举例）。双侧 P 值 $=2P(|T|>1.5)$，查表 $t_{0.05}(24)=1.711, t_{0.025}(24)=2.064$。因 $1.5<1.711$，P 值 $>0.1>0.05$ → <strong>不拒绝 $H_0$</strong></li>
+</ul>
+<p>(2) 单侧 $\chi^2$ 检验：$\chi^2=\dfrac{24s^2}{0.1}\sim\chi^2(24)$。</p>
+<ul>
+<li>拒绝域 $\chi^2>\chi^2_{0.05}(24)=36.415$</li>
+<li>若 $24s^2/0.1=$ 某值 $>36.415$ → 拒绝 $H_0$，方差超标</li>
+</ul>
+</div>
+</div>
+
+<div class="ex">
+<strong>题 G2（标准 t 检验）</strong>：电池寿命 $\sim N(\mu,\sigma^2)$。$n=16, \bar x=6.2, s=0.5$，检验 $H_0:\mu=6.5$ 双侧，$\alpha=0.05$。
+<div class="sol"><div class="st">解</div>
+<p>$T=\dfrac{6.2-6.5}{0.5/\sqrt{16}}=\dfrac{-0.3}{0.125}=-2.4$</p>
+<p>$|T|=2.4>t_{0.025}(15)=2.131$ → <strong>拒绝 $H_0$</strong>。</p>
+</div>
+</div>
+</div>
+
+<h2>选择题高频考点</h2>
+<div class="card">
+
+<div class="ex">
+<strong>选 1（不相关 vs 独立反例，14-15-2 第 1 题）</strong>：$(X,Y)$ 在单位圆内均匀分布。判断：
+<ul>
+<li>① $X,Y$ 不相关</li>
+<li>② $X,Y$ 相互独立</li>
+<li>③ $D(X-Y)=D(X)-D(Y)$</li>
+<li>④ $E(XY)=E(X)E(Y)$</li>
+</ul>
+正确的是 ___。
+<div class="sol"><div class="st">分析</div>
+<p>① $E(X)=E(Y)=0$（对称），$E(XY)=\iint_{x^2+y^2\leq 1}xy\dfrac{1}{\pi}\dd x\dd y$，被积奇函数 → 0。所以 $\Cov=0$，<strong>不相关</strong>。</p>
+<p>② $f(x,y)=1/\pi$，$f_X(x)=\dfrac{2\sqrt{1-x^2}}{\pi}$，$f_X\cdot f_Y\neq 1/\pi$，<strong>不独立</strong>。</p>
+<p>③ 独立时才有 $D(X-Y)=D(X)+D(Y)$（同号！）；不独立时 $D(X-Y)=D(X)+D(Y)-2\Cov(X,Y)$。但即便 $\Cov=0$，仍是 $D(X)+D(Y)$，<strong>不是 $D(X)-D(Y)$</strong>。错。</p>
+<p>④ $E(XY)=0=E(X)E(Y)$，对。</p>
+<p>正确：①④</p>
+</div>
+</div>
+
+<div class="ex">
+<strong>选 2（密度偶函数性质）</strong>：$X$ 密度是偶函数，分布函数 $F(x)$。下列哪些正确？
+<ul>
+<li>① $F(x)=F(-x)$</li>
+<li>② $F(-x)=1-F(x)$</li>
+<li>③ $P(|X|\leq x)=2F(x)-1$（$x\geq 0$）</li>
+<li>④ $F(0)=1/2$</li>
+</ul>
+<div class="sol"><div class="st">分析</div>
+<p>① 错。$F$ 单调增不可能是偶函数。</p>
+<p>② 对。由密度偶函数，$P(X<-x)=P(X>x)=1-F(x)$，又 $P(X<-x)=F(-x-0)=F(-x)$（连续型）。</p>
+<p>③ 对。$P(|X|\leq x)=F(x)-F(-x)=F(x)-(1-F(x))=2F(x)-1$。</p>
+<p>④ 对。由②取 $x=0$：$F(0)=1-F(0)\Rightarrow F(0)=1/2$。</p>
+<p>正确：②③④</p>
+</div>
+</div>
+
+<div class="ex">
+<strong>选 3（抽样分布凑构造）</strong>：$X_1,\ldots,X_{30}\sim N(\mu,1)$。哪个统计量服从 $\chi^2(29)$？
+<ul>
+<li>(A) $\sum(X_i-\bar X)^2$ → $\chi^2(29)$ ✓</li>
+<li>(B) $\sum(X_i-\mu)^2$ → $\chi^2(30)$ ✗（自由度多 1）</li>
+<li>(C) $\bar X\sim N(\mu,1/30)$ ✗</li>
+<li>(D) $\dfrac{\bar X-\mu}{S/\sqrt{29}}\sim t(?)$，$S$ 用 $n-1$，应是 $t(29)$ ✗</li>
+</ul>
+答案 (A)。
+</div>
+
+<div class="ex">
+<strong>选 4（最有效估计）</strong>：$X_1,\ldots,X_n\sim N(\mu,\sigma^2)$ 简单样本，$n>3$。下列 $\mu$ 的无偏估计中最有效的：
+<ul>
+<li>(A) $\dfrac{1}{2}X_1+\dfrac{1}{2}X_2$，$D=\sigma^2/2$</li>
+<li>(B) $\dfrac{1}{3}X_1+\dfrac{1}{3}X_2+\dfrac{1}{3}X_3$，$D=\sigma^2/3$</li>
+<li>(C) $\dfrac{1}{4}X_1+\dfrac{1}{4}X_2+\dfrac{1}{2}X_3$，$D=\dfrac{1}{16}+\dfrac{1}{16}+\dfrac{1}{4}=3\sigma^2/8$</li>
+<li>(D) $\dfrac{1}{n}\sum X_i=\bar X$，$D=\sigma^2/n$</li>
+</ul>
+<div class="sol"><div class="st">解</div>
+<p>$n>3$ 时 $\sigma^2/n<\sigma^2/3$，所以 (D) 最有效（方差最小）。</p>
+<p><strong>结论</strong>：样本均值 $\bar X$ 是 $\mu$ 的最有效无偏估计（在 N 分布族下达到 Rao-Cramer 下界）。</p>
+</div>
+</div>
+
+<div class="ex">
+<strong>选 5（两两独立 ≠ 相互独立）</strong>：以下哪些命题正确？
+<ul>
+<li>① A,B,C 相互独立 ⇒ A,B,C 两两独立</li>
+<li>② A,B,C 两两独立 ⇒ A,B,C 相互独立</li>
+<li>③ A,B 独立 ⇒ $\bar A,\bar B$ 独立</li>
+<li>④ A,B 互斥 ⇒ A,B 独立</li>
+</ul>
+<div class="sol"><div class="st">分析</div>
+<p>① 对（定义包含）；② 错（缺 $P(ABC)=P(A)P(B)P(C)$）；③ 对（独立可传递到补）；④ 错（若 $0<P<1$ 互斥与独立不能并存）。</p>
+<p>正确：①③</p>
+</div>
+</div>
+
+<div class="ex">
+<strong>选 6（无记忆性识别）</strong>：哪个分布具有无记忆性？
+<ul>
+<li>(A) 二项 (B) Poisson (C) 几何 (D) 指数</li>
+</ul>
+<div class="sol"><div class="st">解</div>
+<p>离散：<strong>几何</strong>；连续：<strong>指数</strong>。选 (C) 和 (D)。</p>
+</div>
+</div>
+</div>
+
+<h2>七年大题主题分布（一览）</h2>
+<div class="card">
+<table>
+<thead><tr><th>年份</th><th>题 13</th><th>题 14</th><th>题 15</th><th>题 16</th><th>题 17</th><th>题 18</th><th>题 19</th></tr></thead>
+<tbody>
+<tr><td>20-21-2</td><td>三类保险</td><td>$6e^{-2x-3y}$</td><td>函数分布</td><td>200 顾客 CLT</td><td>$\bar X_{\text{前}}\bar X_{\text{后}}$</td><td>带平移指数 MLE</td><td>球投匣依概率收敛</td></tr>
+<tr><td>22-23-2</td><td>驾驶员三类</td><td>$27x^2y^2/4$</td><td>双侧指数 $Y=X^2$</td><td>血型 1000 人</td><td>$Q_n,S_n$ 协方差</td><td>正态 MLE</td><td>笔记本续航 t 检验</td></tr>
+<tr><td>23-24-1</td><td>次品 Bayes</td><td>$cxy$ 三角域</td><td>$Y=\min(X,2)$</td><td>维修 40 台 CLT</td><td>有效性比较</td><td>$F=1-1/x^\theta$ MLE</td><td>炼钢得率检验</td></tr>
+<tr><td>23-24-2</td><td>三门高射炮</td><td>$e^{-x}$ 域 $y<x$</td><td>函数分布</td><td>电脑 400 户</td><td>$S_1^2,S_2^2,S_3^2$ 排序</td><td>边界 MLE</td><td>车轴直径 P 值法</td></tr>
+</tbody>
+</table>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

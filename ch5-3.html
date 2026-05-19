@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.3 中心极限定理 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch5-2.html">← 5.2</a><a href="ch6-1.html">6.1 统计基础 →</a></div>
+<h1>5.3 中心极限定理（CLT）⭐⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：<strong>14/14 套真题命中（100%！）</strong>。每年大题第 14 或 16 题（9 分），与 Chebyshev 联考。<br>
+<b>典型出题</b>：23-24-2 家庭电脑 400 户 · 23-24-1 维修 40 台 · 22-23-2 血型 1000 人 · 20-21-2 便利店 200 顾客 · 19-20-1 汽车通过 1000 辆。
+</div>
+
+<h2 id="s1">一、Lindeberg-Lévy 中心极限定理（i.i.d.）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">⭐ 经典 CLT（独立同分布）</div>
+<p>设 $X_1, X_2, \ldots$ 是 i.i.d. 随机变量序列，$E(X_i) = \mu, D(X_i) = \sigma^2$ 存在（$0 < \sigma^2 < \infty$）。则当 $n$ 大时：</p>
+$$\dfrac{\sum_{i=1}^n X_i - n\mu}{\sqrt n\sigma}\xrightarrow{d}N(0, 1)$$
+<p>等价说法（实际应用中最常用！）：</p>
+$$\sum_{i=1}^n X_i\;\overset{\text{近似}}{\sim}\;N(n\mu, n\sigma^2),\quad\bar X_n\;\overset{\text{近似}}{\sim}\;N\!\left(\mu,\dfrac{\sigma^2}{n}\right)$$
+</div>
+</div>
+
+<h2 id="s2">二、De Moivre-Laplace CLT（二项 → 正态）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>$Y_n\sim B(n, p)$，则</p>
+$$\dfrac{Y_n - np}{\sqrt{np(1-p)}}\xrightarrow{d}N(0, 1)$$
+<p>即 $Y_n\overset{\text{近似}}{\sim}N(np, np(1-p))$。</p>
+</div>
+
+<div class="tip"><strong>三选一判别表</strong>（不同近似的适用条件）：
+<ul>
+<li>$n$ 小（$n\leq 20$）：直接用二项分布</li>
+<li>$n$ 大、$p$ 小、$np\leq 10$：用 <strong>Poisson 近似</strong> $P(np)$</li>
+<li>$n$ 大、$0.1 < p < 0.9$：用 <strong>正态近似</strong> $N(np, np(1-p))$</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s3">三、CLT 标准解题流程（满分答题模板）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 五步法</div>
+<ol>
+<li><strong>识别 $\sum X_i$ 或 $\bar X_n$</strong>：$X_i$ 必须 i.i.d.</li>
+<li><strong>算 $\mu = E(X_i)$, $\sigma^2 = D(X_i)$</strong>（一定要写出来！）</li>
+<li><strong>标准化</strong>：$Z = \dfrac{\sum X_i - n\mu}{\sqrt n\sigma}$ 或 $Z = \dfrac{\bar X-\mu}{\sigma/\sqrt n}$</li>
+<li><strong>$Z\approx N(0, 1)$</strong>，要求的概率转化为 $\Phi$ 的值</li>
+<li><strong>查标准正态表</strong>得最终值</li>
+</ol>
+</div>
+</div>
+
+<h2 id="s4">四、典型真题完整解答</h2>
+<div class="card">
+<div class="ex"><strong>题 ★★★★★ 23-24-2 第 16 题（家庭电脑 400 户）</strong>：某品牌家用电脑年故障率 0.1，400 户独立使用。
+<ol>
+<li>用 Chebyshev 估计"故障数在 30-50 之间"的概率下界。</li>
+<li>用 CLT 估计同一概率。</li>
+</ol>
+<div class="sol"><div class="st">解</div>
+<p>$S\sim B(400, 0.1)$。$E(S) = np = 40$，$D(S) = np(1-p) = 36$，$\sigma_S = 6$。事件 $\{30\leq S\leq 50\}$ 即 $\{|S-40|\leq 10\}$。</p>
+<p><strong>(1) Chebyshev</strong>：$P(|S-40|\leq 10) = P(|S-40|<10.001)\geq 1-\dfrac{36}{100} = 0.64$。</p>
+<p>下界 0.64（粗糙）。</p>
+<p><strong>(2) CLT</strong>：$Z = \dfrac{S-40}{6}\approx N(0, 1)$。</p>
+$$P(|S-40|\leq 10) = P(|Z|\leq 10/6) = 2\Phi(1.667)-1\approx 2\cdot 0.952-1 = 0.904$$
+<p><strong>对比</strong>：Chebyshev 给 0.64 下界，CLT 给约 0.90。CLT 更准确。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★ 22-23-2 第 16 题（血型 1000 人）</strong>：某地 A 血型概率 0.2。1000 人调查，求 A 血型人数在 180-220 之间的概率。
+<div class="sol"><div class="st">解</div>
+<p>$S\sim B(1000, 0.2)$。$E(S) = 200$，$D(S) = 160$，$\sigma_S = 12.65$。</p>
+$$P(180\leq S\leq 220)\approx P\!\left(\dfrac{180-200}{12.65}\leq Z\leq\dfrac{220-200}{12.65}\right) = \Phi(1.58)-\Phi(-1.58) = 2\Phi(1.58)-1\approx 0.886$$
+</div></div>
+
+<div class="ex"><strong>题 ★★★（保险公司盈利）</strong>：保险公司接受 10000 单，每单年保费 12 元，赔付概率 0.006，赔付额 1000 元。求公司盈利不少于 60000 元的概率。
+<div class="sol"><div class="st">解</div>
+<p>设 $X_i$ 为单 $i$ 赔付额（0 或 1000）。$E(X_i) = 6$，$D(X_i) = 1000^2\cdot 0.006-36 = 5964$。</p>
+<p>总收入 $= 120000$。盈利 $\geq 60000$ ⇔ $\sum X_i\leq 60000$。</p>
+<p>$\sum X_i\overset{近似}{\sim}N(60000, 10000\cdot 5964)$，$\sigma = \sqrt{5.964\times 10^7}\approx 7723$。</p>
+$$P(\sum X_i\leq 60000) = P(Z\leq 0) = 0.5$$
+<p>恰好 50%（因为均值线就是 60000）。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★（反查 $n$）</strong>：每次测量误差 $\sim U(-1, 1)$ 独立。希望 $n$ 次平均误差落入 $[-0.1, 0.1]$ 的概率 $\geq 0.95$，求最少 $n$。
+<div class="sol"><div class="st">解</div>
+<p>$E = 0$，$D = 1/3$，$\sigma = 1/\sqrt 3$。$\bar X\approx N(0, 1/(3n))$。</p>
+$$P(|\bar X|<0.1)\approx 2\Phi(0.1\sqrt{3n})-1\geq 0.95\Rightarrow\Phi(0.1\sqrt{3n})\geq 0.975$$
+<p>$0.1\sqrt{3n}\geq 1.96\Rightarrow n\geq\dfrac{1.96^2}{0.01\cdot 3}\approx 128.05$，取 $n = 129$。</p>
+</div></div>
+</div>
+
+<h2 id="s5">五、Chebyshev vs CLT 对比表（同题常考！）</h2>
+<div class="card">
+<table>
+<thead><tr><th>项目</th><th>Chebyshev 不等式</th><th>中心极限定理</th></tr></thead>
+<tbody>
+<tr><td>用途</td><td>估计概率下界</td><td>给出近似精确概率</td></tr>
+<tr><td>条件</td><td>只需期望/方差存在</td><td>$X_i$ i.i.d. + 方差有限</td></tr>
+<tr><td>精度</td><td>粗糙</td><td>$n$ 大时精确</td></tr>
+<tr><td>结论</td><td>$P(|S-\mu|<\epsilon)\geq 1-\sigma^2/\epsilon^2$</td><td>$Z = (S-n\mu)/(\sqrt n\sigma)\approx N(0, 1)$</td></tr>
+<tr><td>使用场景</td><td>题目要"至少 / 下界"</td><td>题目要具体数值</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="s6">六、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>标准化分母用 $\sqrt n\sigma$</strong>（不是 $n\sigma$，也不是 $\sqrt n\sigma^2$）</li>
+<li><strong>$\bar X$ 的方差是 $\sigma^2/n$</strong>（除以 $n$ 不是 $\sqrt n$）</li>
+<li><strong>$\Phi(-x) = 1-\Phi(x)$</strong>：负参数查表时忘减号</li>
+<li><strong>单位换算</strong>：例如"8 小时 = 480 分钟"</li>
+<li><strong>CLT 用于"和"或"均值"</strong>，单个变量不能用</li>
+<li><strong>$n$ 不够大时近似误差大</strong></li>
+<li><strong>注意区分 $\sum X_i$ 与 $\bar X$</strong>：两者均值方差不同</li>
+<li><strong>二项分布近似正态时</strong>有连续性校正 $\pm 0.5$（教材未强调，但部分题目会用）</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li><strong>"i.i.d. 之和 ≈ $N(n\mu, n\sigma^2)$"</strong>（不要忘 $n$）</li>
+<li><strong>"$\bar X$ ≈ $N(\mu, \sigma^2/n)$"</strong>（方差除 $n$）</li>
+<li><strong>"标准化分母 $\sqrt n\sigma$"</strong></li>
+<li><strong>"二项 $n$ 大 $p$ 适中 → 正态；$p$ 小 → Poisson"</strong></li>
+</ul>
+</div>
+</div>
+
+<h2 id="s7">七、扩展：CLT 的几种推广</h2>
+<div class="card">
+<div class="fb">
+<p>满分笔记中提到的扩展定理（证明题潜在考点）：</p>
+<ul>
+<li><strong>Lindeberg-Feller</strong>：处理独立<strong>不同分布</strong>的情形，要求 Lindeberg 条件成立</li>
+<li><strong>Lyapunov</strong>：用 $E|X_i-\mu_i|^{2+\delta}$ 控制，证明 CLT</li>
+<li>三大 CLT 之间：Lindeberg-Lévy 是 i.i.d. 特例；Lindeberg-Feller 处理一般独立情形（最普适）；Lyapunov 条件是 Lindeberg 条件的<strong>充分条件</strong>（更易验证）</li>
+</ul>
+<p>本课重点是 Lindeberg-Lévy（i.i.d.）和 De Moivre-Laplace（二项）。</p>
+</div>
+</div>
+
+<h2 id="patterns">八、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>CLT 题型决策树</h3>
+<div class="fb" style="border-color:#27ae60">
+<table>
+<thead><tr><th>题型</th><th>套路</th></tr></thead>
+<tbody>
+<tr><td>i.i.d. 求 $P(\sum X_i\in[a,b])$</td><td>$Z = (\sum X_i-n\mu)/(\sqrt n\sigma)\approx N(0,1)$ → 查表</td></tr>
+<tr><td>$B(n,p)$ 大 $n$</td><td>$N(np, np(1-p))$ 近似</td></tr>
+<tr><td>反查 $n$（"至少多少次保证 P > c"）</td><td>$\Phi^{-1}(c)$ 反解 $n$</td></tr>
+<tr><td>Chebyshev + CLT 同题</td><td>(1) Chebyshev 下界 (2) CLT 精确值，对比</td></tr>
+<tr><td>$\bar X$ 落入区间</td><td>$\bar X\approx N(\mu, \sigma^2/n)$，标准化 $(\bar X-\mu)/(\sigma/\sqrt n)$</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>i.i.d. 之和近似正态</strong>：$\sum X_i\overset{近似}{\sim}N(n\mu, n\sigma^2)$</li>
+<li><strong>样本均值近似正态</strong>：$\bar X\overset{近似}{\sim}N(\mu, \sigma^2/n)$</li>
+<li><strong>De Moivre-Laplace</strong>：$B(n,p)\Rightarrow$ 标准化后 $\to N(0,1)$</li>
+<li><strong>$n$ 充分大 $\chi^2$ 渐近正态</strong>：$\chi^2(n)\approx N(n, 2n)$</li>
+<li><strong>$n$ 大 $p$ 适中</strong>（$0.1<p<0.9$）→ 二项近似正态</li>
+<li><strong>$n$ 大 $p$ 小</strong>（$np\leq 10$）→ 二项近似 Poisson $P(np)$</li>
+<li><strong>误差累积公式</strong>：$n$ 个独立测量误差 $X_i\sim N(0, \sigma^2)$，$\bar X\sim N(0, \sigma^2/n)$</li>
+<li><strong>常用 $\Phi$ 值</strong>：$\Phi(1)=0.8413, \Phi(1.645)=0.95, \Phi(1.96)=0.975, \Phi(2.33)=0.99$</li>
+<li><strong>3$\sigma$ 原则</strong>：$P(|X-\mu|<3\sigma) = 0.9974$</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>识别"独立同分布求和/均值"立刻想 CLT</strong></li>
+<li><strong>标准化公式必背</strong>：$Z = \dfrac{S-n\mu}{\sqrt n\sigma}$（分母 $\sqrt n\sigma$！）</li>
+<li><strong>反查 $n$ 技巧</strong>：若要 $P\geq c$，解 $\Phi^{-1}(c) = z^*$，再代回方程</li>
+<li><strong>对称性</strong>：$P(|Z|\leq z) = 2\Phi(z)-1$</li>
+<li><strong>分位数倒查</strong>：$P(Z>1.96) = 0.025$；$P(|Z|>1.96) = 0.05$</li>
+<li><strong>Chebyshev 给下界，CLT 给精确值</strong>，对比时先 Chebyshev 后 CLT</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>标准化分母 $\sqrt n\sigma$</strong>（不是 $n\sigma$、$\sqrt n\sigma^2$、$n\sigma^2$）</li>
+<li><strong>$\bar X$ 的方差是 $\sigma^2/n$</strong>（除以 $n$，不是 $\sqrt n$）</li>
+<li><strong>$\Phi(-x) = 1-\Phi(x)$</strong>：负参数易忘</li>
+<li><strong>单位换算</strong>：例如"8 小时 = 480 分钟"</li>
+<li><strong>CLT 用于"和"或"均值"</strong>，单个变量不能用</li>
+<li><strong>$n$ 不够大时近似误差</strong>：$n<30$ 时要谨慎</li>
+<li><strong>$\sum X_i$ 与 $\bar X$ 区分</strong>：均值方差不同</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

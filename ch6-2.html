@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6.2 抽样分布 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch6-1.html">← 6.1</a><a href="ch7-1.html">7.1 点估计 →</a></div>
+<h1>6.2 抽样分布（三大分布 + 正态总体）⭐⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：<strong>14/14 套真题命中（100%）</strong>。每年选择题至少 1-2 道考"统计量服从什么分布"或"凑构造 $\chi^2/t/F$"。<br>
+<b>典型出题</b>：14-15-1 第 6 题 · 17-18-2 第 12 题 · 20-21-2 第 1 题 · 22-23-2 第 11 题 · 23-24-1 第 9 题 · 23-24-2 第 10 题（$F(m,m)$ 对称性）。
+</div>
+
+<h2 id="s1">一、$\chi^2$ 分布</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">定义</div>
+<p>$X_1, \ldots, X_n$ i.i.d. $\sim N(0, 1)$，则</p>
+$$\sum_{i=1}^n X_i^2\sim\chi^2(n)$$
+<p>自由度 $n$ 的卡方分布。</p>
+<p>密度（不要求记）：$f(x) = \dfrac{1}{2^{n/2}\Gamma(n/2)}x^{n/2-1}e^{-x/2},\ x > 0$</p>
+</div>
+
+<div class="fb"><div class="t">$\chi^2$ 的性质</div>
+<ul>
+<li>$E(\chi^2) = n$，$D(\chi^2) = 2n$</li>
+<li><strong>可加性</strong>：$\chi^2(n_1) + \chi^2(n_2) = \chi^2(n_1+n_2)$（独立时）</li>
+<li>$n$ 很大时 $\chi^2\approx N(n, 2n)$（近似正态）</li>
+<li>右偏分布，$n$ 越大越接近对称</li>
+</ul>
+</div>
+
+<div class="tip"><strong>核心关联</strong>：$N(0, 1)^2 = \chi^2(1)$（即 $X\sim N(0,1)\Rightarrow X^2\sim\chi^2(1)$）。这是凑构造卡方的基本砖。</div>
+</div>
+
+<h2 id="s2">二、$t$ 分布（Student）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">定义</div>
+<p>$X\sim N(0, 1),\,Y\sim\chi^2(n)$ <strong>独立</strong>，则</p>
+$$T = \dfrac{X}{\sqrt{Y/n}}\sim t(n)$$
+</div>
+
+<div class="fb"><div class="t">$t$ 分布的性质</div>
+<ul>
+<li><strong>对称</strong>（偶函数），峰值在 0</li>
+<li>比 $N(0, 1)$ <strong>厚尾</strong>（peak 略低、尾部略肥）</li>
+<li>$n > 1$ 时 $E(T) = 0$；$n > 2$ 时 $D(T) = n/(n-2)$</li>
+<li>$n\to\infty$ 时 $t(n)\to N(0, 1)$</li>
+<li>对称分位数：$t_{1-\alpha}(n) = -t_\alpha(n)$</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s3">三、$F$ 分布</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">定义</div>
+<p>$U\sim\chi^2(m),\ V\sim\chi^2(n)$ <strong>独立</strong>，则</p>
+$$F = \dfrac{U/m}{V/n}\sim F(m, n)$$
+<p>$m$ 是分子自由度，$n$ 是分母自由度。</p>
+</div>
+
+<div class="fb"><div class="t">⭐ $F$ 的关键性质</div>
+<ul>
+<li><strong>倒数关系</strong>：$F\sim F(m, n)\Rightarrow 1/F\sim F(n, m)$（注意自由度交换！）</li>
+<li><strong>分位数对偶</strong>：$F_{1-\alpha}(m, n) = \dfrac{1}{F_\alpha(n, m)}$（查左尾用）</li>
+<li>$T\sim t(n)\Rightarrow T^2\sim F(1, n)$（重要！）</li>
+<li>对称性：$F\sim F(m, m)\Rightarrow P(F > 1) = 1/2$（<strong>23-24-2 第 10 题考点</strong>）</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s4">四、⭐ 正态总体的抽样分布定理（必背！）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐⭐ 一个正态总体（$X_1, \ldots, X_n\sim N(\mu, \sigma^2)$）</div>
+<ol>
+<li>$\bar X\sim N\!\left(\mu, \dfrac{\sigma^2}{n}\right)$，即 $\dfrac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0, 1)$</li>
+<li>$\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$</li>
+<li><strong>$\bar X$ 与 $S^2$ 相互独立</strong>（仅在正态总体！）</li>
+<li>$\dfrac{\bar X-\mu}{S/\sqrt n}\sim t(n-1)$（$\sigma$ 未知时）</li>
+<li>$\dfrac{1}{\sigma^2}\sum_{i=1}^n(X_i-\mu)^2\sim\chi^2(n)$（$\mu$ 已知时，自由度 $n$！）</li>
+</ol>
+<p><strong>区别自由度</strong>：$\sum(X_i-\bar X)^2/\sigma^2\sim\chi^2(n-1)$；$\sum(X_i-\mu)^2/\sigma^2\sim\chi^2(n)$。多 / 少 1 个自由度的关键是"用 $\bar X$ 估了 $\mu$"。</p>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 两个正态总体（$X\sim N(\mu_1, \sigma_1^2),\,Y\sim N(\mu_2, \sigma_2^2)$ 独立）</div>
+<ol>
+<li>$\bar X-\bar Y\sim N\!\left(\mu_1-\mu_2,\,\dfrac{\sigma_1^2}{n_1}+\dfrac{\sigma_2^2}{n_2}\right)$</li>
+<li>$\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(n_1-1, n_2-1)$（方差比的 F 检验基础！）</li>
+<li>若 $\sigma_1^2 = \sigma_2^2 = \sigma^2$，合并方差 $S_w^2 = \dfrac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}$，则
+$$\dfrac{(\bar X-\bar Y)-(\mu_1-\mu_2)}{S_w\sqrt{1/n_1+1/n_2}}\sim t(n_1+n_2-2)$$
+</li>
+</ol>
+</div>
+</div>
+
+<h2 id="s5">五、$\bar X$ 与 $S^2$ 独立性的证明（满分笔记）</h2>
+<div class="card">
+<div class="note">
+<p>$(X_1, \ldots, X_n)\sim N(\mu, \sigma^2)$ i.i.d.。构造正交矩阵 $A^TA = I$ 使 $\mathbf Y = A\mathbf X$：</p>
+<ul>
+<li>$Y_1 = \dfrac{1}{\sqrt n}\sum X_i = \sqrt n\bar X$</li>
+<li>$Y_2, \ldots, Y_n$ 与 $Y_1$ 正交（独立）</li>
+<li>$\sum Y_i^2 = \sum X_i^2$（正交变换保范数）</li>
+</ul>
+<p>故 $\sum(X_i-\bar X)^2 = \sum X_i^2 - n\bar X^2 = \sum Y_i^2 - Y_1^2 = \sum_{i=2}^n Y_i^2$ 与 $Y_1 = \sqrt n\bar X$ 独立。</p>
+<p>$\dfrac{(n-1)S^2}{\sigma^2} = \dfrac{1}{\sigma^2}\sum_{i=2}^n Y_i^2\sim\chi^2(n-1)$ 与 $\bar X$ 独立。</p>
+<p><strong>这是 $\bar X\perp S^2$ 的本质</strong>——只在正态总体下成立（正交变换保正态独立性）。</p>
+</div>
+</div>
+
+<h2 id="s6">六、典型例题：凑构造分布</h2>
+<div class="card">
+<div class="ex"><strong>题 ★★★（凑 $\chi^2$）</strong>：$X_1, X_2, X_3, X_4\sim N(0, 4)$ i.i.d.。构造 $Y = a(2X_1-X_2)^2+b(4X_3-3X_4)^2\sim\chi^2(2)$。求 $a, b$。
+<div class="sol"><div class="st">解</div>
+<p>$2X_1-X_2\sim N(0, 4\cdot 4+4) = N(0, 20)$，标准化平方 $\Rightarrow\dfrac{(2X_1-X_2)^2}{20}\sim\chi^2(1)$，故 $a = 1/20$。</p>
+<p>$4X_3-3X_4\sim N(0, 16\cdot 4+9\cdot 4) = N(0, 100)$，标准化平方 $\Rightarrow\dfrac{(4X_3-3X_4)^2}{100}\sim\chi^2(1)$，故 $b = 1/100$。</p>
+<p>$Y\sim\chi^2(2)$（卡方可加性）。</p>
+</div></div>
+
+<div class="ex"><strong>题（$\chi^2$ 范围）</strong>：$n = 20$ 正态样本，求 $P(0.4\sigma^2\leq S^2\leq 1.76\sigma^2)$。
+<div class="sol"><div class="st">解</div>
+<p>$\dfrac{19S^2}{\sigma^2}\sim\chi^2(19)$。事件等价 $7.6\leq\chi^2(19)\leq 33.44$。</p>
+<p>查表 $\chi^2_{0.025}(19) = 32.85,\,\chi^2_{0.975}(19) = 8.91$ → 区间 $[8.91, 32.85]$ 对应 0.95 概率。题目区间略宽，概率约 0.93。</p>
+</div></div>
+
+<div class="ex"><strong>题（判断哪个统计量 $\sim t$）</strong>：$X_1, \ldots, X_n\sim N(\mu, \sigma^2)$，下列哪个 $\sim t(n-1)$？
+<ul>
+<li>(A) $\dfrac{\bar X-\mu}{\sigma/\sqrt n}$ → $N(0, 1)$，错</li>
+<li>(B) $\dfrac{\bar X-\mu}{S/\sqrt n}$ → $t(n-1)$ ✓</li>
+<li>(C) $\sum(X_i-\bar X)^2/\sigma^2$ → $\chi^2(n-1)$，错</li>
+<li>(D) $\sum(X_i-\mu)^2/\sigma^2$ → $\chi^2(n)$，错</li>
+</ul>
+<p>答案 (B)。</p>
+</div>
+
+<div class="ex"><strong>题（$F(m,m)$ 对称性，23-24-2 第 10 题）</strong>：$F\sim F(m, m)$，求 $P(F > 1)$。
+<div class="sol"><div class="st">解</div>
+<p>由倒数关系 $1/F\sim F(m, m)$ 即与 $F$ 同分布。所以 $P(F > 1) = P(1/F > 1) = P(F < 1)$，故 $P(F > 1) = 1/2$。</p>
+<p>这是<strong>纯概念题</strong>，知道 $F(m, m)$ 对称即可秒杀。</p>
+</div></div>
+</div>
+
+<h2 id="s7">七、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>$\chi^2$ 自由度</strong>：$\sum(X_i-\bar X)^2/\sigma^2\sim\chi^2(n-1)$；$\sum(X_i-\mu)^2/\sigma^2\sim\chi^2(n)$</li>
+<li><strong>$t$ 分布要求分子分母独立</strong>：不能用 $\bar X$ 同时在分子和分母</li>
+<li><strong>$F$ 倒数和分位数对偶易混</strong>：$F_{1-\alpha}(m, n) = 1/F_\alpha(n, m)$（自由度交换！）</li>
+<li><strong>$\bar X\perp S^2$ 仅在正态总体</strong>：其他分布下不成立</li>
+<li><strong>合并方差 $S_w$ 的自由度</strong>：$n_1+n_2-2$（每个总体减 1）</li>
+<li><strong>两个 $\sigma^2$ 不同时</strong>：用 $\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F$，分子分母都要除以各自的 $\sigma^2$</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li><strong>"$\chi^2$ = 标准正态平方和；$t$ = N(0,1) 除以根号 $\chi^2/n$；$F$ = 两 $\chi^2$ 除以各自自由度之比"</strong></li>
+<li><strong>"正态 → 卡方一定除 $\sigma$；自由度 n vs n-1 看用 $\mu$ 还是 $\bar X$"</strong></li>
+<li><strong>"$\bar X \perp S^2$ 仅正态；只此分布"</strong></li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">八、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>"凑构造"五步法</h3>
+<div class="fb" style="border-color:#27ae60"><div class="t">⭐ 给一组独立正态，凑出 $\chi^2 / t / F$</div>
+<ol>
+<li><strong>识别基础</strong>：$N(0,1)^2 = \chi^2(1)$ 是"砖块"</li>
+<li><strong>线性组合 → 标准化平方 → $\chi^2(1)$</strong>：$aX_1+bX_2+\cdots\sim N(0, a^2+b^2+\cdots\sigma^2)$，除方差再平方 → $\chi^2(1)$</li>
+<li><strong>独立 $\chi^2$ 相加</strong>：$\chi^2(n_1)+\chi^2(n_2) = \chi^2(n_1+n_2)$</li>
+<li><strong>"凑分母"</strong>：要 $t(n) = N(0,1)/\sqrt{\chi^2(n)/n}$，分子分母必须<strong>独立</strong></li>
+<li><strong>"凑分母比"</strong>：要 $F(m,n) = (\chi^2(m)/m)/(\chi^2(n)/n)$</li>
+</ol>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>$N(0,1)^2 = \chi^2(1)$</strong></li>
+<li><strong>$\chi^2(n)$：$E = n,\,D = 2n$</strong></li>
+<li><strong>$\chi^2$ 可加</strong>：$\chi^2(n_1)+\chi^2(n_2) = \chi^2(n_1+n_2)$（独立）</li>
+<li><strong>$t(n)\to N(0,1)$ 当 $n\to\infty$</strong></li>
+<li><strong>$T\sim t(n)\Rightarrow T^2\sim F(1,n)$</strong></li>
+<li><strong>$F$ 倒数</strong>：$F\sim F(m,n)\Rightarrow 1/F\sim F(n,m)$（自由度交换）</li>
+<li><strong>$F$ 分位数对偶</strong>：$F_{1-\alpha}(m,n) = 1/F_\alpha(n,m)$</li>
+<li><strong>$F(m,m)$ 对称</strong>：$P(F>1) = 1/2$（23-24-2 第 10 题考过）</li>
+<li><strong>正态总体核心定理</strong>：$\bar X\sim N(\mu,\sigma^2/n)$；$\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$；$\bar X\perp S^2$；$\dfrac{\bar X-\mu}{S/\sqrt n}\sim t(n-1)$</li>
+<li><strong>$\mu$ 已知时</strong>：$\dfrac{1}{\sigma^2}\sum(X_i-\mu)^2\sim\chi^2(n)$（自由度 $n$，不是 $n-1$）</li>
+<li><strong>两正态合并方差 $t$</strong>：$S_w^2 = \dfrac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}$，$t$ 分布自由度 $n_1+n_2-2$</li>
+<li><strong>两正态方差比</strong>：$\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(n_1-1, n_2-1)$</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>看到 $\sum(X_i-\bar X)^2/\sigma^2$ 立刻知道 $\chi^2(n-1)$</strong></li>
+<li><strong>看到 $\sum(X_i-\mu)^2/\sigma^2$ 立刻知道 $\chi^2(n)$</strong>（多一个自由度，因为 $\mu$ 已知）</li>
+<li><strong>$t$ 分布构造时分子分母必须独立</strong>：常用 $\bar X$（用作分子）和 $S$（用作分母），它们独立！</li>
+<li><strong>$F$ 倒数关系用来查左尾分位数</strong>：$F_{0.95}(m,n) = 1/F_{0.05}(n,m)$</li>
+<li><strong>$F(m,m)$ 对称</strong>：纯概念题，知道结论秒杀</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>$\chi^2$ 自由度搞错</strong>：$\sum(X_i-\bar X)^2 \to\chi^2(n-1)$；$\sum(X_i-\mu)^2\to\chi^2(n)$</li>
+<li><strong>$t$ 分子分母不独立</strong>：不能构成 $t$</li>
+<li><strong>$F$ 自由度顺序</strong>：分子在前、分母在后，倒数关系 $F(m,n) \leftrightarrow F(n,m)$</li>
+<li><strong>$\bar X\perp S^2$ 仅在正态总体</strong>，其他分布不成立</li>
+<li><strong>合并方差自由度</strong>：$n_1+n_2-2$（每个总体减 1）</li>
+<li><strong>两 $\sigma^2$ 不同时</strong>：$F$ 公式必须各自除以 $\sigma^2$</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

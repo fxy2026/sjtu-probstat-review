@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4.1 数学期望 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch3-5.html">← 3.5</a><a href="ch4-2.html">4.2 方差 →</a></div>
+<h1>4.1 数学期望 ⭐⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：<strong>14/14 套真题命中（100%）</strong>。每年大题工具，作为题 14-19 的基础。<br>
+<b>典型出题</b>：LOTUS · 示性函数法（配对期望，hat-matching）· 7 大分布期望直接套 · $E(e^{aX})$ 矩母函数。
+</div>
+
+<h2 id="s1">一、定义</h2>
+<div class="card">
+<div class="fb">
+<p><strong>离散型</strong>：$E(X) = \sum_k x_k p_k$（绝对收敛 $\sum|x_k|p_k<\infty$）</p>
+<p><strong>连续型</strong>：$E(X) = \int_{-\infty}^{+\infty}xf(x)\dd x$（绝对收敛 $\int|x|f(x)\dd x<\infty$）</p>
+</div>
+
+<div class="warn"><strong>绝对收敛要求必不可少！</strong>否则期望<strong>不存在</strong>。</div>
+
+<div class="ex"><strong>反例（Cauchy 分布）</strong>：$f(x) = \dfrac{1}{\pi(1+x^2)}$。期望积分 $\int|x|/(\pi(1+x^2))\dd x$ 发散，<strong>期望不存在</strong>。</div>
+</div>
+
+<h2 id="s2">二、LOTUS（随机变量函数的期望）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ Law Of The Unconscious Statistician</div>
+<p>对 $Y = g(X)$，<strong>不需要先求 $Y$ 的分布</strong>：</p>
+$$E[g(X)] = \sum_k g(x_k)p_k\quad\text{或}\quad\int g(x)f(x)\dd x$$
+<p>二维：</p>
+$$E[g(X, Y)] = \sum_{i,j}g(x_i, y_j)p_{ij}\quad\text{或}\quad\iint g(x, y)f(x, y)\dd x\dd y$$
+</div>
+
+<div class="ex"><strong>例</strong>：$X\sim P(\lambda)$，求 $E(3^X)$。
+<div class="sol"><div class="st">解</div>
+$$E(3^X) = \sum_{k=0}^\infty 3^k\dfrac{\lambda^k e^{-\lambda}}{k!} = e^{-\lambda}\sum\dfrac{(3\lambda)^k}{k!} = e^{2\lambda}$$
+</div></div>
+</div>
+
+<h2 id="s3">三、期望的性质（必背！）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<ol>
+<li>$E(C) = C$（常数）</li>
+<li>$E(aX+b) = aE(X)+b$</li>
+<li><strong>线性性</strong>：$E(X+Y) = E(X)+E(Y)$（<strong>无需独立！</strong>）</li>
+<li>$X, Y$ <strong>独立</strong> $\Rightarrow E(XY) = E(X)E(Y)$（反向<strong>不真</strong>）</li>
+<li>$|E(X)|\leq E(|X|)$</li>
+</ol>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 示性函数法（解题神器！）</div>
+<p>对事件 $A$ 定义示性函数 $I_A = \begin{cases}1,&A\text{ 发生}\\0,&\text{否则}\end{cases}$</p>
+<p>则 $E(I_A) = P(A)$。</p>
+<p><strong>用法</strong>：把"复杂计数随机变量"分解为示性函数求和，利用 $E$ 的线性性。</p>
+</div>
+
+<div class="ex"><strong>题 ★★（空盒数期望）</strong>：4 球随机独立放入 4 盒，求空盒数 $X$ 的期望。
+<div class="sol"><div class="st">解</div>
+<p>令 $X_i = I_{\{\text{盒 }i\text{ 空}\}}$，$X = X_1+X_2+X_3+X_4$。</p>
+<p>$P(X_i = 1) = (3/4)^4 = 81/256$。所以 $E(X) = 4\cdot 81/256 = 81/64$。</p>
+<p>若直接列分布律会非常麻烦，<strong>示性函数法瞬间秒杀</strong>。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★（hat-matching，多年真题原型）</strong>：$n$ 个球编号放入 $n$ 个盒子（一一对应）。配对数 $X$ 的期望与方差。
+<div class="sol"><div class="st">解</div>
+<p>$X = \sum X_i$，$X_i$ 是"第 $i$ 个盒配对"的示性。</p>
+<p>$P(X_i = 1) = 1/n$，$E(X) = n\cdot 1/n = 1$。</p>
+<p>$E(X_iX_j) = P(X_i = X_j = 1) = \dfrac{1}{n(n-1)}$（$i\neq j$）。</p>
+<p>$E(X^2) = \sum E(X_i^2)+\sum_{i\neq j}E(X_iX_j) = n\cdot\dfrac{1}{n}+n(n-1)\cdot\dfrac{1}{n(n-1)} = 2$。</p>
+<p>$D(X) = 2-1 = 1$。<strong>$E(X) = D(X) = 1$，与 $n$ 无关</strong>！</p>
+<p>这是 hat-matching 标志性结论，多年压轴题都会用。</p>
+</div></div>
+</div>
+
+<h2 id="s4">四、七大分布期望总表（必背！）</h2>
+<div class="card">
+<table>
+<thead><tr><th>分布</th><th>参数</th><th>$E(X)$</th></tr></thead>
+<tbody>
+<tr><td>0-1</td><td>$p$</td><td>$p$</td></tr>
+<tr><td>$B(n, p)$</td><td>$n, p$</td><td>$np$</td></tr>
+<tr><td>$P(\lambda)$</td><td>$\lambda$</td><td>$\lambda$</td></tr>
+<tr><td>$G(p)$</td><td>$p$</td><td>$1/p$</td></tr>
+<tr><td>$U(a, b)$</td><td>$a, b$</td><td>$(a+b)/2$</td></tr>
+<tr><td>$E(\lambda)$</td><td>$\lambda$</td><td>$1/\lambda$</td></tr>
+<tr><td>$N(\mu, \sigma^2)$</td><td>$\mu, \sigma^2$</td><td>$\mu$</td></tr>
+<tr><td>$\chi^2(n)$</td><td>$n$</td><td>$n$</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="s5">五、关键推导（满分笔记）</h2>
+<div class="card">
+<div class="note"><strong>二项分布 $E(X) = np$ 的推导</strong>：
+<p>$X = X_1 + \cdots + X_n$，每 $X_i\sim B(1, p)$，$E(X_i) = p$。</p>
+<p>由线性性 $E(X) = nE(X_i) = np$。<strong>用示性函数法 1 行搞定</strong>。</p>
+</div>
+
+<div class="note"><strong>Poisson $E(X) = \lambda$ 的推导</strong>：
+$$E(X) = \sum_{k=0}^\infty k\dfrac{\lambda^k e^{-\lambda}}{k!} = e^{-\lambda}\sum_{k=1}^\infty\dfrac{\lambda^k}{(k-1)!} = \lambda e^{-\lambda}\sum_{j=0}^\infty\dfrac{\lambda^j}{j!} = \lambda e^{-\lambda}\cdot e^\lambda = \lambda$$
+</div>
+
+<div class="note"><strong>正态 $E(X) = \mu$ 的推导</strong>：见 ch2-3，用变量代换 $y = x-\mu$ 后奇偶性即得。</div>
+
+<div class="note"><strong>指数 $E(X) = 1/\lambda$ 的推导</strong>：
+$$E(X) = \int_0^\infty x\lambda e^{-\lambda x}\dd x = \dfrac{1}{\lambda}\quad(\text{分部积分})$$
+</div>
+</div>
+
+<h2 id="s6">六、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li>必须<strong>绝对收敛</strong>，否则期望不存在（Cauchy 分布陷阱）</li>
+<li><strong>$E(XY) = E(X)E(Y)$ 仅独立时成立</strong>，不能乱用</li>
+<li><strong>$E[g(X)]\neq g(E(X))$</strong>（除 $g$ 线性外）</li>
+<li>$E(X^2)\neq[E(X)]^2$ —— "平方的期望" vs "期望的平方"</li>
+<li>$E(X+Y) = E(X)+E(Y)$ <strong>不需要独立</strong>（这条多人忘）</li>
+<li>用示性函数法求计数期望（配对数、空盒数、首达时间等）</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li>"<strong>$E$ 是线性算子，加减无障碍</strong>"</li>
+<li>"<strong>$E(XY) = E(X)E(Y)$ 需要独立</strong>"</li>
+<li>"<strong>示性函数 = $E(I_A) = P(A)$，计数神器</strong>"</li>
+<li>"<strong>LOTUS：$E[g(X)] = \int g(x)f(x)\dd x$，无需求 $Y$ 分布</strong>"</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">七、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>常用计算技巧</h3>
+<div class="fb" style="border-color:#27ae60">
+<ul>
+<li><strong>LOTUS</strong>：$E[g(X)] = \int g(x)f(x)\dd x$ —— 不用求 $Y = g(X)$ 的分布！</li>
+<li><strong>示性函数法</strong>：$X = \sum X_i$（$X_i = I_{A_i}$），$E(X) = \sum P(A_i)$</li>
+<li><strong>独立性</strong>：$X\perp Y\Rightarrow E(XY) = E(X)E(Y)$</li>
+<li><strong>分部积分</strong>：求 $E$ 涉及 $xe^{-\lambda x}$ 等</li>
+</ul>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>七大分布期望</strong>：0-1→$p$；$B(n,p)$→$np$；$P(\lambda)$→$\lambda$；$G(p)$→$1/p$；$U(a,b)$→$(a+b)/2$；$E(\lambda)$→$1/\lambda$；$N(\mu,\sigma^2)$→$\mu$</li>
+<li><strong>$\chi^2(n)$</strong>：$E = n, D = 2n$</li>
+<li><strong>线性性</strong>：$E(aX+bY+c) = aE(X)+bE(Y)+c$（无需独立）</li>
+<li><strong>$E(XY) = E(X)E(Y)$</strong>：要独立或不相关</li>
+<li><strong>示性函数</strong>：$E(I_A) = P(A)$</li>
+<li><strong>hat-matching</strong>：$n$ 个球放入 $n$ 个盒，配对数 $X$ 满足 $E(X) = 1, D(X) = 1$，与 $n$ 无关</li>
+<li><strong>$E(e^{aX})$ 矩母函数</strong>：用于计算 $E(X^k)$</li>
+<li><strong>Cauchy 分布期望不存在</strong>（$f = 1/(\pi(1+x^2))$）</li>
+<li><strong>$E[g(X,Y)] = \iint g(x,y)f(x,y)\dd x\dd y$</strong>（二维 LOTUS）</li>
+<li><strong>$E|X|$（$X\sim N(0,\sigma^2)$）</strong>：$\sigma\sqrt{2/\pi}$</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>识别分布 → 直接套 $E$</strong></li>
+<li><strong>计数期望用示性函数</strong>：空盒数、配对数、首次成功等</li>
+<li><strong>$E(\sum X_i) = \sum E(X_i)$ 无需独立</strong>，先拆再算</li>
+<li><strong>$E(X+a) = E(X)+a$；$E(aX) = aE(X)$</strong>，常数无关</li>
+<li><strong>对称分布的奇函数期望 = 0</strong>（如 $N(0,1)$ 的 $X^3$）</li>
+<li><strong>$E(X)$ 不存在的判别</strong>：$\int|x|f(x)\dd x$ 是否收敛</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>$E(XY) = E(X)E(Y)$ 乱用</strong>：必须独立</li>
+<li><strong>$E[g(X)] \neq g(E(X))$</strong>（除 $g$ 线性外）</li>
+<li><strong>$E(X^2) \neq [E(X)]^2$</strong></li>
+<li><strong>绝对收敛要求</strong>：否则期望不存在</li>
+<li><strong>$E(X+Y)$ 不需要独立</strong>（线性性是免费的）</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

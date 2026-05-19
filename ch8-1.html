@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>8.1 假设检验 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch7-2.html">← 7.2</a><a href="index.html">完结 →</a></div>
+<h1>8.1 假设检验 ⭐⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 13 套（93%）。每年大题第 19 题（10 分，压轴）。<br>
+<b>近 3 年趋势</b>：从单一拒绝域法 → <strong>P 值法 + 经典法并列</strong>（22-23 起）。23-24-2 第 19 题考的就是 P 值法+经典法双问。<br>
+<b>典型出题</b>：23-24-2 车轴直径 · 22-23-2 笔记本续航 · 20-21-2 脉搏 · 17-18-2 光纤。
+</div>
+
+<h2 id="s1">一、基本概念</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">原假设 $H_0$ vs 备择假设 $H_1$</div>
+<ul>
+<li>$H_0$：默认成立，需数据"反对"才能拒绝。"保护"的假设</li>
+<li>$H_1$：与 $H_0$ 对立的假设</li>
+<li><strong>双侧</strong>：$H_1:\theta\neq\theta_0$</li>
+<li><strong>左侧</strong>：$H_1:\theta < \theta_0$</li>
+<li><strong>右侧</strong>：$H_1:\theta > \theta_0$</li>
+</ul>
+</div>
+
+<div class="fb"><div class="t">两类错误</div>
+<table>
+<tr><th></th><th>$H_0$ 真</th><th>$H_0$ 假</th></tr>
+<tr><th>接受 $H_0$</th><td>正确</td><td><strong>第二类错误</strong>（弃假取真，记 $\beta$）</td></tr>
+<tr><th>拒绝 $H_0$</th><td><strong>第一类错误</strong>（弃真取假，记 $\alpha$）</td><td>正确（功效 $1-\beta$）</td></tr>
+</table>
+<p>$\alpha$ = 显著性水平 = 拒真概率。一般 $\alpha = 0.05$ 或 $0.01$。</p>
+</div>
+
+<div class="tip"><strong>核心原则</strong>：控制第一类错误的概率 $\leq\alpha$。"宁可错过，不可冤枉"——把保护的结论作为 $H_0$。</div>
+</div>
+
+<h2 id="s2">二、两种检验流程</h2>
+<div class="card">
+<h3>2.1 经典临界值法（拒绝域法）</h3>
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 标准五步</div>
+<ol>
+<li>提出 $H_0, H_1$</li>
+<li>选择检验统计量（含 $\theta_0$，分布在 $H_0$ 下已知）</li>
+<li>构造拒绝域 $C$，使 $P(T\in C\mid H_0) = \alpha$</li>
+<li>由样本算统计量观测值 $T_{\text{obs}}$</li>
+<li>判定：$T_{\text{obs}}\in C$ → 拒绝 $H_0$；否则不拒绝</li>
+</ol>
+</div>
+
+<h3>2.2 P 值法（近年高频！）</h3>
+<div class="fb" style="border-color:#c0392b">
+<p><strong>P 值定义</strong>：在 $H_0$ 真时，得到"比观察样本更极端"统计量的概率。</p>
+<p><strong>规则</strong>：</p>
+<ul>
+<li>$P < \alpha$ → 拒绝 $H_0$</li>
+<li>$P\geq\alpha$ → 不拒绝 $H_0$</li>
+</ul>
+<p>P 值算法（按 $H_1$ 方向）：</p>
+<ul>
+<li><strong>双侧</strong>：$P = 2P(|T| > |T_{\text{obs}}|)$（或两个单侧概率的较小者 × 2）</li>
+<li><strong>右侧</strong>：$P = P(T > T_{\text{obs}})$</li>
+<li><strong>左侧</strong>：$P = P(T < T_{\text{obs}})$</li>
+</ul>
+</div>
+
+<div class="tip"><strong>两法关系</strong>：在相同 $\alpha$ 下二者完全等价，只是操作顺序不同。P 值给"反对 $H_0$ 的强度"的连续度量。</div>
+</div>
+
+<h2 id="s3">三、正态总体常用检验（必背！）</h2>
+<div class="card">
+<h3>3.1 单正态总体 $\mu$ 的检验</h3>
+<div class="fb">
+<p><strong>U 检验（$\sigma$ 已知）</strong>：$U = \dfrac{\bar X-\mu_0}{\sigma/\sqrt n}\sim N(0, 1)$ 在 $H_0:\mu=\mu_0$ 下。</p>
+<table>
+<thead><tr><th>$H_1$</th><th>拒绝域</th></tr></thead>
+<tbody>
+<tr><td>$\mu\neq\mu_0$</td><td>$|U|>u_{\alpha/2}$</td></tr>
+<tr><td>$\mu<\mu_0$</td><td>$U<-u_\alpha$</td></tr>
+<tr><td>$\mu>\mu_0$</td><td>$U>u_\alpha$</td></tr>
+</tbody>
+</table>
+</div>
+
+<div class="fb">
+<p><strong>t 检验（$\sigma$ 未知）</strong>：$T = \dfrac{\bar X-\mu_0}{S/\sqrt n}\sim t(n-1)$。</p>
+<p>拒绝域同上，把 $u_\alpha$ 换成 $t_\alpha(n-1)$。</p>
+</div>
+
+<h3>3.2 单正态总体 $\sigma^2$ 的检验</h3>
+<div class="fb">
+<p><strong>$\chi^2$ 检验（$\mu$ 未知）</strong>：$\chi^2 = \dfrac{(n-1)S^2}{\sigma_0^2}\sim\chi^2(n-1)$。</p>
+<table>
+<thead><tr><th>$H_1$</th><th>拒绝域</th></tr></thead>
+<tbody>
+<tr><td>$\sigma^2\neq\sigma_0^2$</td><td>$\chi^2<\chi^2_{1-\alpha/2}(n-1)$ 或 $\chi^2>\chi^2_{\alpha/2}(n-1)$</td></tr>
+<tr><td>$\sigma^2<\sigma_0^2$</td><td>$\chi^2<\chi^2_{1-\alpha}(n-1)$</td></tr>
+<tr><td>$\sigma^2>\sigma_0^2$</td><td>$\chi^2>\chi^2_\alpha(n-1)$</td></tr>
+</tbody>
+</table>
+<p><strong>$\chi^2$ 不对称</strong>：双侧拒绝域两个端点不互为相反数。</p>
+</div>
+
+<h3>3.3 两个正态总体的检验</h3>
+<div class="fb">
+<p>$\mu_1 = \mu_2$（$\sigma_1, \sigma_2$ 已知）：$U = \dfrac{\bar X-\bar Y}{\sqrt{\sigma_1^2/n_1+\sigma_2^2/n_2}}\sim N(0, 1)$</p>
+<p>$\mu_1 = \mu_2$（$\sigma$ 均未知但相等）：用合并方差 $S_w$，$T = \dfrac{\bar X-\bar Y}{S_w\sqrt{1/n_1+1/n_2}}\sim t(n_1+n_2-2)$</p>
+<p>$\sigma_1^2 = \sigma_2^2$：$F = S_1^2/S_2^2\sim F(n_1-1, n_2-1)$</p>
+</div>
+</div>
+
+<h2 id="s4">四、典型真题完整解答</h2>
+<div class="card">
+<div class="ex"><strong>题 ★★★★★ 23-24-2 第 19 题（车轴直径，P 值 + 经典法双问，10 分）</strong>：车轴直径 $X\sim N(\mu, \sigma^2)$，要求均值 4.0、方差不超过 0.1。25 件样本（频数表给出）算得 $\bar x = 4.02,\,s^2 = 0.105$。
+<ol>
+<li>用 P 值法检验 $H_0:\mu = 4.0$ vs $H_1:\mu\neq 4.0$，$\alpha = 0.05$。</li>
+<li>用经典拒绝域法检验 $H_0:\sigma^2\leq 0.1$ vs $H_1:\sigma^2 > 0.1$，$\alpha = 0.05$。</li>
+</ol>
+<div class="sol"><div class="st">解（满分模板）</div>
+<p><strong>(1) μ 的 t 检验（P 值法）</strong>：</p>
+<p>$T = \dfrac{\bar x-4}{s/\sqrt{25}} = \dfrac{0.02}{\sqrt{0.105}/5} = \dfrac{0.02}{0.0648}\approx 0.309$</p>
+<p>双侧 P 值 $= 2P(|T(24)|>0.309)$。查表 $t_{0.05}(24)=1.711$，$0.309\ll 1.711$，所以 P 值 $\gg 0.10>0.05$。<strong>不拒绝 $H_0$</strong>。</p>
+<p><strong>(2) σ² 的 $\chi^2$ 检验（经典法，单侧）</strong>：</p>
+<p>$\chi^2 = \dfrac{24\cdot 0.105}{0.1} = 25.2$</p>
+<p>拒绝域 $\chi^2 > \chi^2_{0.05}(24) = 36.415$。$25.2 < 36.415$，<strong>不拒绝 $H_0$</strong>（方差未显著超过 0.1）。</p>
+<p><strong>结论</strong>：在 5% 显著性水平下，认为车轴生产符合规格要求。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★（标准 t 检验）</strong>：电池寿命 $\sim N(\mu, \sigma^2)$。$n = 16,\,\bar x = 6.2,\,s = 0.5$，检验 $H_0:\mu = 6.5$ 双侧，$\alpha = 0.05$。
+<div class="sol"><div class="st">解</div>
+<p>$T = \dfrac{6.2-6.5}{0.5/\sqrt{16}} = \dfrac{-0.3}{0.125} = -2.4$</p>
+<p>查表 $t_{0.025}(15) = 2.131$。$|T| = 2.4 > 2.131$ → <strong>拒绝 $H_0$</strong>。</p>
+<p>结论：在 5% 显著性水平下，认为电池实际寿命与 6.5 有显著差异。</p>
+</div></div>
+
+<div class="ex"><strong>题（单侧检验）</strong>：某产品要求次品率 $p\leq 0.05$。100 件样本中有 8 件次品。检验是否合格，$\alpha = 0.05$。
+<div class="sol"><div class="st">解</div>
+<p>$H_0:p\leq 0.05$ vs $H_1:p > 0.05$（单侧）。用 CLT 近似：$\hat p = 0.08$，</p>
+<p>$U = \dfrac{0.08-0.05}{\sqrt{0.05\cdot 0.95/100}} = \dfrac{0.03}{0.0218}\approx 1.376$</p>
+<p>查 $u_{0.05} = 1.645$。$U = 1.376 < 1.645$ → <strong>不拒绝 $H_0$</strong>。次品率未显著超标。</p>
+</div></div>
+</div>
+
+<h2 id="s5">五、非参数检验：Pearson $\chi^2$ 拟合优度（满分笔记）</h2>
+<div class="card">
+<div class="fb">
+<p>样本空间分 $k$ 个互斥事件 $A_1, \ldots, A_k$，理论概率 $p_i$，实际频数 $n_i$：</p>
+$$\chi^2 = \sum_{i=1}^k\dfrac{(n_i-np_i)^2}{np_i}\sim\chi^2(k-1-r)$$
+<p>$r$ 为已估计的参数个数。常用于"数据是否来自某分布"检验。</p>
+</div>
+</div>
+
+<h2 id="s6">六、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>单侧 vs 双侧</strong>：双侧用 $\alpha/2$，单侧用 $\alpha$（分位数）</li>
+<li><strong>$\chi^2$ 双侧拒绝域不对称</strong>：上下分位数分别查 $\chi^2_{\alpha/2}$ 和 $\chi^2_{1-\alpha/2}$</li>
+<li><strong>P 值小 = 拒绝 $H_0$</strong>，不是"大"</li>
+<li><strong>P 值的"极端"方向按 $H_1$</strong>：右侧检验 $P=P(T\geq T_{\text{obs}})$，单侧</li>
+<li><strong>$\sigma$ 未知用 $t$，已知用 $u$</strong>：题目要看清楚</li>
+<li><strong>"$\sigma^2$ 不超过 0.05" → 单侧 $H_0:\sigma^2\leq 0.05$</strong>，拒绝域 $\chi^2 > \chi^2_\alpha(n-1)$</li>
+<li><strong>结论用语</strong>："拒绝 $H_0$" 或 "无足够证据拒绝 $H_0$"（不说"接受"更严谨）</li>
+<li><strong>样本均值与样本方差区分</strong>：检验 $\mu$ 用 $\bar X$ 中心化；检验 $\sigma^2$ 用 $S^2$</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li><strong>"双侧 $\alpha/2$，单侧 $\alpha$"</strong></li>
+<li><strong>"$\sigma$ 已知 U，$\sigma$ 未知 t，方差检验 $\chi^2$"</strong></li>
+<li><strong>"P 值小，拒原假；P 值大，留原假"</strong></li>
+<li><strong>"保护谁，谁就是 $H_0$"</strong></li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">七、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>检验题型决策树</h3>
+<div class="fb" style="border-color:#27ae60">
+<table>
+<thead><tr><th>检验对象</th><th>条件</th><th>统计量</th><th>分布</th></tr></thead>
+<tbody>
+<tr><td>$\mu = \mu_0$</td><td>$\sigma^2$ 已知</td><td>$U = (\bar X-\mu_0)/(\sigma/\sqrt n)$</td><td>$N(0,1)$</td></tr>
+<tr><td>$\mu = \mu_0$</td><td>$\sigma^2$ 未知</td><td>$T = (\bar X-\mu_0)/(S/\sqrt n)$</td><td>$t(n-1)$</td></tr>
+<tr><td>$\sigma^2 = \sigma_0^2$</td><td>$\mu$ 未知</td><td>$\chi^2 = (n-1)S^2/\sigma_0^2$</td><td>$\chi^2(n-1)$</td></tr>
+<tr><td>$\sigma^2 = \sigma_0^2$</td><td>$\mu$ 已知</td><td>$\chi^2 = \sum(X_i-\mu)^2/\sigma_0^2$</td><td>$\chi^2(n)$</td></tr>
+<tr><td>$\mu_1 = \mu_2$</td><td>$\sigma_1, \sigma_2$ 都未知 + 相等</td><td>$T = (\bar X-\bar Y)/(S_w\sqrt{1/n_1+1/n_2})$</td><td>$t(n_1+n_2-2)$</td></tr>
+<tr><td>$\sigma_1^2 = \sigma_2^2$</td><td>—</td><td>$F = S_1^2/S_2^2$</td><td>$F(n_1-1, n_2-1)$</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>拒绝域速查表</h3>
+<div class="fb" style="border-color:#27ae60">
+<table>
+<thead><tr><th>$H_1$</th><th>U / t 拒绝域</th><th>$\chi^2$ 拒绝域</th></tr></thead>
+<tbody>
+<tr><td>$\theta\neq\theta_0$（双侧）</td><td>$|T|>t_{\alpha/2}$</td><td>$\chi^2<\chi^2_{1-\alpha/2}$ 或 $>\chi^2_{\alpha/2}$</td></tr>
+<tr><td>$\theta>\theta_0$（右单侧）</td><td>$T>t_\alpha$</td><td>$\chi^2>\chi^2_\alpha$</td></tr>
+<tr><td>$\theta<\theta_0$（左单侧）</td><td>$T<-t_\alpha$</td><td>$\chi^2<\chi^2_{1-\alpha}$</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>P 值</strong> = 在 $H_0$ 真时，得到比观察更极端统计量的概率</li>
+<li><strong>P 值小于 $\alpha$ 拒绝 $H_0$</strong>；P 值大于 $\alpha$ 不拒绝</li>
+<li><strong>P 值法 = 拒绝域法</strong>，结论一致</li>
+<li><strong>"保护谁谁就是 $H_0$"</strong>：原假设是想保护的结论</li>
+<li><strong>第一类错误率 $\alpha$ = 弃真</strong>；第二类 $\beta$ = 取假</li>
+<li><strong>双侧用 $\alpha/2$，单侧用 $\alpha$</strong></li>
+<li><strong>$\chi^2$ 双侧拒绝域不对称</strong>：上下分位数分开查</li>
+<li><strong>$\sigma^2$ "不超过 $\sigma_0^2$" → 单侧 $H_0:\sigma^2\leq\sigma_0^2$</strong>，拒绝域 $\chi^2>\chi^2_\alpha$</li>
+<li><strong>合并方差自由度</strong>：$n_1+n_2-2$</li>
+<li><strong>双侧 P 值算法</strong>：$P = 2P(|T|>|T_{\text{obs}}|)$（对称分布）</li>
+<li><strong>近似 P 值与查表关系</strong>：若 $|T_{\text{obs}}|<t_\alpha(n-1)$，则 P > 2α；若 $>t_{\alpha/2}$，则 P < α</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>$\sigma$ 已知 → U；$\sigma$ 未知 → t</strong></li>
+<li><strong>方差检验 → $\chi^2$</strong>（不对称！）</li>
+<li><strong>两正态比较：均值用 t（同方差时）；方差用 F</strong></li>
+<li><strong>题目"不少于 / 不超过" → 单侧检验</strong></li>
+<li><strong>"显著差异" → 双侧</strong>；"显著大于" → 右单侧；"显著小于" → 左单侧</li>
+<li><strong>查表 $t_{0.025}(n-1)$ 双侧 5%；$t_{0.05}(n-1)$ 单侧 5%</strong></li>
+<li><strong>$\bar x, s^2$ 算出来后</strong>：直接代入对应统计量公式</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>单侧 vs 双侧分位数</strong>：双侧用 $\alpha/2$，单侧用 $\alpha$</li>
+<li><strong>$\chi^2$ 双侧不对称</strong>：要查两次分位数</li>
+<li><strong>P 值小 = 拒绝 $H_0$</strong>，不是"大"</li>
+<li><strong>P 值"极端"方向按 $H_1$</strong>：右单侧 $P = P(T\geq T_{\text{obs}})$</li>
+<li><strong>$\sigma$ 已知/未知用对统计量</strong></li>
+<li><strong>"$\sigma^2$ 不超过 $\sigma_0^2$" 是单侧 $H_0$</strong></li>
+<li><strong>结论用词</strong>：用"拒绝 $H_0$"或"无足够证据拒绝 $H_0$"（不说"接受"更严谨）</li>
+<li><strong>检验 $\mu$ 用 $\bar X$ 中心化；检验 $\sigma^2$ 用 $S^2$</strong>，不要混淆</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

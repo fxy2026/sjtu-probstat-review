@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2.4 随机变量函数的分布 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch2-3.html">← 2.3</a><a href="ch3-1.html">3.1 二维 →</a></div>
+<h1>2.4 随机变量的函数及其分布 ⭐⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 10+ 套。每年大题第 15 题（9 分）频繁出现。<br>
+<b>典型出题</b>：$Y=X^2$（22-23-2、15-16-1）· $Y=e^X$（18-19-2）· $Y=\sqrt X$（19-20-1）· $Y=|X|$（多次）· $Y=\min(X,2)$（23-24-1）· $Y=e^{-X}$（17-18-2）。
+</div>
+
+<h2 id="s1">一、离散型：取值合并</h2>
+<div class="card">
+<div class="fb">
+<p>$Y = g(X)$，$X$ 取 $\{x_k\}$ 概率 $\{p_k\}$，则</p>
+$$P(Y = y_i) = \sum_{k:\,g(x_k) = y_i} p_k$$
+<p>把映射到同一 $y_i$ 的所有 $x_k$ 概率合并即可。</p>
+</div>
+
+<div class="ex"><strong>例 1</strong>：$X$ 取 $-1, 0, 1, 2$，概率 $0.2, 0.3, 0.4, 0.1$。求 $Y = X^2$ 的分布律。
+<div class="sol"><div class="st">解</div>
+<p>$Y$ 取值 $0, 1, 4$。</p>
+<p>$P(Y=0) = P(X=0) = 0.3$；$P(Y=1) = P(X=-1) + P(X=1) = 0.2+0.4 = 0.6$；$P(Y=4) = P(X=2) = 0.1$。</p>
+</div></div>
+</div>
+
+<h2 id="s2">二、连续型方法 A：分布函数法（万能！）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 三步走（最稳）</div>
+<ol>
+<li>先写 $F_Y(y) = P(Y \leq y) = P(g(X) \leq y)$</li>
+<li>把 $\{g(x) \leq y\}$ 反解成 $x$ 的区域</li>
+<li>用 $f_X$ 积分，再求导得 $f_Y$</li>
+</ol>
+<p><strong>难点</strong>：对 $g(x)\leq y$ 反解时，可能要根据 $y$ 的不同范围分段讨论；定义域要写完整。</p>
+</div>
+
+<div class="ex"><strong>例 2（绝对值）</strong>：$X\sim U(-1,1)$，求 $Y = |X|$ 的密度。
+<div class="sol"><div class="st">解</div>
+<p>$f_X(x) = 1/2,\ -1 < x < 1$。当 $y < 0$：$F_Y(y) = 0$。当 $y\geq 1$：$F_Y(y) = 1$。当 $0\leq y < 1$：</p>
+$$F_Y(y) = P(|X|\leq y) = P(-y\leq X\leq y) = \int_{-y}^y\dfrac{1}{2}\dd x = y$$
+<p>$f_Y(y) = F_Y'(y) = 1,\ y\in(0,1)$。即 $Y\sim U(0,1)$。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★ 22-23-2 第 4 题（双侧指数 $Y=X^2$）</strong>：$X$ 密度 $f(x) = \dfrac{1}{2}e^{-|x|}$，求 $Y = X^2$ 的密度。
+<div class="sol"><div class="st">解</div>
+<p>$y\leq 0$：$F_Y = 0$。$y > 0$：</p>
+$$F_Y(y) = P(X^2\leq y) = P(-\sqrt y\leq X\leq\sqrt y) = \int_{-\sqrt y}^{\sqrt y}\dfrac{1}{2}e^{-|x|}\dd x = 1-e^{-\sqrt y}$$
+$$f_Y(y) = F_Y'(y) = \dfrac{e^{-\sqrt y}}{2\sqrt y},\ y > 0$$
+<p><strong>关键</strong>：偶函数对称性 → 积分上限去对称变 $2\int_0^{\sqrt y}\frac{1}{2}e^{-x}\dd x = 1-e^{-\sqrt y}$。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★（$Y=X^2$ 导出 $\chi^2(1)$）</strong>：$X\sim N(0,1)$，求 $Y=X^2$ 的密度。
+<div class="sol"><div class="st">解</div>
+<p>$y\leq 0$：$F_Y = 0$。$y > 0$：</p>
+$$F_Y(y) = P(X^2\leq y) = P(-\sqrt y\leq X\leq\sqrt y) = \Phi(\sqrt y)-\Phi(-\sqrt y) = 2\Phi(\sqrt y)-1$$
+$$f_Y(y) = \dfrac{1}{\sqrt y}\varphi(\sqrt y) = \dfrac{1}{\sqrt{2\pi y}}e^{-y/2},\ y > 0$$
+<p>这就是<strong>自由度 1 的 $\chi^2$ 分布</strong> $\chi^2(1)$，等价于 $E(1/2)$。第 6 章会重点考。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★ 23-24-1 第 2 题（min 函数，混合型！）</strong>：$X\sim E(\lambda)$，求 $Y=\min(X, 2)$ 的分布。
+<div class="sol"><div class="st">解</div>
+<p>$Y$ 既有连续部分（$Y < 2$ 时 $Y = X$）又有离散质点（$Y = 2$ 时 $X\geq 2$）。</p>
+<p>$Y < 2$：$F_Y(y) = P(\min(X,2)\leq y) = P(X\leq y) = 1-e^{-\lambda y}$，$y\in(0,2)$</p>
+<p>$Y = 2$：$P(Y = 2) = P(X\geq 2) = e^{-2\lambda}$（这是个跳跃，质点！）</p>
+<p>$Y\geq 2$：$F_Y(y) = 1$。</p>
+<p>所以 $Y$ 的分布函数 $F_Y$ 在 $[0, 2)$ 是 $1-e^{-\lambda y}$，在 $y=2$ 跳到 1。<strong>$Y$ 不是连续型，是混合型</strong>！这就是 min(X, c) 的常见陷阱。</p>
+</div></div>
+</div>
+
+<h2 id="s3">三、连续型方法 B：公式法（仅严格单调）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 公式法</div>
+<p>若 $g$ 在 $X$ 的支撑上<strong>严格单调可导</strong>，反函数 $x = h(y)$，则</p>
+$$f_Y(y) = f_X(h(y))\cdot|h'(y)|$$
+<p>定义域 = $g$ 的值域。</p>
+</div>
+
+<div class="fb"><div class="t">线性变换（最常用！）</div>
+<p>$Y = aX+b$（$a\neq 0$）：</p>
+$$f_Y(y) = \dfrac{1}{|a|}f_X\!\left(\dfrac{y-b}{a}\right)$$
+<p><strong>正态特例</strong>：$X\sim N(\mu,\sigma^2) \Rightarrow Y = aX+b\sim N(a\mu+b, a^2\sigma^2)$</p>
+</div>
+
+<div class="fb"><div class="t">分段单调推广</div>
+<p>若 $g$ 在 $X$ 支撑上分段单调，每段反函数 $h_i$：</p>
+$$f_Y(y) = \sum_i f_X(h_i(y))\cdot|h_i'(y)|$$
+<p>每个 $h_i$ 的定义域需正确确定。</p>
+</div>
+
+<div class="ex"><strong>题 ★★（对数正态）</strong>：$X\sim N(\mu,\sigma^2)$，$Y = e^X$。
+<div class="sol"><div class="st">解</div>
+<p>$g(x) = e^x$ 严格增，$h(y) = \ln y$，$h'(y) = 1/y$。值域 $y > 0$。</p>
+$$f_Y(y) = \dfrac{1}{y\sqrt{2\pi}\sigma}\exp\!\left[-\dfrac{(\ln y-\mu)^2}{2\sigma^2}\right],\ y > 0$$
+<p>这是<strong>对数正态分布</strong>，常用于金融建模。</p>
+</div></div>
+
+<div class="ex"><strong>题（$Y = \sin X$，分段单调）</strong>：$X\sim U(0,\pi)$，求 $Y = \sin X$ 的密度。
+<div class="sol"><div class="st">解</div>
+<p>$f_X(x) = 1/\pi,\ 0 < x < \pi$。$y = \sin x$ 在 $(0,\pi)$ 不严格单调，分两段：</p>
+<ul>
+<li>$x\in(0,\pi/2)$：$h_1(y) = \arcsin y$，$h_1'(y) = 1/\sqrt{1-y^2}$</li>
+<li>$x\in(\pi/2,\pi)$：$h_2(y) = \pi-\arcsin y$，$h_2'(y) = -1/\sqrt{1-y^2}$</li>
+</ul>
+<p>对 $y\in(0,1)$：</p>
+$$f_Y(y) = \dfrac{1}{\pi}\cdot\dfrac{1}{\sqrt{1-y^2}}+\dfrac{1}{\pi}\cdot\dfrac{1}{\sqrt{1-y^2}} = \dfrac{2}{\pi\sqrt{1-y^2}}$$
+</div></div>
+</div>
+
+<h2 id="s4">四、概率积分变换（满分笔记重点）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>若 $X$ 的分布函数 $F_X$ <strong>严格单调连续</strong>，则</p>
+$$Y = F_X(X)\sim U(0,1)$$
+<p><strong>用途</strong>：Monte Carlo 模拟。给定 $U\sim U(0,1)$，则 $X = F_X^{-1}(U)$ 服从 $F_X$。</p>
+</div>
+
+<div class="ex"><strong>例</strong>：模拟指数分布 $E(\lambda)$。
+<div class="sol"><div class="st">解</div>
+<p>$F(x) = 1-e^{-\lambda x}$，反解 $X = -\ln(1-U)/\lambda$（$U\sim U(0,1)$）。</p>
+<p>简化 $X = -\ln U/\lambda$（因为 $1-U$ 也服从 $U(0,1)$）。</p>
+</div></div>
+</div>
+
+<h2 id="s5">五、必考题型总结</h2>
+<div class="card">
+<table>
+<thead><tr><th>题型</th><th>方法</th><th>关键</th></tr></thead>
+<tbody>
+<tr><td>$Y = aX+b$</td><td>公式法（线性）</td><td>正态保正态</td></tr>
+<tr><td>$Y = X^2$</td><td>分布函数法（双值反函数）</td><td>$y > 0$，分子有 $\sqrt y$；$X\sim N(0,1)$ 时得 $\chi^2(1)$</td></tr>
+<tr><td>$Y = |X|$</td><td>分布函数法</td><td>分对称性</td></tr>
+<tr><td>$Y = e^X$</td><td>公式法</td><td>正态 → 对数正态</td></tr>
+<tr><td>$Y = \min(X, c)$</td><td>分布函数法</td><td><strong>混合型！</strong>$y = c$ 处有质点</td></tr>
+<tr><td>$Y = \max(X, c)$</td><td>分布函数法</td><td>同上，$y = c$ 处质点</td></tr>
+<tr><td>$Y = F_X(X)$</td><td>定义</td><td>$\sim U(0,1)$</td></tr>
+<tr><td>$Y = \sin X / \cos X$</td><td>分段单调推广</td><td>$(0,\pi)$ 上不单调，分段</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="s6">六、易错点清单（每年都有人栽）</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>用公式法时 $g$ 非单调</strong>：例如 $Y = X^2$ 直接套公式法漏掉一半</li>
+<li><strong>忘记定义域</strong>：$Y$ 的定义域 = $g$ 的值域，要明确写</li>
+<li><strong>$Y = \min/\max(X, c)$ 当成连续型</strong>：实际是混合型，含离散质点 $P(Y = c)$</li>
+<li><strong>公式法忘加 $|h'|$ 的绝对值</strong></li>
+<li><strong>反函数定义域写错</strong>：例如 $Y = X^2,\ X\sim N(0,1)$，$Y$ 是 $[0,\infty)$ 不是 $\mathbb R$</li>
+<li><strong>双值反函数</strong>：$X^2$、$|X|$、$\cos X$ 等要分段处理</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li>"<strong>不严格单调，分布函数法</strong>；严格单调，公式法"</li>
+<li>"看到 min/max（X, c），警惕混合型"</li>
+<li>"$Y = X^2$，$X\sim N(0,1)$，结果是 $\chi^2(1)$"</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">七、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>题型决策树（按 $g(x)$ 类型）</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>$g$ 严格单调</strong>（如 $aX+b, e^X, \ln X$）→ 公式法 $f_Y(y) = f_X(h(y))|h'(y)|$</li>
+<li><strong>$g$ 分段单调</strong>（如 $X^2, |X|, \sin X$）→ 公式法分段相加 $\sum f_X(h_i)|h_i'|$</li>
+<li><strong>$g$ 不单调或难解</strong> → 分布函数法（万能但繁琐）</li>
+<li><strong>$g$ 含 max/min(X, c)</strong> → 分布函数法 + <strong>注意混合型（有质点）</strong></li>
+</ol>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>正态线性保正态</strong>：$X\sim N(\mu, \sigma^2),\,Y = aX+b\sim N(a\mu+b, a^2\sigma^2)$</li>
+<li><strong>$X\sim N(0,1)\Rightarrow X^2\sim\chi^2(1)$</strong>，密度 $\dfrac{1}{\sqrt{2\pi y}}e^{-y/2},\,y>0$</li>
+<li><strong>$X\sim U(0,1)\Rightarrow -\ln X\sim E(1)$</strong>（指数随机数生成）</li>
+<li><strong>$X\sim$ 任意连续 $F_X$，则 $Y = F_X(X)\sim U(0,1)$</strong>（概率积分变换）</li>
+<li><strong>$X\sim U(a,b)\Rightarrow Y = (X-a)/(b-a)\sim U(0,1)$</strong>（线性归一）</li>
+<li><strong>$X\sim N(\mu,\sigma^2)\Rightarrow Y = e^X$ 服从对数正态</strong>：$f_Y(y) = \dfrac{1}{y\sqrt{2\pi}\sigma}\exp[-(\ln y-\mu)^2/(2\sigma^2)]$</li>
+<li><strong>$X\sim N(0,1)\Rightarrow |X|$ 服从半正态分布</strong>：$f(y) = \dfrac{2}{\sqrt{2\pi}}e^{-y^2/2},\,y>0$，$E|X| = \sqrt{2/\pi}$</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>看到 $Y = X^2$，立刻想"双值反函数"</strong>，结果含 $\sqrt y$，定义域 $y>0$</li>
+<li><strong>看到 $Y = aX+b$，正态保正态</strong>，无需推导直接写答案</li>
+<li><strong>看到 $Y = \min(X, c)$ 或 $\max(X, c)$</strong>，警惕<strong>混合型！</strong> $P(Y=c)>0$</li>
+<li><strong>$X\sim N(0,1)$ 的偶函数</strong>：$E|X| = \sqrt{2/\pi}\approx 0.798$（必背）</li>
+<li><strong>$F$ 反求 $f$</strong>：$f(y) = F'(y)$（在 $f$ 连续点）</li>
+<li><strong>定义域反推</strong>：$g(x)$ 在 $X$ 支撑上的值域 = $Y$ 的支撑</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>公式法用在非单调函数</strong>：$Y=X^2$ 直接用公式法会漏一半，必须分段</li>
+<li><strong>忘 $|h'(y)|$ 的绝对值</strong> —— 单调减时 $h'<0$，必须取绝对值</li>
+<li><strong>$Y = \min/\max(X,c)$ 当作连续型</strong>：实际有质点 $P(Y=c)>0$，密度只在 $y\neq c$ 定义</li>
+<li><strong>反函数定义域写错</strong>：$Y = X^2,\,X\in\mathbb R$ 时 $Y\in[0,\infty)$</li>
+<li><strong>分段单调时忘加</strong>：$Y = X^2$ 时分段反函数 $\sqrt y, -\sqrt y$ 各贡献一项</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

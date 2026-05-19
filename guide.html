@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📊 期末备考指南 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="cheatsheet.html">← 考前救命卡</a></div>
+<h1>📊 期末备考指南（基于 14 套真题）</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#c0392b);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>📅 期末 2026-06-22（剩 ~5 周）</b> · 权重 100%（无期中）· 总分 100 · 时长 120 分钟<br>
+本指南基于 17-18 ~ 23-24 共 14 套真题统计分析，最近 4 套（20-21-2 起）题型已稳定。
+</div>
+
+<h2>一、题型固定结构（20-21-2 起锁定）</h2>
+<div class="card">
+<table>
+<thead><tr><th>题号</th><th>题型</th><th>分值</th><th>命中率</th></tr></thead>
+<tbody>
+<tr><td>选 1-12</td><td>单选（每题 3 分）</td><td>36</td><td>100%</td></tr>
+<tr><td>题 13</td><td>全概率 + Bayes</td><td>9</td><td>13/14</td></tr>
+<tr><td>题 14</td><td>二维联合 / 条件 / 函数分布</td><td>9</td><td>12+/14</td></tr>
+<tr><td>题 15</td><td>$Z=X+Y$ 卷积 / max-min</td><td>9</td><td>13/14</td></tr>
+<tr><td>题 16</td><td>Chebyshev + CLT 双胞胎</td><td>9</td><td>14/14</td></tr>
+<tr><td>题 17</td><td>估计量无偏/有效</td><td>9</td><td>13/14</td></tr>
+<tr><td>题 18</td><td>矩估计 + MLE</td><td>9</td><td>14/14</td></tr>
+<tr><td>题 19（压轴）</td><td>假设检验 / 综合估计</td><td>10</td><td>13/14</td></tr>
+</tbody>
+</table>
+<div class="tip"><strong>结论</strong>：以 22-23-2、23-24-1、23-24-2 三套作为最终题型模板复习——前 4 套是过渡。</div>
+</div>
+
+<h2>二、TOP 10 高频考点</h2>
+<div class="card">
+<table>
+<thead><tr><th>排名</th><th>考点</th><th>命中</th><th>典型出题方式</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>矩估计 + MLE</td><td>14/14</td><td>给 $f(x;\theta)$ 求两种估计</td></tr>
+<tr><td>1</td><td>CLT</td><td>14/14</td><td>$n$ 个 i.i.d. 求 $P(\sum X\in\ldots)$</td></tr>
+<tr><td>1</td><td>抽样分布构造</td><td>14/14</td><td>问 $aX+bY^2$ 服从什么</td></tr>
+<tr><td>1</td><td>二维联合 / 边缘</td><td>14/14</td><td>求归一化常数、边缘</td></tr>
+<tr><td>5</td><td>Bayes 公式</td><td>13/14</td><td>已知结果求来自某类</td></tr>
+<tr><td>5</td><td>假设检验</td><td>13/14</td><td>$\mu$ 的 $t$/$U$ 检验</td></tr>
+<tr><td>5</td><td>估计量评价</td><td>13/14</td><td>无偏/有效/相合判断</td></tr>
+<tr><td>5</td><td>函数分布卷积</td><td>13/14</td><td>$Z=X+Y$ 的密度</td></tr>
+<tr><td>9</td><td>Chebyshev</td><td>12/14</td><td>与 CLT 双对比</td></tr>
+<tr><td>9</td><td>二维条件密度</td><td>12/14</td><td>$f_{X|Y}$ 和条件概率</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>三、章节投入比例（推荐）</h2>
+<div class="card">
+<table>
+<thead><tr><th>排序</th><th>章节</th><th>投入</th><th>依据</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>第 6-8 章 数理统计</td><td><b>28%</b></td><td>占试卷 ~35 分（题 17-19 全在此 + 选择 3-4 题）</td></tr>
+<tr><td>2</td><td>第 3 章 多维随机变量</td><td><b>22%</b></td><td>题 14 + 15 必出 + 选择 2-3 题</td></tr>
+<tr><td>3</td><td>第 5 章 极限定理</td><td><b>15%</b></td><td>题 16 必出 + 选择 1-2 题</td></tr>
+<tr><td>4</td><td>第 1 章 概率基础</td><td><b>13%</b></td><td>题 13 必出 + 选择 1-2 题，性价比高</td></tr>
+<tr><td>5</td><td>第 4 章 数字特征</td><td><b>12%</b></td><td>不独立成大题，但贯穿题 14-19</td></tr>
+<tr><td>6</td><td>第 2 章 一维随机变量</td><td><b>10%</b></td><td>选择题 2-3 道</td></tr>
+</tbody>
+</table>
+<div class="tip"><strong>操作建议</strong>：
+<ul>
+<li>第 6-8 + 第 3 章合计 50% 时间，绝对重点</li>
+<li>第 1 章只需把 Bayes 模板练熟，5 道题即可</li>
+<li>第 4 章不独立刷题，融入其他章大题练习</li>
+</ul>
+</div>
+</div>
+
+<h2>四、必考"铁打"7 题模板</h2>
+<div class="card">
+
+<h3>题 13（9 分）全概率 + Bayes</h3>
+<div class="fb">
+<p><strong>识别</strong>：题干"三类 / 两类"对象 + 先验比例 + 条件概率。</p>
+<p><strong>解法</strong>：① 设 $B_i$ 类别（验证划分）；② $P(A)=\sum P(B_i)P(A|B_i)$；③ Bayes 求后验。</p>
+<p><strong>易错</strong>：(1) "恰两门击中" 要枚举 3 种组合；(2) Bayes 分母用上一问结果，别重算。</p>
+</div>
+
+<h3>题 14（9 分）二维条件 / 函数分布</h3>
+<div class="fb">
+<p><strong>识别</strong>：$f(x,y)=c\cdot g(x,y)\cdot\mathbf 1_D$，第一问求 $c$、边缘；第二问条件密度或条件概率。</p>
+<p><strong>解法</strong>：① 画区域；② $f_X=\int f\,dy$；③ $f_{X|Y}=f/f_Y$；④ 条件分布函数 = 条件密度积分。</p>
+<p><strong>易错</strong>：$P(X\leq 2|Y\leq 1)=\dfrac{P(X\leq 2,Y\leq 1)}{P(Y\leq 1)}$（二重积分）<strong>不同于</strong> $\int_{-\infty}^2 f_{X|Y}(x|1)\dd x$ —— 23-24-2 第 14 题专考此区别。</p>
+</div>
+
+<h3>题 15（9 分）卷积 / max-min</h3>
+<div class="fb">
+<p><strong>识别</strong>：独立 $X,Y$ 或联合，求 $Z=X+Y$ / $\max(X,Y)$ / $\min(X,Y)$ 的分布。</p>
+<p><strong>解法</strong>：卷积 $f_Z=\int f_X(x)f_Y(z-x)\dd x$，画图分段；max 用乘积 $\prod F$，min 用 $1-\prod(1-F)$。</p>
+<p><strong>易错</strong>：周长 $Z=2(X+Y)$ 时要乘 $1/2$（$Z/2=X+Y$ 的卷积）。</p>
+</div>
+
+<h3>题 16（9 分）Chebyshev + CLT 双胞胎</h3>
+<div class="fb">
+<p><strong>识别</strong>：1000 个独立 $X_i$，问某区间概率。</p>
+<p><strong>解法</strong>：(1) Chebyshev 给下界；(2) CLT 给精确值。</p>
+<p><strong>易错</strong>：单位换算（8 小时 = 480 分）；Chebyshev 给的是"至少为 ?"。</p>
+</div>
+
+<h3>题 17（9 分）估计量评价</h3>
+<div class="fb">
+<p><strong>识别</strong>：给 2-3 个统计量，判无偏 / 矫正 / 有效。</p>
+<p><strong>解法</strong>：① 算 $E(T_i)$，矫正系数 $c_i=\theta/E(T_i)$；② 矫正后比方差；③ 一致性用 Chebyshev。</p>
+<p><strong>关键公式</strong>：$E(\bar X^2)=D(\bar X)+(E\bar X)^2=\sigma^2/n+\mu^2$（高频用到）。</p>
+</div>
+
+<h3>题 18（9 分）矩估计 + MLE</h3>
+<div class="fb">
+<p><strong>识别</strong>：给 $f(x;\theta)$，求两种估计。</p>
+<p><strong>解法</strong>：① 矩估计 $E(X)=g(\theta)\to\hat\theta$；② MLE 求 $\ell'(\theta)=0$。</p>
+<p><strong>易错</strong>：定义域含 $\theta$ 时（如 $U(0,\theta)$、$f=2\theta^2 x^{-3},x>\theta$），MLE 是 $\min$ 或 $\max$ 不是导数 0。</p>
+</div>
+
+<h3>题 19（10 分）假设检验综合</h3>
+<div class="fb">
+<p><strong>识别</strong>：一组样本，分别检验 $\mu$ 和 $\sigma^2$。一问 P 值法、一问经典法。</p>
+<p><strong>解法</strong>：$\mu$ 检验用 $t(n-1)$；$\sigma^2$ 检验用 $\chi^2(n-1)$。</p>
+<p><strong>易错</strong>：单/双侧；P 值小 = 拒绝 $H_0$；$\sigma_0^2$ "不超过" 是单侧 $H_0$。</p>
+</div>
+</div>
+
+<h2>五、22-24 近三年新趋势</h2>
+<div class="card">
+<div class="fb"><div class="t">新增题型</div>
+<ul>
+<li><strong>P 值检验法</strong>大量出现（22-23-2 第 8 题、23-24-1 第 5 题、23-24-2 第 19 题）</li>
+<li><strong>"差到好"有效性排序</strong>成新模板（23-24-2 第 17 题）—— 三个估计量"无偏 + 矫正 + 排序"三连</li>
+<li><strong>(0-1) 分布的复合事件</strong>（23-24-2 第 3 题）—— 考独立性 + 离散组合计算</li>
+<li><strong>$F\sim F(m,m)$ 对称性</strong>（23-24-2 第 10 题）：$P(F>1)=1/2$，纯概念题</li>
+</ul>
+</div>
+
+<div class="fb"><div class="t">删减</div>
+<ul>
+<li>填空题完全消失（20-21-2 起）</li>
+<li>大题从 8 减为 7（题 19 即压轴）</li>
+<li>几何概型 / Buffon 投针纯几何题几乎不出</li>
+</ul>
+</div>
+
+<div class="fb"><div class="t">出题人偏好</div>
+<ol>
+<li>喜欢二维正态 $N(0,1;0,4;-0.5)$（23-24-2 第 1、7 题）</li>
+<li>喜欢"配对问题"（hat-matching，$E=1$）</li>
+<li>喜欢区域型联合密度：$\{0<y<x\}$、$\{y^2<x<1\}$、$\{0<x<y<1\}$</li>
+<li>喜欢 CLT 反查："$n$ 至少为多少"</li>
+<li>连续 3 套都考 $E(\bar X^2)=\sigma^2/n+\mu^2$（估计量矫正关键）</li>
+</ol>
+</div>
+</div>
+
+<h2>六、最高 ROI 5 道练习题（必做！）</h2>
+<div class="card">
+<div class="ex">
+<strong>★★★★★ 题 1：23-24-2 第 17 题（估计量"差到好"排序）</strong>
+<p>$X\sim N(0,\sigma^2)$，对 $S_1^2=\frac{1}{n}\sum X_i^2,\,S_2^2=\frac{1}{n}\sum(X_i-\bar X)^2,\,S_3^2=\bar X^2$ 做无偏判断 + 矫正 + 方差比较。</p>
+<p><strong>覆盖</strong>：估计量评价、卡方分布、方差计算。连续 3 套出此题模板。</p>
+</div>
+
+<div class="ex">
+<strong>★★★★★ 题 2：23-24-2 第 19 题（双假设检验：P 值 + 经典）</strong>
+<p>车轴直径 $\sim N(\mu,\sigma^2)$，频数表 + 25 件样本。(1) P 值法检验 $\mu=4$；(2) 经典法检验 $\sigma^2\leq 0.1$。</p>
+<p><strong>覆盖</strong>：假设检验全套，刚考过的 P 值新趋势。</p>
+</div>
+
+<div class="ex">
+<strong>★★★★ 题 3：22-23-2 第 19 题（协方差无偏 + 一致性）</strong>
+<p>$(X,Y)\sim N(1,4;2,9;0.2)$。证明 $S_n=\frac{1}{n}\sum(X_i-\bar X)(Y_i-\bar Y)$ 矫正成无偏，再证一致性。</p>
+<p><strong>覆盖</strong>：二维正态 + 估计量评价 + 协方差。</p>
+</div>
+
+<div class="ex">
+<strong>★★★★★ 题 4：23-24-2 第 13 题（三门高射炮 Bayes）</strong>
+<p>三门炮命中率 0.4/0.5/0.7，按击中数定摧毁概率。求被摧毁的概率 + 反推恰两门击中。</p>
+<p><strong>覆盖</strong>：全概率 + Bayes 标准模板。</p>
+</div>
+
+<div class="ex">
+<strong>★★★★ 题 5：20-21-2 第 18 题（$n$ 球投匣依概率收敛）</strong>
+<p>$n$ 个带号球放 $n$ 匣，证 $\lim P(|S_n-1|\geq n\epsilon)=0$。</p>
+<p><strong>覆盖</strong>：Chebyshev + 配对问题（$E(S_n)=D(S_n)=1$）。</p>
+</div>
+
+<div class="tip"><strong>做完这 5 题</strong>，你已经稳拿 46 分（题 13 + 17 + 19 + 一题 16/15）。剩下时间刷选择 + 卷剩余大题。</div>
+</div>
+
+<h2>七、5 周冲刺计划</h2>
+<div class="card">
+<table>
+<thead><tr><th>周次</th><th>日期</th><th>核心任务</th><th>每日时长</th></tr></thead>
+<tbody>
+<tr><td>第 1 周</td><td>5/19 - 5/25</td><td>跟课进度 + 补 6.3-6.6（点估计/区间估计/假设检验）<br>过完第 3 章所有题型</td><td>1 h / 天</td></tr>
+<tr><td>第 2 周</td><td>5/26 - 6/1</td><td>真题精做 1：22-23-2 完整一套（120 分钟限时）<br>错题整理；过第 5 章</td><td>1.5 h / 天</td></tr>
+<tr><td>第 3 周</td><td>6/2 - 6/8</td><td>真题精做 2：23-24-1、23-24-2 各一套<br>第 6/7/8 章专题攻关</td><td>2 h / 天</td></tr>
+<tr><td>第 4 周</td><td>6/9 - 6/15</td><td>真题精做 3：20-21-2、19-20-1 限时<br>错题本第二轮；上面 5 道 ROI 题再做一遍</td><td>2 h / 天</td></tr>
+<tr><td>第 5 周</td><td>6/16 - 6/22</td><td>cheatsheet 反复看；考前一晚刷 5-6 道选择保持手感<br>最后 24 h 看二级结论 + 模板</td><td>2.5 h / 天</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2>八、考前 3 天的清单</h2>
+<div class="card">
+<div class="note">
+<strong>D-3</strong>：把 cheatsheet 完整过一遍；做完所有 5 道 ROI 题再回顾一遍。<br>
+<strong>D-2</strong>：22-23-2 / 23-24-1 / 23-24-2 中任选一套<strong>不看答案做完</strong>，对照评分。<br>
+<strong>D-1</strong>：只看错题本 + 30 条二级结论 + 答题模板。不刷新题。<br>
+<strong>考前 30 分钟</strong>：cheatsheet "30 分钟看这些"那段。<br>
+<strong>考中</strong>：按选择 30 分钟 + 大题 90 分钟分配；遇到难题先跳，回头补；最后 5 分钟检查。
+</div>
+</div>
+
+<h2>九、目标分数评估</h2>
+<div class="card">
+<div class="fb">
+<p>按 FXY 的状况（"感觉基本都理解但没考过"）和投入：</p>
+<ul>
+<li><strong>最低保底</strong>（5 周认真复习）：75-80 分</li>
+<li><strong>合理预期</strong>（完成本指南 + 5 道 ROI 题）：82-88 分</li>
+<li><strong>拼一拼</strong>（刷完近 5 套真题 + 错题二轮）：88-93 分</li>
+</ul>
+<p>本课无期中，期末就是全部。投入和回报呈线性，<strong>没有玄学</strong>，按计划走即可。</p>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

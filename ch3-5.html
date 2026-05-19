@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.5 多维随机变量函数的分布 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch3-3.html">← 3.3-3.4</a><a href="ch4-1.html">4.1 期望 →</a></div>
+<h1>3.5 多维随机变量函数的分布 ⭐⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套命中 13 套（93%）。每年大题第 15 题（9 分）的核心。<br>
+<b>典型出题</b>：$Z=X+Y$ 卷积 · $\max/\min$ 极值 · $X^2+Y^2$（导出 $\chi^2(2)$）· 周长 $Z=2(X+Y)$ 的密度。
+</div>
+
+<h2 id="s1">一、分布函数法（万能）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>$Z = g(X, Y)$，分布函数</p>
+$$F_Z(z) = P(g(X, Y)\leq z) = \iint_{g(x,y)\leq z} f(x, y)\dd x\,\dd y$$
+<p>对 $z$ 求导得 $f_Z$。</p>
+</div>
+</div>
+
+<h2 id="s2">二、和的分布：卷积公式 ⭐</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 连续型卷积公式</div>
+<p>$Z = X+Y$，密度</p>
+$$f_Z(z) = \int_{-\infty}^{+\infty}f(x, z-x)\dd x = \int_{-\infty}^{+\infty}f(z-y, y)\dd y$$
+<p>独立时简化为<strong>卷积</strong>：</p>
+$$f_Z(z) = \int_{-\infty}^{+\infty}f_X(x)f_Y(z-x)\dd x$$
+</div>
+
+<div class="fb"><div class="t">离散型卷积</div>
+$$P(Z = r) = \sum_k P(X = k)P(Y = r-k)$$
+</div>
+
+<div class="tip"><strong>分段技巧</strong>：画 $f_X(x)\cdot f_Y(z-x)$ 同时非零的 $(x, z)$ 区域，按 $z$ 分段确定积分上下限。<strong>这是卷积题最容易出错的地方</strong>。</div>
+
+<div class="ex"><strong>题 ★★★（三角分布）</strong>：$X, Y\sim U(0, 1)$ 独立，求 $Z = X+Y$ 的密度。
+<div class="sol"><div class="st">解</div>
+<p>$f_X(x) = 1,\ 0 < x < 1$，$f_Y(z-x) = 1$ 当 $0 < z-x < 1$ 即 $z-1 < x < z$。</p>
+<p>两个非零范围交集：$\max(0, z-1) < x < \min(1, z)$。分段：</p>
+<ul>
+<li>$0\leq z\leq 1$：$x\in(0, z)$，$f_Z(z) = z$</li>
+<li>$1 < z\leq 2$：$x\in(z-1, 1)$，$f_Z(z) = 2-z$</li>
+<li>否则 $f_Z = 0$</li>
+</ul>
+<p>三角分布，对称于 $z = 1$。</p>
+</div></div>
+
+<div class="ex"><strong>题（独立正态相加）</strong>：$X\sim N(\mu_1, \sigma_1^2),\ Y\sim N(\mu_2, \sigma_2^2)$ 独立，求 $X+Y$ 分布。
+<div class="sol"><div class="st">解</div>
+<p>直接用<strong>可加性</strong>：$X+Y\sim N(\mu_1+\mu_2, \sigma_1^2+\sigma_2^2)$。无需做卷积！</p>
+<p>更一般：$aX+bY\sim N(a\mu_1+b\mu_2, a^2\sigma_1^2+b^2\sigma_2^2)$。</p>
+</div></div>
+
+<div class="warn"><strong>周长陷阱（多年真题）</strong>：若题问 $Z = 2(X+Y)$ 的密度，先用卷积求 $W = X+Y$ 密度，再用线性变换公式 $f_Z(z) = \dfrac{1}{2}f_W(z/2)$。<strong>记得乘 1/2</strong>！</div>
+</div>
+
+<h2 id="s3">三、可加性分布表（必背！）</h2>
+<div class="card">
+<table>
+<thead><tr><th>分布</th><th>条件</th><th>结论</th></tr></thead>
+<tbody>
+<tr><td>二项 $B(n,p)$</td><td>独立、<strong>同 $p$</strong></td><td>$B(n_1, p) + B(n_2, p) = B(n_1+n_2, p)$</td></tr>
+<tr><td>Poisson $P(\lambda)$</td><td>独立</td><td>$P(\lambda_1) + P(\lambda_2) = P(\lambda_1+\lambda_2)$</td></tr>
+<tr><td>正态 $N(\mu, \sigma^2)$</td><td>独立</td><td>$\sum a_iX_i\sim N(\sum a_i\mu_i, \sum a_i^2\sigma_i^2)$</td></tr>
+<tr><td>卡方 $\chi^2(n)$</td><td>独立</td><td>$\chi^2(n_1)+\chi^2(n_2) = \chi^2(n_1+n_2)$</td></tr>
+<tr><td>Gamma $\Gamma(\alpha,\beta)$</td><td>独立、<strong>同 $\beta$</strong></td><td>$\Gamma(\alpha_1, \beta)+\Gamma(\alpha_2, \beta) = \Gamma(\alpha_1+\alpha_2, \beta)$</td></tr>
+</tbody>
+</table>
+<div class="warn">指数分布<strong>不</strong>具有可加性（除非视为 $\Gamma(1, \lambda)$，则 $n$ 个独立 $E(\lambda)$ 的和 $\sim\Gamma(n, \lambda)$）。</div>
+</div>
+
+<h2 id="s4">四、极值分布</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 独立 $X_1, \ldots, X_n$ 的 max / min</div>
+<p><strong>最大值</strong> $M = \max\{X_i\}$：</p>
+$$F_M(z) = P(\max X_i\leq z) = P(\text{每个 }X_i\leq z) = \prod_{i=1}^n F_{X_i}(z)$$
+<p><strong>最小值</strong> $N = \min\{X_i\}$：</p>
+$$F_N(z) = 1-P(\min X_i > z) = 1-\prod_{i=1}^n[1-F_{X_i}(z)]$$
+<p>i.i.d. 同分布：$F_M(z) = F(z)^n$，$F_N(z) = 1-(1-F(z))^n$。</p>
+</div>
+
+<div class="ex"><strong>题 ★★★（指数串并联，经典）</strong>：$n$ 个独立 $E(\lambda)$ 元件，求串联（取 min）和并联（取 max）的寿命分布。
+<div class="sol"><div class="st">解</div>
+<p><strong>串联（min）</strong>：$F_N(z) = 1-(e^{-\lambda z})^n = 1-e^{-n\lambda z}$，即 $N\sim E(n\lambda)$。</p>
+<p><strong>并联（max）</strong>：$F_M(z) = (1-e^{-\lambda z})^n$，无简单形式。$E(M) = \dfrac{1}{\lambda}\sum_{k=1}^n\dfrac{1}{k}$（调和级数）。</p>
+<p><strong>结论必记</strong>：$n$ 个 i.i.d. $E(\lambda)$ 取 min 仍是指数分布，参数变 $n\lambda$。</p>
+</div></div>
+</div>
+
+<h2 id="s5">五、商的分布</h2>
+<div class="card">
+<div class="fb">
+<p>$Z = Y/X$（$X\neq 0$）：</p>
+$$f_Z(z) = \int_{-\infty}^{+\infty}|x|\,f(x, xz)\dd x$$
+<p>独立时：$f_Z(z) = \int|x|f_X(x)f_Y(xz)\dd x$。</p>
+</div>
+</div>
+
+<h2 id="s6">六、必记结论 ★★★</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p><strong>$X^2+Y^2$ 的分布</strong>：$X, Y\sim N(0, 1)$ 独立 $\Rightarrow X^2+Y^2\sim\chi^2(2) = E(1/2)$。</p>
+<p>密度：$f(z) = \dfrac{1}{2}e^{-z/2},\ z > 0$。</p>
+<p><strong>这条结论在多年大题压轴里被反复利用</strong>，特别是涉及"求圆内点到原点距离的分布"的几何题。</p>
+</div>
+
+<div class="ex"><strong>例（旋转对称）</strong>：$(X, Y)\sim N(0, 1, 0, 1, 0)$（独立），求 $R = \sqrt{X^2+Y^2}$ 的分布。
+<div class="sol"><div class="st">解</div>
+<p>$R^2 = X^2+Y^2\sim E(1/2)$。$F_{R^2}(t) = 1-e^{-t/2}$。</p>
+<p>$F_R(r) = P(R\leq r) = P(R^2\leq r^2) = 1-e^{-r^2/2},\ r > 0$</p>
+<p>$f_R(r) = re^{-r^2/2}$ —— 这是 <strong>Rayleigh 分布</strong>！</p>
+</div></div>
+</div>
+
+<h2 id="s7">七、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>卷积分段错误</strong>：忘记 $f_X$ 和 $f_Y(z-x)$ 必须<strong>同时非零</strong>，画图！</li>
+<li><strong>线性变换忘除以系数</strong>：周长 $Z = 2(X+Y)$ 的密度要 $\frac{1}{2}f_W(z/2)$</li>
+<li><strong>min 公式</strong>："1 减各自补集乘积"，注意补集</li>
+<li><strong>可加性忘加独立性条件</strong>：所有可加性都需要独立</li>
+<li><strong>二项可加要求同 $p$</strong>：$B(n_1, p_1) + B(n_2, p_2)$ 不等于 $B(n_1+n_2, ?)$</li>
+<li><strong>指数无可加性</strong>：但视为 $\Gamma(1, \lambda)$ 时有</li>
+<li><strong>商分布忘 $|x|$ 系数</strong>：$f_Z(z) = \int|x|f(x, xz)\dd x$</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li><strong>"和用卷积，max 乘 $F$，min 用 $1-(1-F)^n$"</strong></li>
+<li><strong>"可加性永远需要独立"</strong></li>
+<li><strong>"周长记得乘 1/2"</strong></li>
+<li><strong>"两 N(0,1) 平方和 = $\chi^2(2) = E(1/2)$"</strong></li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">八、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>题型决策树（按 $Z$ 类型）</h3>
+<div class="fb" style="border-color:#27ae60">
+<table>
+<thead><tr><th>$Z$ 类型</th><th>方法</th><th>关键</th></tr></thead>
+<tbody>
+<tr><td>$Z = X+Y$（独立）</td><td>卷积 $\int f_X(x)f_Y(z-x)\dd x$</td><td>画图分段</td></tr>
+<tr><td>$Z = X+Y$（不独立）</td><td>$\int f(x, z-x)\dd x$</td><td>用联合密度</td></tr>
+<tr><td>$Z = \max(X_i)$</td><td>$F_Z = \prod F_{X_i}$</td><td>独立时直接</td></tr>
+<tr><td>$Z = \min(X_i)$</td><td>$F_Z = 1-\prod(1-F_{X_i})$</td><td>用补集</td></tr>
+<tr><td>$Z = X/Y$</td><td>$\int|x|f(x,xz)\dd x$</td><td>带 $|x|$</td></tr>
+<tr><td>$Z = X-Y$ 或 $X\cdot Y$</td><td>分布函数法</td><td>分段</td></tr>
+<tr><td>$Z = a(X+Y)$ 周长型</td><td>先卷积，再线性变换</td><td><strong>记得乘 $1/a$</strong></td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>必背二级结论（卷积速查）</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>$U(0,1)+U(0,1) = $ 三角分布</strong>（密度 $z$ 在 $[0,1]$，$2-z$ 在 $[1,2]$）</li>
+<li><strong>独立正态相加保正态</strong>：$X+Y\sim N(\mu_1+\mu_2,\sigma_1^2+\sigma_2^2)$</li>
+<li><strong>独立 Poisson 相加保 Poisson</strong>：$P(\lambda_1)+P(\lambda_2) = P(\lambda_1+\lambda_2)$</li>
+<li><strong>独立同 $p$ 二项相加</strong>：$B(n_1,p)+B(n_2,p) = B(n_1+n_2,p)$（必须同 $p$！）</li>
+<li><strong>$n$ 个独立 $E(\lambda)$ 取 min</strong>：$\sim E(n\lambda)$（参数变大）</li>
+<li><strong>$X^2+Y^2$（$X,Y\sim N(0,1)$ 独立）</strong>：$\sim\chi^2(2) = E(1/2)$，密度 $\frac{1}{2}e^{-z/2}$</li>
+<li><strong>$\sqrt{X^2+Y^2}$（$X,Y\sim N(0,1)$ 独立）</strong>：Rayleigh 分布，密度 $re^{-r^2/2},\,r>0$</li>
+<li><strong>$n$ 个独立 $E(\lambda)$ 之和</strong>：$\sim\Gamma(n,\lambda)$，密度 $\frac{\lambda^n}{(n-1)!}x^{n-1}e^{-\lambda x}$</li>
+<li><strong>独立 $\chi^2$ 相加</strong>：$\chi^2(n_1)+\chi^2(n_2) = \chi^2(n_1+n_2)$</li>
+<li><strong>$n$ 个 i.i.d. $U(0,1)$ 中位数渐近 $N(1/2, 1/(4n))$</strong>（CLT 应用）</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>看到独立正态相加，直接套可加性</strong>，不用卷积</li>
+<li><strong>卷积分段技巧</strong>：找 $f_X(x) > 0$ 和 $f_Y(z-x) > 0$ 同时成立的 $(x,z)$ 区域，画图分段</li>
+<li><strong>周长 / 距离 / 倍数</strong>：先求 $X+Y$ 或 $\sqrt{X^2+Y^2}$，再用变量代换</li>
+<li><strong>"$n$ 个元件串联取 min"</strong> → 直接 $E(n\lambda)$</li>
+<li><strong>检查是否独立</strong>：可加性<strong>必须</strong>独立！否则 $D(X+Y)\neq D(X)+D(Y)$</li>
+<li><strong>验算技巧</strong>：算完 $f_Z$ 后积分 = 1 检验</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>卷积分段错误</strong>：忘记 $f_X(x)$ 与 $f_Y(z-x)$ <strong>同时非零</strong>的范围 → 画图！</li>
+<li><strong>线性变换忘除以系数</strong>：周长 $Z = 2(X+Y)$ 的密度要乘 $1/2$（$Z/2 = X+Y$ 的卷积）</li>
+<li><strong>$\min$ 公式记错</strong>："$1$ 减各自补集乘积"，不要忘减号</li>
+<li><strong>用可加性忘加独立性条件</strong>：所有可加性都需要独立</li>
+<li><strong>二项可加要求同 $p$</strong>：$B(n_1,p_1)+B(n_2,p_2)$ <strong>不是</strong> $B(n_1+n_2,?)$</li>
+<li><strong>指数无可加性</strong>：但视为 $\Gamma(1,\lambda)$ 时有</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.4 随机事件的独立性 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch1-3.html">← 1.3</a><a href="ch2-1.html">2.1 分布函数 →</a></div>
+<h1>1.4 随机事件的独立性 ⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 7 套。选择题 1-2 题，常考"判断对错"和"两两 vs 相互独立"。<br>
+<b>典型出题</b>：判断 $A, B, C$ 相互独立的充要条件 · 串并联电路 · 100 人血清混合 · 独立事件至少一个发生。
+</div>
+
+<h2 id="s1">一、两事件独立</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 定义</div>
+<p>事件 $A, B$ 独立 $\Leftrightarrow P(AB) = P(A)P(B)$</p>
+<p>等价：若 $P(B) > 0$，$A, B$ 独立 $\Leftrightarrow P(A\mid B) = P(A)$（条件下不改变 $A$ 的概率）。</p>
+</div>
+
+<div class="fb"><div class="t">独立性传递到对立</div>
+<p>若 $A, B$ 独立，则下列三组也独立：</p>
+$$\{A, \bar B\},\quad\{\bar A, B\},\quad\{\bar A, \bar B\}$$
+<p>证明（以 $\{A, \bar B\}$ 为例）：$P(A\bar B) = P(A)-P(AB) = P(A)-P(A)P(B) = P(A)(1-P(B)) = P(A)P(\bar B)$。</p>
+</div>
+
+<div class="warn"><strong>独立 vs 互斥</strong>（高频混淆点）：
+<ul>
+<li><strong>互斥</strong>：$AB = \varnothing$，即 $P(AB) = 0$</li>
+<li><strong>独立</strong>：$P(AB) = P(A)P(B)$</li>
+<li>若 $0 < P(A), P(B) < 1$，两者<strong>不能同时成立</strong>（独立时 $P(AB) > 0$ 不互斥）</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s2">二、多事件独立</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 三事件相互独立（注意有 4 个等式！）</div>
+$$P(AB) = P(A)P(B),\;P(AC) = P(A)P(C),\;P(BC) = P(B)P(C)$$
+$$\text{且}\quad P(ABC) = P(A)P(B)P(C)$$
+<p>前 3 个 = 两两独立；加最后 1 个 = 相互独立。</p>
+</div>
+
+<div class="warn"><strong>"两两独立 ⇏ 相互独立！"</strong> 这是选择题常出陷阱。</div>
+
+<div class="ex"><strong>反例 ★★（经典）</strong>：均匀掷一颗骰子。
+<ul>
+<li>$A$ = "1 或 2"，$B$ = "2 或 3"，$C$ = "1 或 3"</li>
+</ul>
+<div class="sol"><div class="st">分析</div>
+<p>每事件概率 1/3。$P(AB) = P(\{2\}) = 1/6 = (1/3)^2$，<strong>两两独立</strong>。</p>
+<p>但 $ABC = \varnothing$（不存在同时属于三个的点），$P(ABC) = 0 \neq (1/3)^3 = 1/27$，<strong>不相互独立</strong>。</p>
+</div></div>
+
+<div class="fb"><div class="t">$n$ 事件相互独立的定义</div>
+<p>$A_1, \ldots, A_n$ 相互独立 $\Leftrightarrow$ 对任意 $k\geq 2$ 个事件 $A_{i_1}, \ldots, A_{i_k}$：</p>
+$$P(A_{i_1}\cdots A_{i_k}) = \prod_{j=1}^k P(A_{i_j})$$
+<p>共需验证 $\binom{n}{2}+\binom{n}{3}+\cdots+\binom{n}{n} = 2^n-n-1$ 个等式。$n=3$ 时是 4 个，$n=4$ 时是 11 个。</p>
+</div>
+</div>
+
+<h2 id="s3">三、独立事件的运算</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 至少一个发生（独立时）</div>
+<p>$A_1, \ldots, A_n$ 相互独立：</p>
+$$P\!\left(\bigcup_{i=1}^n A_i\right) = 1-\prod_{i=1}^n[1-P(A_i)]$$
+<p>同概率 $P(A_i) = p$ 时：$P = 1-(1-p)^n$</p>
+</div>
+
+<div class="ex"><strong>题 ★★（小概率不可忽视）</strong>：某地区慢性病每年发病率 0.004。今年 100 人血清混合检验。求至少一人患病的概率。
+<div class="sol"><div class="st">解</div>
+$$P = 1-(1-0.004)^{100}\approx 1-e^{-0.4}\approx 0.33$$
+<p>单次 0.4% 看似很小，100 次累积达 1/3。<strong>$n$ 大时小概率累积成大概率</strong>——临床检验、流行病学的核心。</p>
+</div></div>
+
+<div class="ex"><strong>题（电路通断）</strong>：四开关 $A_1, A_2, A_3, A_4$ 闭合概率均 $p$，独立。$A_1A_2$ 串联与 $A_3A_4$ 串联，两组并联。求电路通的概率。
+<div class="sol"><div class="st">解</div>
+<p>串联通 = 两个都闭：$P_{\text{串}} = p^2$。</p>
+<p>并联通 = 至少一组通：$P_{\text{并}} = 1-(1-p^2)^2 = 2p^2-p^4$。</p>
+</div></div>
+
+<div class="ex"><strong>题（更复杂电路）</strong>：$A_1$ 与 $A_2$ 串联，再与 $A_3$ 并联。$P(A_i) = p$ 独立。求通的概率。
+<div class="sol"><div class="st">解</div>
+<p>串联通 $= p^2$，整体并联通 $= 1-(1-p^2)(1-p) = p^2+p-p^3$。</p>
+</div></div>
+</div>
+
+<h2 id="s4">四、独立可传递到函数（重要！）</h2>
+<div class="card">
+<div class="fb">
+<p>若 $A_1, \ldots, A_n$ 相互独立，则它们的任意子集函数也相互独立。</p>
+<p>例如：$A_1\cup A_2$ 与 $A_3A_4$ 也独立（基于不同的索引集合）。</p>
+</div>
+</div>
+
+<h2 id="s5">五、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li>"<strong>两两独立 + 同概率 $p$ → 相互独立</strong>"——错！必须四个等式都验证</li>
+<li>"<strong>互斥 + $0<P<1$ → 独立</strong>"——错，刚好相反</li>
+<li>"<strong>独立的对立也独立</strong>"——这条容易忘，证明题常考</li>
+<li>串联看"全都闭"（$\prod$）；并联看"至少一个闭"（$1-\prod(1-)$）</li>
+<li>看到 "100 人每人 0.4% 患病"立刻用对立计算"至少一人患病" $= 1-(1-p)^n$</li>
+<li>$P(A\cup B) = P(A)+P(B)-P(AB)$ —— 独立时简化但不要忘加法</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li><strong>"独立 ⇔ 乘积等于乘积"</strong></li>
+<li><strong>"互斥 ⇔ 交集为空"</strong></li>
+<li><strong>"对立 ⇔ 互斥 + 并为全集"</strong></li>
+<li><strong>"独立 + 至少一个发生：$1-\prod(1-p_i)$"</strong></li>
+<li><strong>"独立可传递到对立"</strong></li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">六、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>判独立题型</h3>
+<div class="fb" style="border-color:#27ae60">
+<ul>
+<li><strong>两事件</strong>：验 $P(AB) = P(A)P(B)$</li>
+<li><strong>三事件相互独立</strong>：验 4 个等式（含 $P(ABC) = P(A)P(B)P(C)$）</li>
+<li><strong>$n$ 事件相互独立</strong>：验 $2^n-n-1$ 个等式</li>
+</ul>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>独立传递到对立</strong>：$\{A,B\}, \{A,\bar B\}, \{\bar A,B\}, \{\bar A,\bar B\}$ 同时独立或同时不独立</li>
+<li><strong>独立 + 至少一个发生</strong>：$P(\bigcup A_i) = 1-\prod(1-P(A_i))$</li>
+<li><strong>同概率独立 $n$ 事件</strong>：$P(\bigcup A_i) = 1-(1-p)^n$</li>
+<li><strong>独立 ⇏ 互斥</strong>（除 $P=0$ 或 $1$）</li>
+<li><strong>互斥 + $0<P<1$ ⇏ 独立</strong></li>
+<li><strong>两两独立 ⇏ 相互独立</strong>（缺 $P(ABC) = $ 乘积条件）</li>
+<li><strong>独立 ⇒ 条件概率不变</strong>：$P(A\mid B) = P(A)$</li>
+<li><strong>$n$ 重 Bernoulli</strong>：$n$ 次独立 + 同 $p$ 试验</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>电路通断</strong>：串联通 = 所有通（$\prod p$）；并联通 = 至少一通（$1-\prod(1-p)$）</li>
+<li><strong>小概率 $n$ 重叠加</strong>：$1-(1-p)^n\approx np$（$p$ 极小，泰勒展开）或 $\approx 1-e^{-np}$（$n$ 大）</li>
+<li><strong>判独立先看物理意义</strong>：常识上是否相互影响</li>
+<li><strong>$P(A\mid B) = P(A)$ 反推独立</strong>：若条件不变就是独立</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>两两独立 → 相互独立</strong>（错）：必须验 $P(ABC) = P(A)P(B)P(C)$</li>
+<li><strong>独立可传递到对立</strong>：常被忘记</li>
+<li><strong>互斥 + 独立</strong>：$0<P<1$ 时不能同时成立</li>
+<li><strong>电路题分串并联</strong>：搞清结构图再算</li>
+<li><strong>大数 $n$ 时小概率累积</strong>：100 人 0.4% 的累积概率 0.33，不是小数</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

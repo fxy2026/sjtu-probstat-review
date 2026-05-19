@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4.2 方差 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch4-1.html">← 4.1</a><a href="ch4-3.html">4.3 协方差 →</a></div>
+<h1>4.2 方差 ⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：每年大题中频繁作为工具。结合期望/协方差出题。<br>
+<b>典型出题</b>：$D(X-Y)$ 独立时的符号 · $D(\bar X) = \sigma^2/n$ · $E(\bar X^2) = \sigma^2/n+\mu^2$（连考 3 套！）。
+</div>
+
+<h2 id="s1">一、方差与标准差</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+$$D(X) = E[(X-EX)^2] = E(X^2)-[E(X)]^2$$
+<p>标准差 $\sigma_X = \sqrt{D(X)}$，与 $X$ 同量纲。</p>
+</div>
+
+<div class="fb"><div class="t">标准化随机变量</div>
+$$X^* = \dfrac{X-EX}{\sigma_X},\quad E(X^*) = 0,\;D(X^*) = 1$$
+</div>
+
+<div class="tip">$D(X) = 0\Rightarrow X$ 几乎处处等于 $E(X)$（即 $P(X=EX) = 1$）。</div>
+</div>
+
+<h2 id="s2">二、方差的性质（必背）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<ol>
+<li>$D(C) = 0$（常数无方差）</li>
+<li>$D(CX) = C^2 D(X)$（注意 $C^2$，不是 $|C|$）</li>
+<li>$D(X+C) = D(X)$（平移不改变方差）</li>
+<li><strong>$D(X\pm Y) = D(X)+D(Y)\pm 2\Cov(X, Y)$</strong></li>
+<li><strong>$X, Y$ 独立</strong> $\Rightarrow D(X+Y) = D(X)+D(Y)$；$D(X-Y) = D(X)+D(Y)$ <strong>（同号！）</strong></li>
+<li>多个独立：$D(\sum a_iX_i) = \sum a_i^2 D(X_i)$</li>
+</ol>
+</div>
+
+<div class="warn"><strong>易错</strong>：$D(X-Y)\neq D(X)-D(Y)$！独立时仍是 $D(X)+D(Y)$，<strong>方差永远非负</strong>，加减号都变加。</div>
+</div>
+
+<h2 id="s3">三、七大分布方差总表（必背！）</h2>
+<div class="card">
+<table>
+<thead><tr><th>分布</th><th>$E(X)$</th><th>$D(X)$</th></tr></thead>
+<tbody>
+<tr><td>0-1</td><td>$p$</td><td>$p(1-p)$</td></tr>
+<tr><td>$B(n, p)$</td><td>$np$</td><td>$np(1-p)$</td></tr>
+<tr><td>$P(\lambda)$</td><td>$\lambda$</td><td>$\lambda$（=$E$！）</td></tr>
+<tr><td>$G(p)$</td><td>$1/p$</td><td>$(1-p)/p^2$</td></tr>
+<tr><td>$U(a, b)$</td><td>$(a+b)/2$</td><td>$(b-a)^2/12$</td></tr>
+<tr><td>$E(\lambda)$</td><td>$1/\lambda$</td><td>$1/\lambda^2$</td></tr>
+<tr><td>$N(\mu, \sigma^2)$</td><td>$\mu$</td><td>$\sigma^2$</td></tr>
+<tr><td>$\chi^2(n)$</td><td>$n$</td><td>$2n$</td></tr>
+</tbody>
+</table>
+</div>
+
+<h2 id="s4">四、典型例题</h2>
+<div class="card">
+<div class="ex"><strong>题 ★（独立正态相加减）</strong>：$X\sim N(1, 0.5),\,Y\sim N(0, 0.5)$ 独立，求 $E|X-Y|$。
+<div class="sol"><div class="st">解</div>
+<p>$Z = X-Y\sim N(1, 1)$。令 $W = Z-1\sim N(0, 1)$，$|Z| = |W+1|$。</p>
+<p>$E|Z| = \int(z+1)\varphi(z)\dd z$（分段）= ... ≈ 1.16（具体计算见教材）。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★ 配对数方差（hat-matching）</strong>：$n$ 个球编号放入 $n$ 个盒（一一对应），配对数 $X$。求 $E(X), D(X)$。
+<div class="sol"><div class="st">解</div>
+<p>$X = \sum X_i$，$X_i$ 是"盒 $i$ 配对"的示性。</p>
+<p>$E(X_i) = 1/n$，$E(X) = 1$。</p>
+<p>$E(X_iX_j) = 1/(n(n-1))$（$i\neq j$）。</p>
+<p>$E(X^2) = n\cdot\frac{1}{n}+n(n-1)\cdot\frac{1}{n(n-1)} = 1+1 = 2$。</p>
+<p>$D(X) = E(X^2)-[E(X)]^2 = 2-1 = 1$。<strong>$E = D = 1$，与 $n$ 无关</strong>！</p>
+</div></div>
+
+<div class="ex"><strong>题（满分笔记重点公式）</strong>：$X_1, \ldots, X_n$ i.i.d. $\sim$ 任意分布，$E(X) = \mu, D(X) = \sigma^2$。求 $E(\bar X^2)$。
+<div class="sol"><div class="st">解</div>
+$$E(\bar X^2) = D(\bar X)+(E(\bar X))^2 = \dfrac{\sigma^2}{n}+\mu^2$$
+<p><strong>这是 23-24 系列连考 3 套的关键公式！</strong> 用于判断 $\bar X^2$ 是否为 $\mu^2$ 的无偏估计。</p>
+</div></div>
+</div>
+
+<h2 id="s5">五、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>$D(X-Y) = D(X)+D(Y)$ 独立时（同号！）</strong>，不是 $D(X)-D(Y)$</li>
+<li>$D(aX) = a^2 D(X)$（不是 $|a|D(X)$ 或 $aD(X)$）</li>
+<li>$E(X^2)\neq[E(X)]^2$（永远）</li>
+<li><strong>用 $D = E(X^2)-[E(X)]^2$ 通常比定义法简洁</strong></li>
+<li>独立性条件遗漏 → 不能用 $D(X+Y) = D(X)+D(Y)$</li>
+<li>$D(\bar X) = \sigma^2/n$（除以 $n$，不是 $\sqrt n$）</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li>"<strong>$D = E(X^2) - (EX)^2$</strong>"（计算神器）</li>
+<li>"<strong>独立 $D(X\pm Y) = D(X) + D(Y)$ 永远加</strong>"</li>
+<li>"<strong>$D(\bar X) = \sigma^2/n$，除以 $n$</strong>"</li>
+<li>"<strong>$E(\bar X^2) = \sigma^2/n + \mu^2$，连考 3 套必背</strong>"</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">六、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>计算 $D(X)$ 的两条路径</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>定义法</strong>：$D(X) = E[(X-EX)^2]$</li>
+<li><strong>公式法（更常用）</strong>：$D(X) = E(X^2)-(E(X))^2$</li>
+</ol>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>七大分布方差</strong>（必背）：0-1→$p(1-p)$；$B(n,p)$→$np(1-p)$；$P(\lambda)$→$\lambda$；$G(p)$→$(1-p)/p^2$；$U(a,b)$→$(b-a)^2/12$；$E(\lambda)$→$1/\lambda^2$；$N(\mu,\sigma^2)$→$\sigma^2$；$\chi^2(n)$→$2n$</li>
+<li><strong>$D(\bar X) = \sigma^2/n$</strong>（任意分布）</li>
+<li><strong>$E(\bar X^2) = \sigma^2/n + \mu^2$</strong>（连考 3 套关键公式！）</li>
+<li><strong>$E(S^2) = \sigma^2$</strong>（任意分布无偏）</li>
+<li><strong>性质</strong>：$D(C) = 0$；$D(CX) = C^2 D(X)$；$D(X+C) = D(X)$</li>
+<li><strong>独立加和</strong>：$D(X+Y) = D(X)+D(Y)$；$D(X-Y) = D(X)+D(Y)$（同号！）</li>
+<li><strong>一般加和</strong>：$D(X\pm Y) = D(X)+D(Y)\pm 2\Cov(X,Y)$</li>
+<li><strong>hat-matching</strong>：$E(X) = D(X) = 1$，与 $n$ 无关</li>
+<li><strong>$D(\sum a_iX_i) = \sum a_i^2 D(X_i)$</strong>（独立时）</li>
+<li><strong>$D(X) = 0\Rightarrow X = E(X)$ 几乎必然</strong></li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>识别分布 → 直接套 $D$</strong></li>
+<li><strong>用 $D = E(X^2)-(EX)^2$ 而非定义法</strong>，通常更简洁</li>
+<li><strong>独立加减都是 $D(X)+D(Y)$</strong>（同号！）</li>
+<li><strong>$D(\bar X)$ 永远是 $\sigma^2/n$</strong>，CLT、估计都用</li>
+<li><strong>$X^2\sim\sigma^2\chi^2(1)$（$X\sim N(0,\sigma^2)$）</strong>，所以 $D(X^2) = 2\sigma^4$</li>
+<li><strong>$E(\bar X^2)$ 拆分</strong>：永远是 $D(\bar X) + (E(\bar X))^2 = \sigma^2/n + \mu^2$</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>$D(X-Y) = D(X)+D(Y)$ 独立时（同号！）</strong>—— 不是减号</li>
+<li><strong>$D(aX) = a^2 D(X)$</strong>—— 不是 $|a|D(X)$</li>
+<li><strong>$E(X^2)\neq[E(X)]^2$</strong></li>
+<li><strong>$D(\bar X)$ 分母是 $n$ 不是 $\sqrt n$</strong></li>
+<li><strong>$E(\bar X^2) = \sigma^2/n + \mu^2$ 漏 $\mu^2$</strong></li>
+<li><strong>独立条件遗漏</strong>：非独立时要加 $2\Cov$</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

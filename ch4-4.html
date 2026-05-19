@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>4.4 高阶矩与协方差矩阵 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch4-3.html">← 4.3</a><a href="ch5-1.html">5.1 Chebyshev →</a></div>
+<h1>4.4 高阶矩与协方差矩阵 ⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 4 套，多为选择/填空。<br>
+<b>典型出题</b>：协方差矩阵性质（对称、半正定）· $n$ 维正态独立 ⇔ 对角阵 · $D(\sum t_iX_i) = \mathbf t^T\mathbb C\mathbf t$。
+</div>
+
+<h2 id="s1">一、各种"矩"</h2>
+<div class="card">
+<div class="fb">
+<ul>
+<li><strong>$k$ 阶原点矩</strong>：$\mu_k = E(X^k)$</li>
+<li><strong>$k$ 阶中心矩</strong>：$\nu_k = E[(X-EX)^k]$</li>
+<li>$\mu_1 = E(X)$；$\nu_2 = D(X)$</li>
+<li><strong>混合矩</strong>：$E(X^k Y^l)$</li>
+<li><strong>混合中心矩</strong>：$E[(X-EX)^k(Y-EY)^l]$；$(1, 1)$ 阶是 $\Cov(X, Y)$</li>
+</ul>
+</div>
+
+<div class="note">原点矩包含位置信息；中心矩消除位置只留分布形状。3 阶中心矩反映偏度，4 阶反映峰度。</div>
+</div>
+
+<h2 id="s2">二、协方差矩阵</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>$n$ 维随机变量 $(X_1, \ldots, X_n)$ 的协方差矩阵</p>
+$$\mathbb C = \begin{pmatrix}c_{11}&c_{12}&\cdots&c_{1n}\\c_{21}&c_{22}&\cdots&c_{2n}\\\vdots&\vdots&\ddots&\vdots\\c_{n1}&c_{n2}&\cdots&c_{nn}\end{pmatrix},\quad c_{ij} = \Cov(X_i, X_j)$$
+<p>性质：<strong>对称、半正定</strong>。对角元 $c_{ii} = D(X_i)$。</p>
+</div>
+
+<div class="fb"><div class="t">线性组合方差</div>
+$$D\!\left(\sum_{i=1}^n t_i X_i\right) = \sum_{i,j}t_i t_j c_{ij} = \mathbf t^T\mathbb C\mathbf t$$
+<p>这是协方差矩阵的"几何意义"——线性组合的方差由二次型给出。</p>
+</div>
+
+<div class="ex"><strong>例</strong>：二维正态 $(X, Y)\sim N(\mu_1, \mu_2, \sigma_1^2, \sigma_2^2, \rho)$ 的协方差矩阵：
+$$\mathbb C = \begin{pmatrix}\sigma_1^2&\rho\sigma_1\sigma_2\\\rho\sigma_1\sigma_2&\sigma_2^2\end{pmatrix},\quad|\mathbb C| = \sigma_1^2\sigma_2^2(1-\rho^2)$$
+$\rho = \pm 1$ 时 $|\mathbb C| = 0$，矩阵退化。
+</div>
+</div>
+
+<h2 id="s3">三、$n$ 维正态分布</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>$n$ 维正态随机向量 $\mathbf X = (X_1, \ldots, X_n)^T\sim N(\boldsymbol\mu, \mathbb C)$ 密度：</p>
+$$f(\mathbf x) = \dfrac{1}{(2\pi)^{n/2}|\mathbb C|^{1/2}}\exp\!\left[-\dfrac{1}{2}(\mathbf x-\boldsymbol\mu)^T\mathbb C^{-1}(\mathbf x-\boldsymbol\mu)\right]$$
+<p>$\mathbb C$ 正定，$\boldsymbol\mu$ 是均值向量。</p>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ $n$ 维正态四大性质</div>
+<ol>
+<li>任意子集仍是低维正态</li>
+<li>任意线性组合 $\sum a_iX_i$ 服从一维正态</li>
+<li><strong>$X_i$ 相互独立 ⇔ 协方差矩阵 $\mathbb C$ 是对角矩阵</strong>（仅在正态下成立！）</li>
+<li>线性变换仍正态：$\mathbf Y = A\mathbf X+\mathbf b\sim N(A\boldsymbol\mu+\mathbf b, A\mathbb C A^T)$</li>
+</ol>
+</div>
+</div>
+
+<h2 id="s4">四、考试要点</h2>
+<div class="card">
+<div class="tip">本节常出选择/填空 1-2 题。重点：协方差矩阵性质 + $n$ 维正态独立判别（对角阵）+ $D(\sum t_iX_i)$ 二次型计算。</div>
+
+<div class="warn">易错：
+<ul>
+<li>"$\mathbb C$ 对角 ⇔ 独立" <strong>仅对 $n$ 维正态成立</strong>，一般分布不成立</li>
+<li>协方差矩阵<strong>半正定</strong>（不一定正定，因为 $\rho = \pm 1$ 时退化）</li>
+<li>$D(\sum t_iX_i)$ 的二次型展开要注意 $i\neq j$ 项有两次贡献</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li>"<strong>协方差矩阵：对称 + 半正定</strong>"</li>
+<li>"<strong>正态下 $\mathbb C$ 对角 = 独立；一般分布不行</strong>"</li>
+<li>"<strong>$D(\mathbf t^T\mathbf X) = \mathbf t^T\mathbb C\mathbf t$</strong>"</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">五、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>协方差矩阵性质</strong>：对称 + 半正定</li>
+<li><strong>$D(\sum t_iX_i) = \mathbf t^T\mathbb C\mathbf t$</strong>（二次型）</li>
+<li><strong>$n$ 维正态独立 ⇔ $\mathbb C$ 对角</strong>（仅在正态下！）</li>
+<li><strong>任意子集仍是低维正态</strong>（性质 1）</li>
+<li><strong>任意线性组合 $\sum a_iX_i$ 服从一维正态</strong>（性质 2）</li>
+<li><strong>线性变换</strong>：$\mathbf Y = A\mathbf X+\mathbf b\sim N(A\boldsymbol\mu+\mathbf b, A\mathbb C A^T)$</li>
+<li><strong>$|\mathbb C|$ 是 $\sigma_1^2\sigma_2^2(1-\rho^2)$</strong>（二维正态）</li>
+<li><strong>$\mathbb C$ 半正定，所以 $|\mathbb C|\geq 0$</strong>；$\rho = \pm 1$ 时退化</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>$n$ 维正态判独立 → 看 $\mathbb C$ 是否对角</strong></li>
+<li><strong>线性组合的分布 → $a\mu+b$ 和 $a^T\mathbb C a$</strong></li>
+<li><strong>二次型 $\mathbf t^T\mathbb C\mathbf t$ 展开</strong>：对角项 $t_i^2 c_{ii}$ + 交叉项 $2t_it_j c_{ij}$</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>"$\mathbb C$ 对角 ⇔ 独立" 仅对 $n$ 维正态</strong>，一般分布不行</li>
+<li><strong>$\mathbb C$ 半正定不是正定</strong>，$\rho=\pm 1$ 时退化</li>
+<li><strong>$D(\sum t_iX_i)$ 二次型</strong>：交叉项有 2 倍系数</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

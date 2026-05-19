@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.2 随机事件的概率 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch1-1.html">← 1.1</a><a href="ch1-3.html">1.3 条件概率 →</a></div>
+<h1>1.2 随机事件的概率 ⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 6 套，多为选择/填空。古典 / 几何概型每年至少 1 题。<br>
+<b>典型出题</b>：摸球 · 配对 · 几何概型（点在区域）· 容斥应用 · 抽签公平性。
+</div>
+
+<h2 id="s1">一、频率与概率的关系</h2>
+<div class="card">
+<div class="fb"><div class="t">频率 → 概率</div>
+<p>事件 $A$ 在 $n$ 次试验中发生 $m$ 次，频率 $f_n(A) = m/n$。<strong>大量重复时频率稳定于某常数 $p$</strong>，记 $P(A) = p$。</p>
+<p>这是概率的"统计定义"。</p>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ Kolmogorov 概率公理（1933）</div>
+<p>$P$ 是 $\sigma$-代数到 $[0, 1]$ 的函数，满足：</p>
+<ol>
+<li><strong>非负性</strong>：$P(A)\geq 0$</li>
+<li><strong>规范性</strong>：$P(\Omega) = 1$</li>
+<li><strong>可列可加性</strong>：$A_i$ 两两互斥 $\Rightarrow P\!\left(\bigcup_{i=1}^\infty A_i\right) = \sum_{i=1}^\infty P(A_i)$</li>
+</ol>
+</div>
+</div>
+
+<h2 id="s2">二、概率的性质（由公理推出）</h2>
+<div class="card">
+<div class="fb">
+<ul>
+<li>$P(\varnothing) = 0$</li>
+<li>$P(\bar A) = 1-P(A)$</li>
+<li>$A\subset B\Rightarrow P(A)\leq P(B)$，且 $P(B-A) = P(B)-P(A)$</li>
+<li>一般差：$P(B-A) = P(B)-P(AB)$</li>
+<li>有限可加性：$A_i$ 两两互斥 $\Rightarrow P(\bigcup A_i) = \sum P(A_i)$</li>
+<li>$0\leq P(A)\leq 1$</li>
+</ul>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 加法公式与容斥</div>
+$$P(A\cup B) = P(A)+P(B)-P(AB)$$
+$$P(A\cup B\cup C) = P(A)+P(B)+P(C)-P(AB)-P(AC)-P(BC)+P(ABC)$$
+<p>一般 $n$ 事件容斥：</p>
+$$P\!\left(\bigcup_{i=1}^n A_i\right) = \sum_i P(A_i)-\sum_{i<j}P(A_iA_j)+\cdots+(-1)^{n-1}P(A_1\cdots A_n)$$
+</div>
+
+<div class="tip"><strong>速算技巧</strong>：见到"至少一个发生"优先用对立 $1-P(\bar A_1\cdots\bar A_n)$，比展开容斥简单。独立时简化为 $1-\prod(1-P(A_i))$。</div>
+</div>
+
+<h2 id="s3">三、古典概型</h2>
+<div class="card">
+<div class="fb"><div class="t">古典概型（等可能事件）</div>
+<p>条件：① 样本点有限；② 每个样本点等可能。则</p>
+$$P(A) = \dfrac{A\text{ 的样本点数}}{\Omega\text{ 的样本点数}} = \dfrac{M}{N}$$
+</div>
+
+<h3>常用计数公式</h3>
+<div class="fb">
+<ul>
+<li><strong>有放回排列</strong>：从 $n$ 中取 $r$，$n^r$</li>
+<li><strong>无放回排列</strong>：$A_n^r = \dfrac{n!}{(n-r)!}$</li>
+<li><strong>组合</strong>：$C_n^r = \dfrac{n!}{r!(n-r)!}$</li>
+</ul>
+</div>
+
+<div class="ex"><strong>题型 ★（生日问题）</strong>：$n$ 人，每人生日独立等可能取 365 天之一。求 "$n$ 人生日各不相同" 的概率。
+<div class="sol"><div class="st">解</div>
+$$P = \dfrac{A_{365}^n}{365^n} = \dfrac{365\cdot 364\cdots(365-n+1)}{365^n}$$
+<p>对立："至少两人生日相同" $= 1-P$。$n = 23$ 时该概率 $\approx 0.507 > 1/2$，反直觉！</p>
+</div></div>
+
+<div class="ex"><strong>题型 ★★（抽签公平性，多年真题原型）</strong>：袋中 $a$ 个白球 $b$ 个黑球，无放回连续取 $n$ 个。求第 $k$ 次取到白球的概率。
+<div class="sol"><div class="st">解</div>
+<p>$P = \dfrac{a}{a+b}$，<strong>与 $k$ 无关</strong>。可由古典概型（考虑全排列）或递推证明。</p>
+<p><strong>结论</strong>："不放回抽签每个位置等公平"——必背！</p>
+</div></div>
+
+<div class="ex"><strong>题型（配对问题，hat-matching）</strong>：$n$ 个球编号放入 $n$ 个盒子（每盒一球，随机）。求"至少一个配对"的概率。
+<div class="sol"><div class="st">解</div>
+<p>记 $A_i$ = "盒 $i$ 配对"。用容斥：</p>
+$$P\!\left(\bigcup A_i\right) = \sum_{k=1}^n\dfrac{(-1)^{k-1}}{k!}\xrightarrow{n\to\infty}1-\dfrac{1}{e}\approx 0.632$$
+<p><strong>结论</strong>：配对数期望 $E = 1$，方差 $D = 1$，<strong>与 $n$ 无关</strong>！这是 hat-matching 的标志结论。</p>
+</div></div>
+</div>
+
+<h2 id="s4">四、几何概型</h2>
+<div class="card">
+<div class="fb"><div class="t">几何概型</div>
+<p>$\Omega\subset\mathbb R^n$ 是几何区域（有限测度），$\omega$ 落入 $\Omega$ 中每点等可能。则</p>
+$$P(A) = \dfrac{\mu(A)}{\mu(\Omega)}$$
+<p>$\mu$ 是适当测度：长度、面积、体积。</p>
+</div>
+
+<div class="ex"><strong>题（约会问题）</strong>：甲乙约 12:00-13:00 在某处见面，先到者等 20 分钟。求二人能见面的概率。
+<div class="sol"><div class="st">解</div>
+<p>设甲到达 $x$、乙 $y$（分钟）。$\Omega = [0,60]^2$，面积 3600。</p>
+<p>"能见面" = $\{|x-y|\leq 20\}$，是 $\Omega$ 减去两个直角三角形（每个面积 800）。</p>
+$$P = \dfrac{3600-1600}{3600} = \dfrac{5}{9}$$
+</div></div>
+
+<div class="ex"><strong>题（Buffon 投针）</strong>：平面画平行线间距 $a$，针长 $l<a$。求针与某线相交的概率。
+<div class="sol"><div class="st">解</div>
+<p>针中点到最近线距离 $x\in[0, a/2]$，针与线夹角 $\theta\in[0, \pi]$。相交 $\Leftrightarrow x\leq\dfrac{l}{2}\sin\theta$。</p>
+$$P = \dfrac{\int_0^\pi(l\sin\theta/2)\dd\theta}{\dfrac{a}{2}\cdot\pi} = \dfrac{2l}{a\pi}$$
+<p><strong>应用</strong>：投针 $n$ 次命中 $m$ 次 → $\pi\approx 2ln/(am)$，可估算 $\pi$。历史上 Lazzerini 投 3408 次得 $\pi\approx 3.1415929$。</p>
+</div></div>
+</div>
+
+<h2 id="s5">五、易错点 & 必背结论</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li>古典概型必须 <strong>"有限 + 等可能"</strong>，缺一不可</li>
+<li>放回 vs 不放回结果不同</li>
+<li>几何概型不同设法可能给不同答案（Bertrand 悖论），按题意自然设定</li>
+<li>容斥公式正负号易错，$P(ABC)$ 是 +</li>
+<li>"至少一个发生" 直接展开常算错，用对立简单</li>
+</ul>
+</div>
+
+<div class="note"><strong>本节 5 条必背结论</strong>：
+<ol>
+<li>$P(\bar A) = 1-P(A)$（最常用）</li>
+<li>$P(B-A) = P(B)-P(AB)$</li>
+<li>加法公式 $P(A\cup B) = P(A)+P(B)-P(AB)$</li>
+<li>三事件容斥（带 $+P(ABC)$）</li>
+<li>抽签公平性：第 $k$ 次抽到的概率 $= a/(a+b)$ 与 $k$ 无关</li>
+</ol>
+</div>
+</div>
+
+<h2 id="patterns">六、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>题型决策树</h3>
+<div class="fb" style="border-color:#27ae60">
+<ul>
+<li><strong>有限等可能 → 古典概型</strong>：算 $M/N$</li>
+<li><strong>区域中均匀 → 几何概型</strong>：算 $\mu(A)/\mu(\Omega)$</li>
+<li><strong>"至少一个发生" → 用对立</strong>：$1-P(\bar A_1\cdots\bar A_n)$</li>
+<li><strong>多事件交并 → 容斥</strong></li>
+</ul>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>$P(\bar A) = 1-P(A)$</strong>（最常用）</li>
+<li><strong>$P(B-A) = P(B)-P(AB)$</strong>（一般差）</li>
+<li><strong>加法公式</strong>：$P(A\cup B) = P(A)+P(B)-P(AB)$</li>
+<li><strong>三事件容斥带 $+P(ABC)$</strong></li>
+<li><strong>抽签公平性</strong>：$a$ 难签 + $b$ 易签，每位 $P($难$) = a/(a+b)$</li>
+<li><strong>生日问题</strong>：$n=23$ 时 $P($至少两人同生日$)\approx 0.507>1/2$</li>
+<li><strong>Buffon 投针</strong>：$P = 2l/(a\pi)$（$l$ = 针长，$a$ = 线距）</li>
+<li><strong>配对问题</strong>：$P($至少一配对$)\to 1-1/e\approx 0.632$</li>
+<li><strong>独立时 "至少一个发生"</strong>：$1-\prod(1-P(A_i))$</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>"至少 / 至多" 立刻用对立</strong>，比展开容斥快</li>
+<li><strong>排列 vs 组合</strong>：考虑顺序 → 用 $A_n^r$；不考虑顺序 → 用 $C_n^r$</li>
+<li><strong>不放回的等价处理</strong>：把它视为对所有可能全排列的等可能选择</li>
+<li><strong>几何概型样本空间设法</strong>：按"自然"参数（位置 $x$、角度 $\theta$ 等）设定</li>
+<li><strong>容斥前 3 项预算</strong>：$\sum P(A_i),\,\sum P(A_iA_j),\,\sum P(A_iA_jA_k)$，符号 $+, -, +$</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li>古典概型必须 <strong>有限 + 等可能</strong></li>
+<li>放回 vs 不放回结果不同</li>
+<li>容斥符号易错（$P(ABC)$ 是 $+$）</li>
+<li>几何概型不同设法可能给不同答案（Bertrand 悖论）</li>
+<li>"至少一个" 直接展开容斥常算错</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

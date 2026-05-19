@@ -1,0 +1,176 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>7.2 区间估计 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch7-1.html">← 7.1</a><a href="ch8-1.html">8.1 假设检验 →</a></div>
+<h1>7.2 区间估计 ⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 10 套（71%）。常作为大题 19 备选题型。<br>
+<b>典型出题</b>：$\mu$ 的双侧/单侧置信区间 · $\sigma^2$ 的置信区间 · 选择置信度对应分位数。
+</div>
+
+<h2 id="s1">一、置信区间的概念</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>对未知参数 $\theta$ 构造统计量 $\underline\theta, \bar\theta$（仅依赖样本），使</p>
+$$P(\underline\theta\leq\theta\leq\bar\theta)\geq 1-\alpha$$
+<p>$[\underline\theta, \bar\theta]$ 称为 $\theta$ 的<strong>置信水平 $1-\alpha$</strong> 的置信区间。$\alpha$ 是显著性水平（一般 0.05 或 0.01）。</p>
+</div>
+
+<div class="tip"><strong>枢轴量法</strong>：找一个含 $\theta$ 且分布已知的统计量 $T = T(\bar X, S, \theta)$，反解出 $\theta$ 的区间。</div>
+
+<div class="fb"><div class="t">三步法</div>
+<ol>
+<li>选枢轴量 $U(X_1, \ldots, X_n; \theta)$（分布已知且不依赖其他未知参数）</li>
+<li>由置信度 $1-\alpha$，找 $a, b$ 满足 $P(a<U<b) = 1-\alpha$（通常对称取分位数）</li>
+<li>由不等式变形 $a<U<b$ → $\underline\theta<\theta<\bar\theta$</li>
+</ol>
+</div>
+</div>
+
+<h2 id="s2">二、单个正态总体（最重要！）</h2>
+<div class="card">
+<h3>2.1 $\mu$ 的置信区间</h3>
+<div class="fb" style="border-color:#c0392b">
+<p><strong>情形 1：$\sigma^2$ 已知</strong></p>
+<p>枢轴量 $U = \dfrac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0, 1)$：</p>
+$$\left[\bar X-u_{\alpha/2}\dfrac{\sigma}{\sqrt n},\;\bar X+u_{\alpha/2}\dfrac{\sigma}{\sqrt n}\right]$$
+<p><strong>情形 2：$\sigma^2$ 未知</strong>（更常见）</p>
+<p>枢轴量 $T = \dfrac{\bar X-\mu}{S/\sqrt n}\sim t(n-1)$：</p>
+$$\left[\bar X-t_{\alpha/2}(n-1)\dfrac{S}{\sqrt n},\;\bar X+t_{\alpha/2}(n-1)\dfrac{S}{\sqrt n}\right]$$
+</div>
+
+<h3>2.2 $\sigma^2$ 的置信区间</h3>
+<div class="fb" style="border-color:#c0392b">
+<p><strong>$\mu$ 已知</strong>：枢轴量 $\chi^2 = \dfrac{1}{\sigma^2}\sum(X_i-\mu)^2\sim\chi^2(n)$：</p>
+$$\left[\dfrac{\sum(X_i-\mu)^2}{\chi^2_{\alpha/2}(n)},\;\dfrac{\sum(X_i-\mu)^2}{\chi^2_{1-\alpha/2}(n)}\right]$$
+<p><strong>$\mu$ 未知</strong>（更常见）：$\chi^2 = \dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$：</p>
+$$\left[\dfrac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)},\;\dfrac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)}\right]$$
+<p>注意 $\chi^2$ <strong>不对称</strong>，上下分位数不同。</p>
+</div>
+
+<div class="ex"><strong>题 ★（标准 $t$ 区间）</strong>：$n = 16, \bar X = 2.125, S = 0.017, \alpha = 0.05$，正态总体方差未知。求 $\mu$ 的 95% 置信区间。
+<div class="sol"><div class="st">解</div>
+<p>$t_{0.025}(15) = 2.131$。半宽 $= 2.131\cdot\dfrac{0.017}{\sqrt{16}} = 0.00906$。</p>
+<p>区间 $[2.125-0.00906, 2.125+0.00906] = [2.116, 2.134]$。</p>
+</div></div>
+</div>
+
+<h2 id="s3">三、两个正态总体</h2>
+<div class="card">
+<div class="fb">
+<ul>
+<li><strong>$\mu_1-\mu_2$（$\sigma_1^2, \sigma_2^2$ 已知）</strong>：枢轴量 $U\sim N(0,1)$，</li>
+</ul>
+$$\bar X-\bar Y\pm u_{\alpha/2}\sqrt{\dfrac{\sigma_1^2}{n_1}+\dfrac{\sigma_2^2}{n_2}}$$
+<ul>
+<li><strong>$\mu_1-\mu_2$（$\sigma_1^2 = \sigma_2^2$ 未知）</strong>：用合并方差 $S_w^2 = \dfrac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}$，</li>
+</ul>
+$$\bar X-\bar Y\pm t_{\alpha/2}(n_1+n_2-2)\cdot S_w\sqrt{\dfrac{1}{n_1}+\dfrac{1}{n_2}}$$
+<ul>
+<li><strong>$\sigma_1^2/\sigma_2^2$</strong>：枢轴量 $F = \dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(n_1-1, n_2-1)$，</li>
+</ul>
+$$\dfrac{S_1^2/S_2^2}{F_{\alpha/2}(n_1-1, n_2-1)}\leq\dfrac{\sigma_1^2}{\sigma_2^2}\leq\dfrac{S_1^2/S_2^2}{F_{1-\alpha/2}(n_1-1, n_2-1)}$$
+</div>
+</div>
+
+<h2 id="s4">四、单侧置信区间</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>单侧上限：$P(\theta\leq\bar\theta)\geq 1-\alpha$，用分位数 $u_\alpha$（不是 $u_{\alpha/2}$！）。</p>
+<p>例：$N(\mu, \sigma^2)$，$\sigma^2$ 未知，$\mu$ 的单侧上限</p>
+$$\bar\mu = \bar X+t_\alpha(n-1)\dfrac{S}{\sqrt n}$$
+<p>单侧置信区间 $(-\infty, \bar\mu)$。</p>
+</div>
+
+<div class="warn"><strong>单 vs 双</strong>：双侧用 $\alpha/2$ 分位数（两边各 $\alpha/2$），单侧用 $\alpha$ 分位数（只一边）。</div>
+</div>
+
+<h2 id="s5">五、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>$\chi^2$ 不对称</strong>，分位数上下分别用 $\chi^2_{\alpha/2}$ 和 $\chi^2_{1-\alpha/2}$（注意大数除以大、小数除以小，要看分位数大小对应方差大小）</li>
+<li><strong>双侧用 $\alpha/2$，单侧用 $\alpha$</strong></li>
+<li>$\sigma$ 未知时<strong>必须用 $t$</strong>（不能用 $u$）</li>
+<li>$F$ 区间利用倒数关系 $F_{1-\alpha/2}(m, n) = 1/F_{\alpha/2}(n, m)$ 查左尾</li>
+<li>"置信区间"是<strong>随机区间</strong>（覆盖 $\theta$ 的概率 = $1-\alpha$），不是说 $\theta$ 在该区间的概率</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li>"<strong>$\sigma$ 已知 → $u$；$\sigma$ 未知 → $t$</strong>"</li>
+<li>"<strong>方差 $\sigma^2$ 估计 → $\chi^2$；方差比 → $F$</strong>"</li>
+<li>"<strong>双 $\alpha/2$；单 $\alpha$</strong>"</li>
+<li>"<strong>$t$ 区间半宽 = $t_{\alpha/2}(n-1)\cdot S/\sqrt n$</strong>"</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">六、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>选枢轴量速查</h3>
+<div class="fb" style="border-color:#27ae60">
+<table>
+<thead><tr><th>估计</th><th>条件</th><th>枢轴量</th></tr></thead>
+<tbody>
+<tr><td>$\mu$</td><td>$\sigma^2$ 已知</td><td>$(\bar X-\mu)/(\sigma/\sqrt n)\sim N(0,1)$</td></tr>
+<tr><td>$\mu$</td><td>$\sigma^2$ 未知</td><td>$(\bar X-\mu)/(S/\sqrt n)\sim t(n-1)$</td></tr>
+<tr><td>$\sigma^2$</td><td>$\mu$ 未知</td><td>$(n-1)S^2/\sigma^2\sim\chi^2(n-1)$</td></tr>
+<tr><td>$\sigma^2$</td><td>$\mu$ 已知</td><td>$\sum(X_i-\mu)^2/\sigma^2\sim\chi^2(n)$</td></tr>
+<tr><td>$\mu_1-\mu_2$</td><td>$\sigma$ 已知</td><td>$\sim N$</td></tr>
+<tr><td>$\mu_1-\mu_2$</td><td>$\sigma$ 未知同方差</td><td>合并方差 $S_w$，$\sim t(n_1+n_2-2)$</td></tr>
+<tr><td>$\sigma_1^2/\sigma_2^2$</td><td>—</td><td>$\sim F(n_1-1, n_2-1)$</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>$\mu$ 区间（$\sigma$ 已知）</strong>：$\bar X\pm u_{\alpha/2}\sigma/\sqrt n$</li>
+<li><strong>$\mu$ 区间（$\sigma$ 未知）</strong>：$\bar X\pm t_{\alpha/2}(n-1) S/\sqrt n$</li>
+<li><strong>$\sigma^2$ 区间</strong>：$\left[\dfrac{(n-1)S^2}{\chi^2_{\alpha/2}(n-1)},\dfrac{(n-1)S^2}{\chi^2_{1-\alpha/2}(n-1)}\right]$</li>
+<li><strong>双侧用 $\alpha/2$，单侧用 $\alpha$</strong></li>
+<li><strong>$\chi^2$ 区间不对称</strong>，上下分位数分开查</li>
+<li><strong>$F$ 区间用倒数关系</strong>：$F_{1-\alpha/2}(m,n) = 1/F_{\alpha/2}(n,m)$</li>
+<li><strong>合并方差 $S_w^2 = \frac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}$</strong></li>
+<li><strong>置信区间是随机区间</strong>，覆盖 $\theta$ 的概率 = $1-\alpha$</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>选枢轴量按 "$\sigma$ 已知/未知" 分</strong></li>
+<li><strong>$\sigma$ 未知用 $t$，已知用 $u$</strong></li>
+<li><strong>双侧 $\alpha/2$，单侧 $\alpha$</strong></li>
+<li><strong>$\chi^2$ 区间 "上下分位数对应大小数 / 反 corresponds 大方差 / 小方差"</strong></li>
+<li><strong>大样本时 $t(n-1)\to N(0,1)$</strong>，可用 $u$ 近似（$n>30$）</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>双 vs 单的分位数</strong>：$\alpha/2$ vs $\alpha$</li>
+<li><strong>$\chi^2$ 不对称</strong>，两个端点分别查</li>
+<li><strong>$\sigma$ 未知必须用 $t$</strong>，不能用 $u$</li>
+<li><strong>合并方差自由度 $n_1+n_2-2$</strong></li>
+<li><strong>"置信区间"是随机区间</strong>，不是说 $\theta$ 落入概率</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>1.3 条件概率（全概率 + Bayes）| 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch1-2.html">← 1.2</a><a href="ch1-4.html">1.4 独立性 →</a></div>
+
+<h1>1.3 条件概率 · 全概率 · Bayes 公式 ⭐⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 13 套（93%）。全概率公式 12 次、Bayes 公式 13 次。<br>
+<b>必出位置</b>：每年大题第 13 题（9 分），命中率 100%。多年雷打不动。<br>
+<b>近 5 年题型</b>：23-24-2 三门高射炮 / 23-24-1 次品检验 / 22-23-2 三类驾驶员 / 20-21-2 三类投保人 / 19-20-1 射手三级。
+</div>
+
+<h2 id="s1">一、条件概率定义与本质</h2>
+<div class="card">
+<div class="fb">
+<div class="t">定义</div>
+<p>设 $P(B) > 0$，事件 $B$ 已发生条件下 $A$ 发生的概率：</p>
+$$P(A\mid B) = \dfrac{P(AB)}{P(B)}$$
+</div>
+
+<div class="tip"><strong>本质</strong>：条件概率把样本空间 $\Omega$ 缩小为 $B$（"重新归一化"）；$A$ 在新空间中的占比即 $P(A\mid B)$。</div>
+
+<div class="fb">
+<div class="t">条件概率也满足三公理</div>
+<p>$P(\cdot\mid B)$ 本身是一个概率测度，所以下列性质在条件下也成立：</p>
+<ul>
+<li>$P(\bar A\mid B) = 1 - P(A\mid B)$</li>
+<li>$P(A\cup C\mid B) = P(A\mid B) + P(C\mid B) - P(AC\mid B)$</li>
+<li>条件下的容斥公式</li>
+</ul>
+<p><strong>用途</strong>：题目给出"在 $B$ 条件下" 的概率时，可以放心用上面这些性质处理。</p>
+</div>
+</div>
+
+<h2 id="s2">二、乘法公式（两事件 + n 事件）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">⭐ 乘法公式</div>
+$$P(AB) = P(B)P(A\mid B) = P(A)P(B\mid A)$$
+<p>推广到 $n$ 事件（$P(A_1A_2\cdots A_{n-1}) > 0$）：</p>
+$$P(A_1A_2\cdots A_n) = P(A_1)\,P(A_2\mid A_1)\,P(A_3\mid A_1A_2)\cdots P(A_n\mid A_1\cdots A_{n-1})$$
+</div>
+
+<div class="ex"><strong>例 1（抽签的公平性，多年真题原型）</strong>：袋中 $a$ 难签 + $b$ 易签。$n$ 人依次<strong>不放回</strong>抽。求第 $k$ 人抽到难签的概率。
+<div class="sol"><div class="st">解（两种方法）</div>
+<p><strong>法 1（古典概型）</strong>：考虑所有 $a+b$ 个签的全排列，每个等可能。第 $k$ 位上是难签的方案数 = $a\cdot (a+b-1)!$。所以 $P = \dfrac{a\cdot (a+b-1)!}{(a+b)!} = \dfrac{a}{a+b}$。</p>
+<p><strong>法 2（递推）</strong>：记 $A_k$="第 $k$ 人抽难签"。$P(A_1) = \dfrac{a}{a+b}$。</p>
+$$P(A_2) = P(A_1)P(A_2\mid A_1) + P(\bar A_1)P(A_2\mid\bar A_1) = \dfrac{a}{a+b}\cdot\dfrac{a-1}{a+b-1}+\dfrac{b}{a+b}\cdot\dfrac{a}{a+b-1} = \dfrac{a}{a+b}$$
+<p>归纳：$P(A_k) = \dfrac{a}{a+b}$，<strong>与 $k$ 无关</strong>。"先抽后抽都公平"。</p>
+</div></div>
+</div>
+
+<h2 id="s3">三、全概率公式 ⭐⭐⭐</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">⭐ 全概率公式</div>
+<p>设 $\{B_1, B_2, \ldots, B_n\}$ 是 $\Omega$ 的一个<strong>划分</strong>（两两互斥，且 $\bigcup_i B_i = \Omega$，$P(B_i) > 0$），则对任意事件 $A$：</p>
+$$P(A) = \sum_{i=1}^n P(B_i)P(A\mid B_i)$$
+</div>
+
+<div class="tip"><strong>三步使用法</strong>：
+<ol>
+<li><strong>验证 $\{B_i\}$ 是划分</strong>：两两互斥 + 并为 $\Omega$（缺一不可）</li>
+<li><strong>列已知</strong>：$P(B_i)$（先验）和 $P(A\mid B_i)$（条件）</li>
+<li><strong>套公式</strong>：加权求和</li>
+</ol>
+</div>
+
+<div class="ex"><strong>例 2（保险公司，PPT 经典）</strong>：投保人分三类（按危险概率比 $2:5:3$）："安全型"占 20%、"一般型"占 50%、"危险型"占 30%。年出险概率分别 $0.05, 0.15, 0.30$。
+<ol>
+<li>任一投保人年内出险的概率？</li>
+<li>已知出险，求是"危险型"的概率？</li>
+</ol>
+<div class="sol"><div class="st">解</div>
+<p>记 $A$ = "出险"，$B_1, B_2, B_3$ 为三类。验证：两两互斥（每人属一类）+ 并为全体（覆盖）。</p>
+<p>(1) 全概率：$P(A) = 0.2\cdot 0.05 + 0.5\cdot 0.15 + 0.3\cdot 0.30 = 0.01 + 0.075 + 0.09 = 0.175$</p>
+<p>(2) Bayes：$P(B_3\mid A) = \dfrac{0.3\cdot 0.30}{0.175} = \dfrac{0.09}{0.175}\approx 0.514$</p>
+<p>先验 0.3 → 后验 0.514，反映"看到出险这条证据后，怀疑此人是危险型的程度增加"。</p>
+</div></div>
+
+<div class="ex"><strong>例 3（多源产品检验）</strong>：工厂三车间生产同种产品，产量比 $4:3:3$，次品率分别 $2\%, 3\%, 5\%$。任取一件检验。
+<ol>
+<li>取到次品的概率。</li>
+<li>已知次品，求来自第一车间的概率。</li>
+</ol>
+<div class="sol"><div class="st">解</div>
+<p>设 $B_i$ = 来自车间 $i$（$i=1,2,3$），$A$ = 次品。$P(B_1)=0.4, P(B_2)=P(B_3)=0.3$。</p>
+<p>(1) $P(A) = 0.4\cdot 0.02 + 0.3\cdot 0.03 + 0.3\cdot 0.05 = 0.008 + 0.009 + 0.015 = 0.032$</p>
+<p>(2) $P(B_1\mid A) = \dfrac{0.4\cdot 0.02}{0.032} = \dfrac{0.008}{0.032} = 0.25$</p>
+<p>先验 $P(B_1) = 0.4$ → 后验 0.25，"次品更可能来自后两个车间"。</p>
+</div></div>
+</div>
+
+<h2 id="s4">四、Bayes 公式 ⭐⭐⭐</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">⭐ Bayes 公式（贝叶斯定理）</div>
+<p>同上设定，$P(A) > 0$，则</p>
+$$P(B_i\mid A) = \dfrac{P(B_i)P(A\mid B_i)}{\sum_{j=1}^n P(B_j)P(A\mid B_j)} = \dfrac{P(B_i)P(A\mid B_i)}{P(A)}$$
+<p><strong>分子</strong>：单一路径 "$B_i \to A$" 的贡献。</p>
+<p><strong>分母</strong>：所有路径总贡献 = 全概率公式。</p>
+</div>
+
+<div class="warn"><strong>必踩坑</strong>：Bayes 分母<strong>必须展开成全概率形式</strong>。直接写 $P(A)$ 是过程不全（虽然结果对），多个真题答案要求展开计算。</div>
+
+<div class="ex"><strong>题 ★★★★★ 23-24-2 第 13 题（三门高射炮，命中率最高的 Bayes 题）</strong>：甲乙丙三门炮独立射击，命中率 $p_1=0.4, p_2=0.5, p_3=0.7$。摧毁规则：仅一门击中 → 摧毁概率 0.2；两门击中 0.6；三门全中 1。
+<ol>
+<li>求目标被摧毁的概率。</li>
+<li>已知目标被摧毁，求恰两门击中的概率。</li>
+</ol>
+<div class="sol"><div class="st">解（满分模板）</div>
+<p><strong>Step 1：</strong> 设 $B_k$ = "恰 $k$ 门击中"，$A$ = "被摧毁"。$\{B_0, B_1, B_2, B_3\}$ 是划分。</p>
+<p><strong>Step 2：</strong> 算 $P(B_k)$（关键：每一项是 3 种组合相加！）</p>
+<ul>
+<li>$P(B_0) = 0.6\cdot 0.5\cdot 0.3 = 0.09$</li>
+<li>$P(B_1) = 0.4\cdot 0.5\cdot 0.3 + 0.6\cdot 0.5\cdot 0.3 + 0.6\cdot 0.5\cdot 0.7 = 0.06 + 0.09 + 0.21 = 0.36$</li>
+<li>$P(B_2) = 0.4\cdot 0.5\cdot 0.3 + 0.4\cdot 0.5\cdot 0.7 + 0.6\cdot 0.5\cdot 0.7 = 0.06 + 0.14 + 0.21 = 0.41$</li>
+<li>$P(B_3) = 0.4\cdot 0.5\cdot 0.7 = 0.14$</li>
+</ul>
+<p>验算 $\sum P(B_k) = 0.09 + 0.36 + 0.41 + 0.14 = 1$ ✓</p>
+<p><strong>Step 3：</strong> 全概率算 $P(A)$：</p>
+$$P(A) = 0\cdot 0.09 + 0.2\cdot 0.36 + 0.6\cdot 0.41 + 1\cdot 0.14 = 0 + 0.072 + 0.246 + 0.14 = 0.458$$
+<p><strong>Step 4：</strong> Bayes 反推：</p>
+$$P(B_2\mid A) = \dfrac{P(B_2)P(A\mid B_2)}{P(A)} = \dfrac{0.41\cdot 0.6}{0.458}\approx 0.537$$
+<p><strong>易错点</strong>：(1) $P(B_1)$ 和 $P(B_2)$ 都要枚举 3 种"哪门击中、哪两门未击中"的组合，不能漏；(2) Bayes 分母用 step 3 的结果 0.458，不要重算。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★★★ 23-24-1 第 13 题（次品检验，标准 Bayes）</strong>：工厂三车间生产同种产品，产量比 $4:3:3$，次品率分别 $2\%, 3\%, 5\%$。
+<ol>
+<li>任取一件，求是次品的概率。</li>
+<li>已知是次品，求来自第 1 车间的概率。</li>
+</ol>
+<div class="sol"><div class="st">解</div>
+<p>设 $B_i$ = 来自车间 $i$，$A$ = 次品。$P(B_1) = 0.4, P(B_2) = P(B_3) = 0.3$。</p>
+<p>(1) $P(A) = 0.4\cdot 0.02 + 0.3\cdot 0.03 + 0.3\cdot 0.05 = 0.008 + 0.009 + 0.015 = 0.032$</p>
+<p>(2) $P(B_1\mid A) = \dfrac{0.008}{0.032} = 0.25$</p>
+<p>先验 $P(B_1) = 0.4$ → 后验 0.25，说明"次品更可能来自后两个车间"。</p>
+</div></div>
+
+<div class="ex"><strong>例（医学诊断反直觉）</strong>：某病发病率 0.005，化验对患者阳性率 0.95，对健康人误诊率 0.04。求一阳性者真患病的概率。
+<div class="sol"><div class="st">解</div>
+$$P(D\mid T^+) = \dfrac{0.005\cdot 0.95}{0.005\cdot 0.95 + 0.995\cdot 0.04} = \dfrac{0.00475}{0.04455}\approx 0.107$$
+<p>测试看似很准（敏感性 95%，特异性 96%），但由于发病率低，阳性者真患病概率只有 10.7%。<strong>这是 Bayes 思维的经典演示——基率不能忽视</strong>。</p>
+</div></div>
+</div>
+
+<h2 id="s5">五、解题标准模板（必背！）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">⭐ 真题题 13 满分答题五步法</div>
+<ol>
+<li><strong>设事件</strong>：用 $A,B_i$ 明确标记"目标事件"和"原因划分"，定义清晰</li>
+<li><strong>验证划分</strong>：写一行 "$\{B_i\}$ 两两互斥且 $\bigcup B_i = \Omega$"</li>
+<li><strong>列已知概率</strong>：$P(B_i)$（先验）和所有 $P(A\mid B_i)$（条件）</li>
+<li><strong>算 $P(A)$</strong>：套全概率公式，<strong>每项展开写</strong>（不要直接算最终数字）</li>
+<li><strong>反推 $P(B_k\mid A)$</strong>：分子单条路径，分母用 step 4 的结果</li>
+</ol>
+</div>
+
+<div class="tip"><strong>近 5 年真题"剧情"清单</strong>（题 13 反复用的几种背景）：
+<ul>
+<li>多源产品检验（3 个工厂 / 3 类原料）</li>
+<li>信道传输错误（0/1 信号传输）</li>
+<li>射击命中（多门炮 / 多个射手）</li>
+<li>医学诊断（疾病 vs 健康，敏感性 vs 特异性）</li>
+<li>多类抽样（保险三类 / 驾驶员三级）</li>
+</ul>
+<p>不管剧情怎么变，<strong>解法完全一样</strong>——按五步走。</p>
+</div>
+</div>
+
+<h2 id="s6">六、易错点清单</h2>
+<div class="card">
+<div class="warn"><strong>本节超纲常错（每年都有人栽）</strong>：
+<ul>
+<li><strong>没验证 $\{B_i\}$ 是划分</strong>：更糟的是用了不互斥的"原因"（如 $B_1$="开火"，$B_2$="有目标"——这两个不互斥）</li>
+<li><strong>$P(B_i)$ 没穷尽</strong>：例如"恰一门击中"忘了 3 种组合相加</li>
+<li><strong>Bayes 分母直接写 $P(A)$</strong>：扣过程分；要展开成全概率形式</li>
+<li><strong>$P(A\mid B)$ 与 $P(B\mid A)$ 弄反</strong>：典型"基率谬误"，医学题最常见</li>
+<li><strong>条件下又用乘法公式时</strong>：每一步都要加 $|B$，不要丢条件</li>
+<li><strong>验证不归一</strong>：算完 $P(B_k)$ 后忘了用 $\sum P(B_k) = 1$ 检查</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li><strong>"先全概，后 Bayes，分母就是全概率"</strong></li>
+<li><strong>"分类讨论 → 加权平均 → 反推路径"</strong></li>
+<li><strong>看到"已知 / 在...条件下，求..."就上 Bayes</strong></li>
+</ul>
+</div>
+</div>
+
+<h2 id="s7">七、本节满分级补充（来自学姐 44 页笔记）</h2>
+<div class="card">
+<div class="note">
+<p><strong>条件概率的三大公式总览</strong>（笔记原话）：</p>
+<ol>
+<li><strong>乘法公式</strong>：$P(AB) = P(B)P(A\mid B)$ 与 $P(A_1\cdots A_n) = P(A_1)P(A_2\mid A_1)\cdots P(A_n\mid A_1\cdots A_{n-1})$</li>
+<li><strong>全概率公式</strong>：用于"已知各种路径，求总概率"</li>
+<li><strong>Bayes 公式</strong>：用于"已知结果，反推路径"</li>
+</ol>
+</div>
+
+<div class="note"><strong>典型几何概型 + 条件概率联考</strong>：
+<p>$(X,Y)$ 在单位正方形 $[0,1]^2$ 均匀分布。求 $P(X<1/2\mid X+Y<1)$。</p>
+<p>$P(X+Y<1)=1/2$（下三角形面积）；$P(X<1/2, X+Y<1)$ = 在三角形内截取 $x<1/2$ 的区域面积。</p>
+<p>条件概率 = 分子面积 / 分母面积，最终 $= 3/4$。</p>
+</div>
+</div>
+
+<h2 id="patterns">八、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>套路一览（按真题剧情）</h3>
+<div class="fb" style="border-color:#27ae60"><div class="t">⭐ 5 种剧情 → 同一套路</div>
+<table>
+<thead><tr><th>剧情</th><th>$B_i$ 划分</th><th>$P(A\mid B_i)$ 类型</th></tr></thead>
+<tbody>
+<tr><td>三类产品 / 多源工厂</td><td>来自工厂 $i$（占比 $\alpha_i$）</td><td>次品率 $p_i$</td></tr>
+<tr><td>三类人 / 多类投保</td><td>身份类别（占比 $\alpha_i$）</td><td>事件率 $p_i$（出险/事故）</td></tr>
+<tr><td>多门炮 / 多个射手</td><td>"恰 $k$ 门击中"（枚举组合相加）</td><td>条件下摧毁率</td></tr>
+<tr><td>信道传输</td><td>原始信号 0/1（先验 $p_0, p_1$）</td><td>转移概率</td></tr>
+<tr><td>医学诊断</td><td>患病 / 健康</td><td>敏感性 / 1 - 特异性</td></tr>
+</tbody>
+</table>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>抽签公平性</strong>：$n$ 人不放回抽 $a$ 难签 + $b$ 易签，<strong>每人抽到难签的概率都是 $a/(a+b)$</strong>，与位置无关</li>
+<li><strong>"恰 $k$ 门击中"</strong>组合数（独立异概率）：$P(B_k) = \sum_{|S|=k}\prod_{i\in S}p_i\prod_{j\notin S}(1-p_j)$</li>
+<li><strong>"条件概率也是概率"</strong>：$P(\cdot\mid B)$ 满足三公理，可用容斥、对立</li>
+<li><strong>Bayes 几何意义</strong>：分子是"路径权重"，分母是"全路径总和"</li>
+<li><strong>独立 → $P(A\mid B) = P(A)$</strong>（条件不改变概率）</li>
+<li><strong>Bayes 在医学诊断中的反直觉</strong>：发病率低时，即便测试很准，阳性者真患病概率也很低（基率谬误）</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>验证 $\sum P(B_k) = 1$</strong> —— 算完所有 $P(B_k)$ 后立刻验证，发现错算可挽回</li>
+<li><strong>Bayes 分子分母同时算</strong>：分母 = 第一问的 $P(A)$，不重算</li>
+<li><strong>"枚举 $k$ 门击中"的组合数</strong>：$n$ 门时 $C_n^k$ 种，每种独立计算后相加</li>
+<li><strong>条件概率题反向变换</strong>：$P(A\mid B) = \dfrac{P(B\mid A)P(A)}{P(B)}$，看哪边好算选哪边</li>
+<li><strong>多重条件 $P(A\mid B, C)$</strong>：先固定 $B, C$ 把样本空间缩到 $BC$，再算 $A$</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li>没算 $P(B_0)$（"全不发生"）—— 虽然往往用不到，但验证 $\sum=1$ 必须包含</li>
+<li>$P(B_1)$ "恰一门击中" 忘了枚举 3 种组合相加</li>
+<li>Bayes 分母直接写 $P(A)$ 不展开 —— 扣过程分</li>
+<li>把 $P(B\mid A)$ 与 $P(A\mid B)$ 弄反 —— 医学题典型陷阱</li>
+<li>"条件 + 容斥" 时忘了加 $\mid B$（每一步都要带条件）</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

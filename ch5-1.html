@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.1 Chebyshev 不等式 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch4-4.html">← 4.4</a><a href="ch5-2.html">5.2 大数定律 →</a></div>
+<h1>5.1 Chebyshev 不等式与依概率收敛 ⭐⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#1a5276);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 12 套（86%）。与 CLT 联考是必出大题第 16 题。<br>
+<b>典型出题</b>：用 Chebyshev 估计概率下界 + CLT 求精确值的对比 · 灯泡寿命 · 营业额估计 · 配对问题。
+</div>
+
+<h2 id="s1">一、Chebyshev 不等式</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>设 $E(X) = \mu,\,D(X) = \sigma^2$ 存在，则对任意 $\epsilon > 0$：</p>
+$$P(|X-\mu|\geq\epsilon)\leq\dfrac{\sigma^2}{\epsilon^2}$$
+<p>或等价：</p>
+$$P(|X-\mu|<\epsilon)\geq 1-\dfrac{\sigma^2}{\epsilon^2}$$
+</div>
+
+<div class="fb"><div class="t">$k\sigma$ 形式</div>
+$$P(|X-\mu|<k\sigma)\geq 1-\dfrac{1}{k^2}$$
+<p>$k = 2$ 时 $\geq 3/4$；$k = 3$ 时 $\geq 8/9$。</p>
+<p>这是<strong>下界</strong>，正态分布实际更高（68/95/99.7%）。</p>
+</div>
+
+<div class="tip"><strong>本质</strong>：Chebyshev 不等式只需期望和方差存在，<strong>对任意分布都成立</strong>。是非常普适但粗糙的估计工具。</div>
+</div>
+
+<h2 id="s2">二、依概率收敛</h2>
+<div class="card">
+<div class="fb">
+<p>$Y_n\xrightarrow{P}a$ 定义：对任意 $\epsilon > 0$，</p>
+$$\lim_{n\to\infty}P(|Y_n-a|\geq\epsilon) = 0$$
+<p>等价：$\lim P(|Y_n-a|<\epsilon) = 1$。</p>
+</div>
+
+<div class="tip">依概率收敛是"概率上越来越接近"，<strong>比几乎处处收敛弱</strong>。是大数定律的标准收敛形式。</div>
+</div>
+
+<h2 id="s3">三、典型例题</h2>
+<div class="card">
+<div class="ex"><strong>题 ★（粗糙估计）</strong>：射手 100 次得分 $X$，$E = 910$，$D = 110.75$。估计 $P(900<X<930)$。
+<div class="sol"><div class="st">解</div>
+<p>$|X-910|<10$（偏差很小）：</p>
+$$P(|X-910|<10)\geq 1-\dfrac{110.75}{100} < 0$$
+<p>无意义。Chebyshev 在偏差小时给出 $\leq 0$ 的下界没有用。<strong>这说明 Chebyshev 仅适合"较大偏差"的估计</strong>。</p>
+<p>用 CLT：$P(900<X<930) = P(-0.95<Z<1.9)\approx 0.81$（更精确）。</p>
+</div></div>
+
+<div class="ex"><strong>题（配对问题应用 Chebyshev）</strong>：$n$ 个球放入 $n$ 个盒，配对数 $S_n$。$E(S_n) = 1, D(S_n) = 1$。证明 $\lim_{n\to\infty}P(|S_n-1|\geq n\epsilon) = 0$。
+<div class="sol"><div class="st">解</div>
+<p>Chebyshev：</p>
+$$P(|S_n-1|\geq n\epsilon)\leq\dfrac{D(S_n)}{(n\epsilon)^2} = \dfrac{1}{n^2\epsilon^2}\to 0$$
+<p>即 $S_n/n\xrightarrow{P}0$（相对而言配对率趋于 0）。</p>
+<p>这是 20-21-2 第 18 题的核心思路。</p>
+</div></div>
+</div>
+
+<h2 id="s4">四、考试要点</h2>
+<div class="card">
+<div class="tip"><strong>本节考点</strong>：
+<ul>
+<li>大题 16 必考"Chebyshev + CLT"双胞胎</li>
+<li>证明依概率收敛（用 Chebyshev 是常规方法）</li>
+<li>独立大数定律的工具</li>
+</ul>
+</div>
+<div class="warn"><strong>易错</strong>：
+<ul>
+<li>$\epsilon$ 是<strong>绝对偏差</strong>不是相对偏差</li>
+<li>当 $\epsilon\leq\sigma$ 时下界 $\leq 0$ 无意义</li>
+<li>Chebyshev 给"至少"或"下界"，CLT 给"近似精确"</li>
+<li>$P(|X-EX|<k\sigma)\geq 1-1/k^2$ 易记错</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">五、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>Chebyshev 不等式</strong>：$P(|X-\mu|\geq\epsilon)\leq\sigma^2/\epsilon^2$</li>
+<li><strong>$k\sigma$ 形式</strong>：$P(|X-\mu|<k\sigma)\geq 1-1/k^2$</li>
+<li><strong>Chebyshev 给下界</strong>，CLT 给精确值</li>
+<li><strong>$\epsilon$ 是绝对偏差</strong>，不是相对偏差</li>
+<li><strong>依概率收敛定义</strong>：$\lim P(|Y_n-a|\geq\epsilon) = 0$</li>
+<li><strong>$\bar X_n\xrightarrow{P}\mu$</strong>（i.i.d. 大数定律）</li>
+<li><strong>$D(\bar X_n)\to 0$ 时 $\bar X_n\xrightarrow{P}E(\bar X_n)$</strong>（Chebyshev 推论）</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>"至少多少概率" → Chebyshev 给下界</strong></li>
+<li><strong>"近似多少概率" → CLT</strong></li>
+<li><strong>证明依概率收敛</strong>：$D(Y_n)\to 0$ 时用 Chebyshev</li>
+<li><strong>$k$ 越大下界越接近 1</strong>：$k=10$ 时 $\geq 99\%$</li>
+<li><strong>Chebyshev 在偏差小时无效</strong>（$\epsilon\leq\sigma$ 时下界 $\leq 0$）</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>$\epsilon$ 是绝对偏差不是相对</strong></li>
+<li><strong>$\epsilon\leq\sigma$ 时下界 $\leq 0$ 无意义</strong></li>
+<li><strong>Chebyshev 是 $\geq$ 不是 $=$</strong>（下界！）</li>
+<li><strong>大数律是依概率收敛不是 a.s.</strong></li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

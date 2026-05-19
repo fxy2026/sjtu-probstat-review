@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>3.3-3.4 独立性与多维随机变量 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch3-2.html">← 3.2</a><a href="ch3-5.html">3.5 函数分布 →</a></div>
+<h1>3.3-3.4 随机变量的独立性 & 多维随机变量 ⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 9 套。选择题 2-3 题，常考"判断独立"。<br>
+<b>典型出题</b>：可分离 + 矩形支撑判独立 · 二维正态 $\rho = 0$ ⇔ 独立 · 不相关 ≠ 独立反例。
+</div>
+
+<h2 id="s1">一、独立性的判定 ⭐⭐</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<div class="t">⭐ 定义</div>
+<p>$X, Y$ 相互独立 $\Leftrightarrow$ 对一切 $(x, y)$：</p>
+$$F(x, y) = F_X(x)F_Y(y)$$
+<p>等价形式：</p>
+<ul>
+<li>离散：$p_{ij} = p_{i\cdot}p_{\cdot j}$（一切 $i, j$）</li>
+<li>连续：$f(x, y) = f_X(x)f_Y(y)$（连续点处）</li>
+</ul>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 可分离判别法（实战常用）</div>
+<p>若 $f(x, y) = r(x)g(y)$ 且<strong>支撑为矩形</strong>（$x$ 和 $y$ 的范围互不约束），则 $X, Y$ 独立。</p>
+<p><strong>关键</strong>：支撑必须是矩形！</p>
+<ul>
+<li>$f(x, y) = e^{-x-y},\,x, y > 0$ → 支撑 $(0, \infty)\times(0, \infty)$ 矩形 → 独立 ✓</li>
+<li>$f(x, y) = 2,\,0 < x < y < 1$ → 支撑三角形 → <strong>不独立</strong>（虽然 $f = 2$ 看似可拆，但支撑非矩形）</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s2">二、二维正态的独立性 ⭐</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>$(X, Y)\sim N(\mu_1, \mu_2, \sigma_1^2, \sigma_2^2, \rho)$：</p>
+$$X, Y\text{ 独立}\Leftrightarrow\rho = 0$$
+<p><strong>仅在此分布下三者等价</strong>！一般 "不相关 ≠ 独立"。</p>
+</div>
+</div>
+
+<h2 id="s3">三、独立性的传递</h2>
+<div class="card">
+<div class="fb">
+<p>$X, Y$ 独立 $\Rightarrow$ 对任意 Borel 函数 $u, v$：$u(X)$ 与 $v(Y)$ 也独立。</p>
+<p><strong>用途</strong>：例如 $X, Y$ 独立则 $X^2, Y^2$ 独立、$\sin X, e^Y$ 独立、$|X|, Y^3$ 独立。</p>
+</div>
+</div>
+
+<h2 id="s4">四、$n$ 维随机变量</h2>
+<div class="card">
+<div class="fb">
+<p>$n$ 维联合分布函数 $F(x_1, \ldots, x_n) = P(X_1\leq x_1, \ldots, X_n\leq x_n)$。</p>
+<p>$n$ 维<strong>相互独立</strong>：</p>
+$$F(x_1, \ldots, x_n) = \prod_{i=1}^n F_{X_i}(x_i)$$
+<p>等价于 $f = \prod f_{X_i}$（连续）或 $p = \prod p_i$（离散）。</p>
+<p>性质：相互独立 ⇒ 任意子集独立，各自函数独立。</p>
+</div>
+</div>
+
+<h2 id="s5">五、典型例题</h2>
+<div class="card">
+<div class="ex"><strong>题 ★（指数分布积，可分离）</strong>：$f(x, y) = 6e^{-2x-3y},\,x, y > 0$。判断独立性。
+<div class="sol"><div class="st">解</div>
+<p>$f$ 可拆 $f = 2e^{-2x}\cdot 3e^{-3y}$，支撑 $(0, \infty)^2$ 是矩形 → <strong>独立</strong>。</p>
+<p>所以 $X\sim E(2),\,Y\sim E(3)$。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★（区域非矩形）</strong>：$(X, Y)$ 在 $D = \{(x, y):y^2\leq x\leq 1\}$ 上均匀分布。判断独立。
+<div class="sol"><div class="st">解</div>
+<p>$D$ 面积 $= \int_{-1}^1(1-y^2)\dd y = 4/3$，$f(x, y) = 3/4$（似乎可拆）。</p>
+<p>$f_X(x) = \int_{-\sqrt x}^{\sqrt x}\dfrac{3}{4}\dd y = \dfrac{3\sqrt x}{2}$；$f_Y(y) = \int_{y^2}^1\dfrac{3}{4}\dd x = \dfrac{3(1-y^2)}{4}$。</p>
+<p>$f_X\cdot f_Y = \dfrac{9\sqrt x(1-y^2)}{8}\neq\dfrac{3}{4} = f$，<strong>不独立</strong>。</p>
+<p><strong>本质</strong>：支撑 $D$ 不是矩形，$x, y$ 互相约束。</p>
+</div></div>
+
+<div class="ex"><strong>题（密度看似 $r(x)g(y)$ 但支撑非矩形）</strong>：$(X, Y)$ 联合密度 $f(x, y) = 8xy,\,0 < x < y < 1$。判断独立。
+<div class="sol"><div class="st">解</div>
+<p>$f = 8xy$ 形式上可拆为 $8x\cdot y$，但支撑 $\{x < y\}$ 不是矩形 → <strong>不独立</strong>。</p>
+<p>验证：$f_X(x) = \int_x^1 8xy\dd y = 4x(1-x^2),\,f_Y(y) = \int_0^y 8xy\dd x = 4y^3$。</p>
+<p>$f_X\cdot f_Y = 16xy(1-x^2)y^3\neq 8xy$，确认不独立。</p>
+</div></div>
+</div>
+
+<h2 id="s6">六、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>"$f$ 可拆 → 独立"是错的！</strong>必须先看支撑是否为矩形</li>
+<li><strong>"$\rho = 0$ → 独立"</strong>仅对二维正态成立</li>
+<li>多事件独立和两两独立的混淆（参见 1.4）</li>
+<li>独立性的<strong>传递</strong>：$X\perp Y \Rightarrow u(X)\perp v(Y)$，经常忘</li>
+<li>判断独立要验证<strong>所有</strong> $(x, y)$ 点（找一个反例就够说明不独立）</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li>"<strong>独立 = 可分离 + 矩形支撑</strong>"（两个条件缺一不可）</li>
+<li>"<strong>独立 $\Rightarrow$ 不相关；反向只在二维正态</strong>"</li>
+<li>"<strong>独立可传递到函数</strong>"（$X\perp Y\Rightarrow X^2\perp Y^3$）</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">七、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>判独立的快速方法</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>第一步看支撑</strong>：是否为矩形（$x$ 范围与 $y$ 范围互不约束）？</li>
+<li><strong>支撑非矩形 → 不独立</strong>（无需验证密度）</li>
+<li><strong>支撑矩形 → 验密度是否可拆</strong> $f = r(x)g(y)$</li>
+<li><strong>二维正态特例</strong>：直接看 $\rho$ 是否为 0</li>
+</ol>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>独立 ⇔ $f(x,y) = f_X(x)f_Y(y)$</strong>（连续型）</li>
+<li><strong>独立 ⇔ $p_{ij} = p_{i\cdot}p_{\cdot j}$</strong>（离散型）</li>
+<li><strong>可分离 + 矩形支撑 ⇔ 独立</strong>（必须两个条件！）</li>
+<li><strong>二维正态独立 ⇔ $\rho = 0$</strong>（仅此分布！）</li>
+<li><strong>独立传递到函数</strong>：$X\perp Y\Rightarrow u(X)\perp v(Y)$</li>
+<li><strong>独立 + 同分布</strong>：i.i.d.（统计学基础）</li>
+<li><strong>$n$ 维独立 ⇒ 任意子集独立</strong></li>
+<li><strong>$n$ 维独立 ⇒ 联合密度 = 边缘乘积</strong></li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>先看支撑</strong>：非矩形立刻判为不独立，省时</li>
+<li><strong>独立时 $f_X f_Y$ 表达式应等于联合 $f$</strong>，对应位置写出对比</li>
+<li><strong>二维正态参数 $\rho = 0$</strong>，立刻独立</li>
+<li><strong>独立的应用</strong>：$E(XY) = E(X)E(Y)$，$D(X+Y) = D(X)+D(Y)$</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>"$f$ 可拆 → 独立" 错！</strong>必须先看支撑</li>
+<li><strong>$\rho = 0$ → 独立</strong>仅对二维正态</li>
+<li><strong>独立可传递到函数</strong>，经常忘</li>
+<li><strong>多事件独立和两两独立的混淆</strong>（见 1.4）</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

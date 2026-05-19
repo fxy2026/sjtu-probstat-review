@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>2.3 连续型随机变量 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch2-2.html">← 2.2</a><a href="ch2-4.html">2.4 函数分布 →</a></div>
+<h1>2.3 连续型随机变量 ⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：<strong>14/14 套真题命中（100%）</strong>。每年至少 1-2 道选择 + 大题中常作工具。<br>
+<b>典型出题</b>：指数失效 · 正态 $N(\mu, \sigma^2)$ 标准化查表 · Rayleigh · 密度积分求归一化 · $3\sigma$ 原则。
+</div>
+
+<h2 id="s1">一、概率密度函数</h2>
+<div class="card">
+<div class="fb"><div class="t">定义</div>
+<p>$X$ 的分布函数 $F(x)$ 可写成</p>
+$$F(x) = \int_{-\infty}^x f(t)\dd t$$
+<p>$f(x)$ 是概率密度。</p>
+</div>
+
+<div class="fb"><div class="t">密度的性质</div>
+<ul>
+<li>$f(x)\geq 0$</li>
+<li>$\int_{-\infty}^{+\infty}f(x)\dd x = 1$</li>
+<li>$f$ 连续点 $F'(x) = f(x)$</li>
+<li>$P(a<X\leq b) = \int_a^b f$</li>
+<li><strong>$P(X = x_0) = 0$</strong>（但事件未必不发生，"零测集"）</li>
+</ul>
+</div>
+
+<div class="warn">连续型 $X$ 取任意单点概率为 0，所以 $P(a\leq X\leq b) = P(a<X<b) = \int_a^b f$，<strong>边界与否不影响</strong>。</div>
+</div>
+
+<h2 id="s2">二、均匀分布 $U(a, b)$</h2>
+<div class="card">
+<div class="fb">
+$$f(x) = \begin{cases}\dfrac{1}{b-a},&a<x<b\\0,&\text{其他}\end{cases}\quad F(x) = \begin{cases}0,&x<a\\\dfrac{x-a}{b-a},&a\leq x\leq b\\1,&x>b\end{cases}$$
+<p>$E(X) = \dfrac{a+b}{2},\,D(X) = \dfrac{(b-a)^2}{12}$</p>
+</div>
+</div>
+
+<h2 id="s3">三、指数分布 $E(\lambda)$ ⭐</h2>
+<div class="card">
+<div class="fb">
+$$f(x) = \begin{cases}\lambda e^{-\lambda x},&x\geq 0\\0,&x<0\end{cases}\quad F(x) = 1-e^{-\lambda x}\;(x\geq 0)$$
+<p>$E(X) = 1/\lambda,\,D(X) = 1/\lambda^2$</p>
+<p>描述独立随机事件发生的时间间隔。</p>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 无记忆性（连续唯一！）</div>
+$$P(X>s+t\mid X>s) = P(X>t)$$
+<p><strong>证明</strong>：</p>
+$$\dfrac{P(X>s+t)}{P(X>s)} = \dfrac{e^{-\lambda(s+t)}}{e^{-\lambda s}} = e^{-\lambda t} = P(X>t)$$
+<p>"已经等了 $s$，再等 $t$ 的概率与从头等 $t$ 一样"。</p>
+<p><strong>结论</strong>：连续分布中<strong>唯一</strong>具有无记忆性的是指数分布。</p>
+</div>
+
+<div class="ex"><strong>题 ★</strong>：到达时间 $T\sim E(\lambda)$，已知 $T > 8$ 分钟，求 $T > 18$ 的概率。
+<div class="sol"><div class="st">解</div>
+<p>$P(T>18\mid T>8) = P(T>10) = e^{-10\lambda}$。</p>
+</div></div>
+
+<div class="fb"><div class="t">指数与 Poisson 的关系</div>
+<p>Poisson 流（率 $\lambda$）的相邻事件间隔时间 $\sim E(\lambda)$。</p>
+<p>反过来：若 i.i.d. 间隔 $\sim E(\lambda)$，则单位时间内事件数 $\sim P(\lambda)$。</p>
+<p>这是排队论的基础。</p>
+</div>
+</div>
+
+<h2 id="s4">四、正态分布 $N(\mu, \sigma^2)$ ⭐⭐⭐</h2>
+<div class="card">
+<div class="fb">
+$$f(x) = \dfrac{1}{\sqrt{2\pi}\sigma}\exp\!\left[-\dfrac{(x-\mu)^2}{2\sigma^2}\right]$$
+<p>$E(X) = \mu,\,D(X) = \sigma^2$</p>
+<p>$\mu$ 决定位置（对称轴），$\sigma$ 决定胖瘦（越小越尖）。</p>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 标准化定理</div>
+$$X\sim N(\mu, \sigma^2)\Rightarrow\dfrac{X-\mu}{\sigma}\sim N(0, 1)$$
+<p>记标准正态分布函数为 $\Phi$，则</p>
+$$P(X\leq x) = \Phi\!\left(\dfrac{x-\mu}{\sigma}\right)$$
+<p>对称性：$\Phi(-x) = 1-\Phi(x)$。</p>
+</div>
+
+<div class="fb"><div class="t">⭐ $3\sigma$ 原则（必背！）</div>
+<ul>
+<li>$P(|X-\mu|<\sigma)\approx 0.6826$</li>
+<li>$P(|X-\mu|<2\sigma)\approx 0.9544$</li>
+<li>$P(|X-\mu|<3\sigma)\approx 0.9974$</li>
+</ul>
+<p>正态分布几乎所有概率集中在 $\mu\pm 3\sigma$ 内。工业质量控制核心。</p>
+</div>
+
+<div class="fb"><div class="t">常用分位数（必背）</div>
+<table>
+<tr><th>$\alpha$</th><td>0.10</td><td>0.05</td><td>0.025</td><td>0.01</td><td>0.005</td></tr>
+<tr><th>$u_\alpha$</th><td>1.28</td><td>1.645</td><td>1.96</td><td>2.33</td><td>2.575</td></tr>
+</table>
+<p>定义：$P(X>u_\alpha) = \alpha$（上侧 $\alpha$ 分位数）。</p>
+</div>
+
+<div class="ex"><strong>题 ★</strong>：$X\sim N(7.5, 100)$，求 $P(|X|\leq 10)$。
+<div class="sol"><div class="st">解</div>
+<p>$\sigma = 10$。</p>
+$$P(|X|\leq 10) = P(-10\leq X\leq 10) = \Phi\!\left(\dfrac{10-7.5}{10}\right)-\Phi\!\left(\dfrac{-10-7.5}{10}\right) = \Phi(0.25)-\Phi(-1.75)$$
+$$= \Phi(0.25)-[1-\Phi(1.75)] = 0.5987-(1-0.9599) = 0.5586$$
+</div></div>
+
+<div class="ex"><strong>题（满分笔记推导）</strong>：$X\sim N(\mu, \sigma^2)$，证明 $E(X) = \mu$。
+<div class="sol"><div class="st">证明</div>
+$$E(X) = \int_{-\infty}^{+\infty}\dfrac{x}{\sqrt{2\pi}\sigma}e^{-(x-\mu)^2/(2\sigma^2)}\dd x$$
+<p>令 $y = x-\mu$，$\dd y = \dd x$：</p>
+$$= \int_{-\infty}^{+\infty}\dfrac{y+\mu}{\sqrt{2\pi}\sigma}e^{-y^2/(2\sigma^2)}\dd y$$
+$$= \underbrace{\int\dfrac{y}{\sqrt{2\pi}\sigma}e^{-y^2/(2\sigma^2)}\dd y}_{=0\,\text{（奇函数）}}+\mu\cdot\underbrace{\int\dfrac{1}{\sqrt{2\pi}\sigma}e^{-y^2/(2\sigma^2)}\dd y}_{=1\,\text{（归一化）}} = \mu$$
+</div></div>
+</div>
+
+<h2 id="s5">五、易错点清单</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li>连续型 $P(X = a) = 0$ 但事件未必不发生</li>
+<li>正态标准化分母用 $\sigma$，<strong>不是 $\sigma^2$</strong></li>
+<li>$\Phi(-x) = 1-\Phi(x)$ 忘减负数情况</li>
+<li>指数分布参数 $\lambda$ 方向：$E(X) = 1/\lambda$（不是 $\lambda$）</li>
+<li>无记忆性是连续分布的"指数唯一"，离散是"几何唯一"</li>
+<li>$X\sim N(\mu, \sigma^2)$ 中第二参数是<strong>方差</strong>不是标准差</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li>"<strong>均匀 → 长度，指数 → 时间，正态 → 钟形</strong>"</li>
+<li>"<strong>正态标准化：减 $\mu$ 除 $\sigma$</strong>"</li>
+<li>"<strong>3$\sigma$ 原则：$\pm\sigma=68\%, \pm 2\sigma=95\%, \pm 3\sigma=99.7\%$</strong>"</li>
+<li>"<strong>指数无记忆性：$P(X>s+t|X>s) = P(X>t)$</strong>"</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">六、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>识别连续分布的速查</h3>
+<div class="fb" style="border-color:#27ae60">
+<ul>
+<li><strong>等可能 / 均匀</strong>：$U(a,b)$，$E=(a+b)/2, D=(b-a)^2/12$</li>
+<li><strong>到达 / 寿命时间间隔</strong>：$E(\lambda)$，$E=1/\lambda, D=1/\lambda^2$</li>
+<li><strong>测量误差 / 自然现象</strong>：$N(\mu,\sigma^2)$</li>
+</ul>
+</div>
+
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>$E, D$ 总表</strong>：$U(a,b)$ → $(a+b)/2, (b-a)^2/12$；$E(\lambda)$ → $1/\lambda, 1/\lambda^2$；$N(\mu,\sigma^2)$ → $\mu, \sigma^2$</li>
+<li><strong>正态标准化</strong>：$X\sim N(\mu,\sigma^2)\Rightarrow Z = (X-\mu)/\sigma\sim N(0,1)$</li>
+<li><strong>正态对称</strong>：$\Phi(-x) = 1-\Phi(x)$；$u_{1-\alpha} = -u_\alpha$</li>
+<li><strong>$3\sigma$ 原则</strong>：$P(|X-\mu|<\sigma) = 68\%$；$<2\sigma=95\%$；$<3\sigma=99.7\%$</li>
+<li><strong>分位数</strong>：$u_{0.05}=1.645, u_{0.025}=1.96, u_{0.01}=2.33, u_{0.005}=2.575$</li>
+<li><strong>指数无记忆</strong>：$P(X>s+t\mid X>s) = P(X>t)$（连续唯一！）</li>
+<li><strong>$n$ 个独立 $E(\lambda)$ 取 min</strong>：$\sim E(n\lambda)$（重要！）</li>
+<li><strong>指数与 Poisson 关系</strong>：Poisson 流的间隔时间服从 $E(\lambda)$</li>
+<li><strong>$E|X|$（$X\sim N(0,1)$）</strong>：$\sqrt{2/\pi}\approx 0.798$（必背）</li>
+<li><strong>$X\sim N(0,1)\Rightarrow X^2\sim\chi^2(1)$</strong></li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>正态概率计算流程</strong>：标准化 → 化为 $\Phi(\cdot)-\Phi(\cdot)$ → 用对称性 → 查表</li>
+<li><strong>"求 $n$ 使概率 $\geq$ 某值"</strong>：用 $\Phi^{-1}(c) = z^*$ 反查</li>
+<li><strong>指数分布的 $P(X>a)$</strong>：直接 $e^{-\lambda a}$，不用积分</li>
+<li><strong>密度归一化求常数 $c$</strong>：$\int_{-\infty}^{+\infty}cf(x)\dd x = 1$</li>
+<li><strong>$P(a<X<b)$ 连续型</strong>：直接积分 $\int_a^b f\dd x$ 或 $F(b)-F(a)$</li>
+<li><strong>正态的 $E(X), D(X)$ 直接看参数</strong>：$N(\mu,\sigma^2)$ 中 $\mu$ 是均值，$\sigma^2$ 是方差</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>正态标准化分母用 $\sigma$</strong>（不是 $\sigma^2$）</li>
+<li><strong>$\Phi(-x) = 1-\Phi(x)$</strong> 忘减负数情况</li>
+<li><strong>指数分布参数</strong>：$E(\lambda)$ 中 $\lambda$ 是<strong>率</strong>，$E(X) = 1/\lambda$</li>
+<li><strong>$N(\mu,\sigma^2)$ 中第二参数是方差不是标准差</strong>（教材约定）</li>
+<li><strong>无记忆性：离散是几何，连续是指数</strong></li>
+<li><strong>连续型 $P(X=a) = 0$ 但事件未必不发生</strong></li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>5.2 大数定律 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch5-1.html">← 5.1</a><a href="ch5-3.html">5.3 CLT →</a></div>
+<h1>5.2 大数定律 ⭐⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：14 套真题命中 9 套。选择题概念辨析 + 证明题（用 Chebyshev 证大数律）。<br>
+<b>典型出题</b>：判断哪个序列服从大数律 · 用大数律证明矩估计的合理性。
+</div>
+
+<h2 id="s1">一、Bernoulli 大数定律</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>$n$ 重 Bernoulli 试验中 $A$ 发生频数为 $n_A$，概率为 $p$。则</p>
+$$\dfrac{n_A}{n}\xrightarrow{P}p\quad(n\to\infty)$$
+<p>即 $\lim_n P\!\left(\left|\dfrac{n_A}{n}-p\right|\geq\epsilon\right) = 0$。</p>
+<p><strong>"频率稳定于概率"的严格表述</strong>。</p>
+</div>
+
+<div class="note"><strong>证明思路</strong>：$n_A/n$ 的期望是 $p$，方差是 $p(1-p)/n\to 0$。用 Chebyshev 即得依概率收敛。</div>
+</div>
+
+<h2 id="s2">二、Chebyshev 大数定律</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>$X_1, X_2, \ldots$ <strong>两两不相关</strong>（不要求独立！），方差有公共上界 $D(X_i)\leq M$。则</p>
+$$\dfrac{1}{n}\sum_{i=1}^n X_i-\dfrac{1}{n}\sum_{i=1}^n E(X_i)\xrightarrow{P}0$$
+<p>条件较弱：不要求同分布、只要两两不相关 + 方差有上界。</p>
+</div>
+
+<div class="tip">证明思路：$D\!\left(\dfrac{1}{n}\sum X_i\right) = \dfrac{1}{n^2}\sum D(X_i)\leq M/n\to 0$，再用 Chebyshev。</div>
+</div>
+
+<h2 id="s3">三、辛钦（Khintchine）大数定律</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+<p>$X_1, X_2, \ldots$ <strong>i.i.d.</strong>，$E(X_i) = \mu$ 存在（<strong>不要求方差！</strong>），则</p>
+$$\bar X_n = \dfrac{1}{n}\sum_{i=1}^n X_i\xrightarrow{P}\mu$$
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 推论（矩估计基础）</div>
+<p>$X_i$ i.i.d. 且 $E(X^k)$ 存在 ⇒</p>
+$$M_k = \dfrac{1}{n}\sum_{i=1}^n X_i^k\xrightarrow{P}E(X^k)$$
+<p>样本 $k$ 阶矩依概率收敛于总体 $k$ 阶矩 —— <strong>矩估计法的理论基础</strong>。</p>
+</div>
+</div>
+
+<h2 id="s4">四、三大大数定律比较</h2>
+<div class="card">
+<table>
+<thead><tr><th>定律</th><th>条件</th><th>结论</th></tr></thead>
+<tbody>
+<tr><td>Bernoulli</td><td>$n$ 重独立同 $p$ 试验</td><td>$n_A/n\xrightarrow{P}p$</td></tr>
+<tr><td>Chebyshev</td><td>两两不相关 + 方差有界</td><td>$\frac{1}{n}\sum X_i-\frac{1}{n}\sum EX_i\xrightarrow{P}0$</td></tr>
+<tr><td>Khintchine</td><td>i.i.d. + 期望存在</td><td>$\bar X_n\xrightarrow{P}\mu$</td></tr>
+</tbody>
+</table>
+<p>三者都是<strong>依概率收敛</strong>。条件强度（独立性、同分布、方差）各有取舍。</p>
+</div>
+
+<h2 id="s5">五、考试要点</h2>
+<div class="card">
+<div class="tip">大数定律出现在：① 证明题（用 Chebyshev 证大数律）② 矩估计的理论基础 ③ 选择题概念辨析。</div>
+<div class="warn"><strong>易错</strong>：
+<ul>
+<li>Chebyshev 大数律<strong>不要求同分布</strong>、只要"两两不相关 + 方差有界"</li>
+<li>Khintchine <strong>不要求方差</strong>存在（只需期望）</li>
+<li>大数定律是<strong>依概率收敛</strong>，不是几乎处处收敛（强大数定律才是）</li>
+<li>"频率稳定于概率"是 Bernoulli 大数律的本质</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li>"<strong>Bernoulli: 频率 → 概率</strong>"</li>
+<li>"<strong>Chebyshev: 不相关 + 方差有界</strong>"</li>
+<li>"<strong>Khintchine: i.i.d. + 期望存在</strong>"</li>
+<li>"<strong>大数律 = 依概率，不是 a.s.</strong>"</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">六、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>Bernoulli</strong>：$n_A/n\xrightarrow{P}p$ —— 频率稳定性</li>
+<li><strong>Chebyshev 大数律</strong>：两两不相关 + 方差有界 → $\frac{1}{n}\sum X_i - \frac{1}{n}\sum E(X_i)\xrightarrow{P}0$</li>
+<li><strong>Khintchine 大数律</strong>：i.i.d. + $E$ 存在（不要求方差！）→ $\bar X_n\xrightarrow{P}\mu$</li>
+<li><strong>样本 $k$ 阶矩</strong>：$M_k\xrightarrow{P}E(X^k)$（矩估计基础）</li>
+<li><strong>大数律是依概率收敛</strong>（不是几乎处处）</li>
+<li><strong>Chebyshev 大数律比 Khintchine 弱条件</strong>：不要求同分布</li>
+<li><strong>样本均值收敛速度 $1/\sqrt n$</strong>（由 CLT）</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>证某序列服从大数律</strong>：用 Chebyshev（$D\to 0$ 即可）</li>
+<li><strong>用 Khintchine 时只验 i.i.d. 和 $E$ 存在</strong></li>
+<li><strong>不要求方差但要求 i.i.d. → Khintchine</strong>；要求方差但不要求同分布 → Chebyshev</li>
+<li><strong>$\sum g(X_i)/n\xrightarrow{P}E(g(X))$</strong>（连续映射定理 + Khintchine）</li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>Chebyshev 不要求同分布</strong>，只要"两两不相关 + 方差有界"</li>
+<li><strong>Khintchine 不要求方差</strong>，只要"i.i.d. + 期望存在"</li>
+<li><strong>大数律是依概率不是 a.s.</strong>（强大数律才是）</li>
+<li><strong>Bernoulli ⊂ Khintchine ⊂ Chebyshev</strong>（条件依次更弱/特殊）</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

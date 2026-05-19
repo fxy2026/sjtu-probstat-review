@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>6.1 数理统计基本概念 | 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="ch5-3.html">← 5.3</a><a href="ch6-2.html">6.2 抽样分布 →</a></div>
+<h1>6.1 数理统计的基本概念 ⭐</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#2980b9);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>本节真题考频</b>：每年选择/填空 1-2 道。$\bar X, S^2$ 性质是后续 6.2、7、8 章基础。<br>
+<b>典型出题</b>：判断哪些是统计量 · $E(\bar X), D(\bar X), E(S^2)$ · 分位数定义。
+</div>
+
+<h2 id="s1">一、总体、样本、统计量</h2>
+<div class="card">
+<div class="fb">
+<ul>
+<li><strong>总体</strong>：研究对象全体（视为随机变量 $X$，其分布为总体分布）</li>
+<li><strong>个体</strong>：$X$ 的一次取值</li>
+<li><strong>样本</strong>：从总体抽取的 $n$ 个个体 $(X_1, \ldots, X_n)$，样本容量 $n$</li>
+<li><strong>简单随机样本</strong>（i.i.d.）：$X_i$ 与 $X$ 同分布且相互独立</li>
+</ul>
+</div>
+
+<div class="fb"><div class="t">简单样本的联合分布</div>
+<p>$F_X$ 是总体分布函数：</p>
+$$F(x_1, \ldots, x_n) = \prod_{i=1}^n F_X(x_i),\quad f(x_1, \ldots, x_n) = \prod_{i=1}^n f_X(x_i)$$
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 统计量定义</div>
+<p>样本 $(X_1, \ldots, X_n)$ 的<strong>不含未知参数</strong>的可测函数 $g(X_1, \ldots, X_n)$ 称为统计量。</p>
+<p><strong>关键</strong>：不能含未知参数！</p>
+<p>例：$X\sim N(\mu, \sigma^2),\,\mu, \sigma^2$ 未知：</p>
+<ul>
+<li>$\bar X$ 是统计量 ✓</li>
+<li>$S^2$ 是统计量 ✓</li>
+<li>$\dfrac{\bar X-\mu}{\sigma}$ <strong>不是</strong>统计量（含 $\mu, \sigma$）</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s2">二、常用统计量及其性质</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b">
+$$\bar X = \dfrac{1}{n}\sum_{i=1}^n X_i\quad\text{样本均值}$$
+$$S^2 = \dfrac{1}{n-1}\sum_{i=1}^n(X_i-\bar X)^2\quad\text{样本方差（分母 $n-1$）}$$
+$$S_n^2 = \dfrac{1}{n}\sum_{i=1}^n(X_i-\bar X)^2 = \dfrac{n-1}{n}S^2\quad\text{样本二阶中心矩}$$
+$$M_k = \dfrac{1}{n}\sum_{i=1}^n X_i^k\quad\text{样本 $k$ 阶（原点）矩}$$
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 期望/方差关键结论（对<strong>任意分布</strong>都成立！）</div>
+<ul>
+<li>$E(\bar X) = \mu$</li>
+<li>$D(\bar X) = \sigma^2/n$</li>
+<li>$E(S^2) = \sigma^2$（<strong>无偏！</strong> 这就是分母用 $n-1$ 的原因）</li>
+<li>$E(S_n^2) = \frac{n-1}{n}\sigma^2$（有偏）</li>
+<li>$M_k\xrightarrow{P}E(X^k)$（依概率收敛）</li>
+<li>$E(\bar X^2) = \sigma^2/n+\mu^2$（连考 3 套关键公式）</li>
+</ul>
+</div>
+
+<div class="note"><strong>$E(S^2) = \sigma^2$ 的证明</strong>：
+$$E(S^2) = \dfrac{1}{n-1}\left[E\!\left(\sum X_i^2\right)-nE(\bar X^2)\right] = \dfrac{1}{n-1}\left[n(\sigma^2+\mu^2)-n(\sigma^2/n+\mu^2)\right] = \dfrac{n\sigma^2-\sigma^2}{n-1} = \sigma^2$$
+"分母 $n-1$ 而不是 $n$"<strong>就是为了让 $S^2$ 无偏</strong>。
+</div>
+</div>
+
+<h2 id="s3">三、顺序统计量与分位数</h2>
+<div class="card">
+<div class="fb">
+<p><strong>顺序统计量</strong>：把 $(X_1, \ldots, X_n)$ 从小到大排序得 $X_{(1)}\leq X_{(2)}\leq\cdots\leq X_{(n)}$。</p>
+<ul>
+<li>最小 $X_{(1)} = \min X_i$；最大 $X_{(n)} = \max X_i$</li>
+<li>样本中位数 $\tilde X$：奇数 $n$ 取 $X_{((n+1)/2)}$；偶数 $n$ 取中间两个的平均</li>
+<li>样本极差 $R = X_{(n)}-X_{(1)}$</li>
+</ul>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 分位数（必背！）</div>
+<p><strong>上侧 $\alpha$ 分位数</strong>：$P(X > x_\alpha) = \alpha$（右尾概率 = $\alpha$）</p>
+<p>标准正态：</p>
+<table>
+<tr><th>$\alpha$</th><td>0.10</td><td>0.05</td><td>0.025</td><td>0.01</td><td>0.005</td></tr>
+<tr><th>$u_\alpha$</th><td>1.28</td><td>1.645</td><td>1.96</td><td>2.33</td><td>2.575</td></tr>
+</table>
+<p>对称性：$u_{1-\alpha} = -u_\alpha$（因为标准正态密度是偶函数）</p>
+</div>
+</div>
+
+<h2 id="s4">四、典型例题</h2>
+<div class="card">
+<div class="ex"><strong>题 ★</strong>：总体 $X\sim N(52, 6.3^2)$，$n = 36$。求 $P(50.8<\bar X<53.8)$。
+<div class="sol"><div class="st">解</div>
+<p>$\bar X\sim N(52, 6.3^2/36) = N(52, 1.1025)$，$\sigma_{\bar X} = 1.05$。</p>
+$$P(50.8<\bar X<53.8) = \Phi\!\left(\dfrac{1.8}{1.05}\right)-\Phi\!\left(\dfrac{-1.2}{1.05}\right) = \Phi(1.71)-\Phi(-1.14)\approx 0.829$$
+</div></div>
+</div>
+
+<h2 id="s5">五、考试要点</h2>
+<div class="card">
+<div class="tip"><strong>本节常考</strong>：
+<ul>
+<li>判断"哪些是统计量"（不含未知参数）</li>
+<li>$E(\bar X), D(\bar X), E(S^2)$ 直接套用</li>
+<li>样本 $k$ 阶矩与总体 $k$ 阶矩的关系（矩估计准备）</li>
+<li>分位数定义与对称性</li>
+</ul>
+</div>
+<div class="warn"><strong>易错</strong>：
+<ul>
+<li>$S^2$ 用 $n-1$ 才<strong>无偏</strong>；$S_n^2$ 用 $n$ 有偏</li>
+<li>统计量<strong>不能含未知参数</strong></li>
+<li>$\bar X$ 是 $\mu$ 的<strong>任意分布</strong>下的无偏估计</li>
+<li>$D(\bar X) = \sigma^2/n$，分母是 $n$（不是 $\sqrt n$）</li>
+</ul>
+</div>
+
+<div class="note"><strong>记忆口诀</strong>：
+<ul>
+<li>"<strong>$\bar X$ 估 $\mu$，$S^2$ 估 $\sigma^2$，都无偏</strong>"</li>
+<li>"<strong>$D(\bar X) = \sigma^2/n$；$E(\bar X^2) = \sigma^2/n + \mu^2$</strong>"</li>
+<li>"<strong>统计量 = 不含未知参数的样本函数</strong>"</li>
+<li>"<strong>上 α 分位数：$P(X > x_\alpha) = \alpha$</strong>"</li>
+</ul>
+</div>
+</div>
+
+<h2 id="patterns">六、真题套路 · 二级结论 · 速算技巧</h2>
+<div class="card">
+<h3>必背二级结论</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li><strong>$E(\bar X) = \mu$</strong>（任意分布）</li>
+<li><strong>$D(\bar X) = \sigma^2/n$</strong>（任意分布）</li>
+<li><strong>$E(S^2) = \sigma^2$</strong>（任意分布无偏）</li>
+<li><strong>$E(S_n^2) = \frac{n-1}{n}\sigma^2$</strong>（有偏）</li>
+<li><strong>$E(\bar X^2) = \sigma^2/n+\mu^2$</strong>（连考 3 套关键！）</li>
+<li><strong>$M_k\xrightarrow{P}E(X^k)$</strong>（矩估计基础）</li>
+<li><strong>简单样本联合密度</strong>：$f = \prod f_X(x_i)$</li>
+<li><strong>统计量 = 不含未知参数的样本函数</strong></li>
+<li><strong>上 α 分位数</strong>：$P(X>x_\alpha) = \alpha$；$u_{1-\alpha} = -u_\alpha$</li>
+<li><strong>顺序统计量</strong>：$X_{(1)}\leq X_{(2)}\leq\cdots\leq X_{(n)}$</li>
+</ol>
+</div>
+
+<h3>速算与解题技巧</h3>
+<div class="tip">
+<ol>
+<li><strong>判断统计量：是否含未知参数</strong></li>
+<li><strong>$\bar X, S^2$ 的期望直接背</strong></li>
+<li><strong>$D(\bar X) = \sigma^2/n$ 用于 CLT 标准化</strong></li>
+<li><strong>查表分位数 $u_{0.025} = 1.96, u_{0.05} = 1.645, u_{0.01} = 2.33$</strong></li>
+<li><strong>正态总体下 $\bar X\sim N(\mu, \sigma^2/n)$ 严格</strong></li>
+</ol>
+</div>
+
+<h3>常错"小坑"清单</h3>
+<div class="warn">
+<ul>
+<li><strong>统计量不能含未知参数</strong></li>
+<li><strong>$S^2$ 用 $n-1$ 才无偏</strong></li>
+<li><strong>$D(\bar X) = \sigma^2/n$，分母 $n$（不是 $\sqrt n$）</strong></li>
+<li><strong>$E(\bar X^2)$ 漏 $\mu^2$ 项</strong></li>
+<li><strong>分位数 $u_{1-\alpha} = -u_\alpha$</strong>（对称性）</li>
+</ul>
+</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

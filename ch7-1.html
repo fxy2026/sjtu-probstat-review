@@ -94,6 +94,18 @@
 </div></div>
 
 <div class="warn"><strong>边界 MLE 识别</strong>：定义域含 $\theta$（如 $X\leq\theta$ 或 $X\geq\theta$），似然函数关于 $\theta$ 单调 → 不要求导，看单调性！这是 MLE 题<strong>最常见的陷阱</strong>。</div>
+
+<figure class="plot">
+<img src="img/ch7-1_mle_boundary.png" alt="U(0,theta) 似然函数边界型 MLE">
+<figcaption>边界型 MLE 的几何真相（以 $U(0,\theta)$ 为例）：似然 $L(\theta)=\theta^{-n}$ 只在 $\theta\geq\max X_i$ 时非零，且对 $\theta$ <strong>单调递减</strong>（求导 $\frac{\dd\ln L}{\dd\theta}=-\frac{n}{\theta}<0$ 恒负，永远取不到 $0$）。所以最大值落在约束的左端点 $\hat\theta_{\text{MLE}}=\max X_i$，<strong>绝不能令导数为零</strong>。</figcaption>
+</figure>
+
+<div class="warn" style="border-left-color:#c0392b;background:#fff0f0"><strong>⚠️ 你在这反复卡（5/29 连问"MLE 没掌握"）</strong>：见到 $f(x;\alpha,\beta)=\beta e^{-\beta(x-\alpha)}\,(x\geq\alpha)$、$f=2\theta^2x^{-3}\,(x>\theta)$、$U(0,\theta)$ 这类<strong>定义域里出现参数</strong>的题，第一反应不是求导，而是先盯死约束方向：
+<ul>
+<li>参数是<strong>下界</strong>（$x\geq\alpha$ 即 $\alpha\leq\min x_i$）→ $\hat\alpha=\min X_i=X_{(1)}$；</li>
+<li>参数是<strong>上界</strong>（$x\leq\theta$ 即 $\theta\geq\max x_i$）→ $\hat\theta=\max X_i=X_{(n)}$。</li>
+</ul>
+破法：把"求导=0"换成"画 $L(\theta)$ 单调性 + 看约束端点"。<strong>双参数</strong>（如平移指数 $\alpha,\beta$）先用边界法定 $\hat\alpha=X_{(1)}$，再把 $\hat\alpha$ 代回对 $\beta$ 正常求导。这正是 5/29 那道一题打通全链的题。</div>
 </div>
 
 <h2 id="s3">三、估计量评价 ⭐⭐⭐</h2>
@@ -146,6 +158,11 @@ $$D(S_1^2) = \dfrac{2\sigma^4}{n} < D(\hat S_2^2) = \dfrac{2\sigma^4}{n-1} < D(\
 <p>即 $S_1^2$ 最有效，$\hat S_3^2 = n\bar X^2$ 最差。</p>
 <p><strong>本题考点全集</strong>：① 用 $E(\bar X^2) = \sigma^2/n+\mu^2$ 公式判无偏 ② 用 $\chi^2$ 算方差 ③ 比较选最优。</p>
 </div></div>
+
+<figure class="plot">
+<img src="img/ch7-1_unbiased_efficient.png" alt="三个无偏估计量的抽样分布与方差比较">
+<figcaption>把三个估计量矫正成无偏后各跑 $4$ 万次抽样（$n=10,\ \sigma^2=1$）：三条直方图<strong>都中心在 $\sigma^2=1$</strong>（无偏），但<strong>胖瘦不同</strong>——$S_1^2=\frac1n\sum X_i^2$（绿，最窄=方差最小=最有效）$<\ \frac{n}{n-1}S_2^2=S^2$（蓝）$<\ n\bar X^2$（红，最胖=最差）。"有效性排序"比的就是这个胖瘦，对应方差 $\frac{2\sigma^4}{n}<\frac{2\sigma^4}{n-1}<2\sigma^4$。</figcaption>
+</figure>
 </div>
 
 <h2 id="s4">四、Rao-Cramer 不等式（满分笔记重点）</h2>

@@ -67,6 +67,11 @@ $$M_k = \dfrac{1}{n}\sum_{i=1}^n X_i^k\quad\text{样本 $k$ 阶（原点）矩}$
 $$E(S^2) = \dfrac{1}{n-1}\left[E\!\left(\sum X_i^2\right)-nE(\bar X^2)\right] = \dfrac{1}{n-1}\left[n(\sigma^2+\mu^2)-n(\sigma^2/n+\mu^2)\right] = \dfrac{n\sigma^2-\sigma^2}{n-1} = \sigma^2$$
 "分母 $n-1$ 而不是 $n$"<strong>就是为了让 $S^2$ 无偏</strong>。
 </div>
+
+<figure class="plot">
+<img src="img/ch6-1_s2_unbiased.png" alt="S^2 与 S_n^2 抽样分布对比">
+<figcaption>$6$ 万次抽样（$n=6,\ \sigma^2=1$）的直方图：除 $n-1$ 的 $S^2$（蓝）均值正好落在真值 $\sigma^2=1$；除 $n$ 的 $S_n^2$（橙）整体偏小，均值约 $\frac{n-1}{n}\sigma^2$。这就是"为什么 $S^2$ 分母是 $n-1$"的直观图证。</figcaption>
+</figure>
 </div>
 
 <h2 id="s3">三、顺序统计量与分位数</h2>

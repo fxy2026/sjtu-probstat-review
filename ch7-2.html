@@ -25,6 +25,11 @@ $$P(\underline\theta\leq\theta\leq\bar\theta)\geq 1-\alpha$$
 
 <div class="tip"><strong>枢轴量法</strong>：找一个含 $\theta$ 且分布已知的统计量 $T = T(\bar X, S, \theta)$，反解出 $\theta$ 的区间。</div>
 
+<figure class="plot">
+<img src="img/ch7-2_ci_coverage.png" alt="40 次抽样的 95% 置信区间覆盖示意">
+<figcaption>置信区间是<strong>随机区间</strong>：固定 $\mu=5$，重复抽样 $40$ 次，每次都算一条 95% 区间。约 95% 的区间盖住真值 $\mu$（蓝），约 5% 没盖住（红，本图 2 条）。"95% 置信"说的是<strong>这套造区间的方法长期有 95% 命中率</strong>，不是"$\mu$ 落在某条具体区间里的概率是 95%"——$\mu$ 是固定常数，要么在要么不在。</figcaption>
+</figure>
+
 <div class="fb"><div class="t">三步法</div>
 <ol>
 <li>选枢轴量 $U(X_1, \ldots, X_n; \theta)$（分布已知且不依赖其他未知参数）</li>

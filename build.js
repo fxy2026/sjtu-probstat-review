@@ -59,6 +59,16 @@ function copyFile(src, dst) {
   fs.copyFileSync(src, dst);
 }
 
+function copyDir(src, dst) {
+  fs.mkdirSync(dst, { recursive: true });
+  for (const entry of fs.readdirSync(src)) {
+    const s = path.join(src, entry);
+    const d = path.join(dst, entry);
+    if (fs.statSync(s).isDirectory()) copyDir(s, d);
+    else fs.copyFileSync(s, d);
+  }
+}
+
 function writeFile(dst, content) {
   fs.mkdirSync(path.dirname(dst), { recursive: true });
   fs.writeFileSync(dst, content);
@@ -75,7 +85,12 @@ for (const entry of entries) {
   const src = path.join(SRC, entry);
   const dst = path.join(DIST, entry);
   const stat = fs.statSync(src);
-  if (stat.isDirectory()) continue;
+  if (stat.isDirectory()) {
+    // 复制资源目录（如 img/）到 dist，供 Vercel 部署
+    copyDir(src, dst);
+    copyCount++;
+    continue;
+  }
   if (entry.endsWith('.html')) {
     const content = fs.readFileSync(src, 'utf8');
     writeFile(dst, preRenderHTML(content));

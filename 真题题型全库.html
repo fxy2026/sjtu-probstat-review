@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>📚 真题题型全库（按频次）| 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="exams.html">← 历年真题精选</a><a href="我的薄弱点.html">🔴 我的薄弱点 →</a></div>
+<h1>📚 真题题型全库（按频次 / 占分排序）</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#1a5276,#c0392b);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>📊 穷尽 SJTU 历年期末真题</b>（14-15 ~ 23-24，含荣誉版，17 套）+ 满分 44 页笔记 + 21 节课件统计而成。<br>
+本页是<b>频次统计 + 题型全库 + 标准解法 + 真题原型 + 必背全集</b>的<b>底库</b>。<br>
+⚠️ 所有分位数 / 临界值<b>考前以试卷附表核对</b>，临界值错 = 灾难。
+</div>
+
+<h2 id="cards">一、卷型与八大铁打题型</h2>
+<div class="card">
+<div class="fb"><div class="t">卷型锁定（20-21-2 起定型）</div>
+<p>单选 <strong>12×3 = 36 分</strong> + 大题 <strong>7 道（前 6 题各 9 分 + 第 19 题 10 分）= 64 分</strong>，共 100 分 / 120 分钟。</p>
+<p><strong>复习模板</strong>：以 <strong>22-23-2、23-24-1、23-24-2</strong> 三套为最终题型模板。</p>
+</div>
+<div class="warn"><strong>别背死题号！</strong> 八大题型集合每套<strong>必齐</strong>，但具体落在哪个题号<strong>会打乱</strong>（已核对原卷）。按"题型"而非"题号"准备。下表是 23-24-2 的最规整顺序：
+<table>
+<thead><tr><th>题号</th><th>题型</th><th>分值</th><th>命中</th></tr></thead>
+<tbody>
+<tr><td>13</td><td>全概率 + Bayes</td><td>9</td><td>13+/14</td></tr>
+<tr><td>14</td><td>二维联合密度（边缘/条件/条件分布函数）</td><td>9</td><td>14/14</td></tr>
+<tr><td>15</td><td>二维函数分布 / 卷积 / max / min</td><td>9</td><td>13/14</td></tr>
+<tr><td>16</td><td>切比雪夫 + 中心极限定理（双胞胎）</td><td>9</td><td>14/14</td></tr>
+<tr><td>17</td><td>估计量无偏矫正 + 有效性排序</td><td>9</td><td>13/14</td></tr>
+<tr><td>18</td><td>矩估计 + 极大似然</td><td>9</td><td>14/14</td></tr>
+<tr><td>19（压轴）</td><td>假设检验（P 值法 + 经典法双检验）</td><td>10</td><td>13/14</td></tr>
+</tbody>
+</table>
+</div>
+</div>
+
+<h2 id="byscore">二、分值重心（按章占分）</h2>
+<div class="card">
+<table>
+<thead><tr><th>排序</th><th>章节</th><th>占分</th><th>建议时长</th></tr></thead>
+<tbody>
+<tr><td>1</td><td>第 6 章 数理统计</td><td>~35 分（题 17/18/19 + 选择 3~4 题）</td><td><b>28%</b></td></tr>
+<tr><td>2</td><td>第 3 章 多维随机变量</td><td>~22 分（题 14/15 + 选择 2~3 题）</td><td><b>22%</b></td></tr>
+<tr><td>3</td><td>第 5 章 极限定理</td><td>~15 分（题 16 + 选择 1~2 题）</td><td><b>15%</b></td></tr>
+<tr><td>4</td><td>第 1 章 随机事件与概率</td><td>~12 分（题 13 + 选择 1~2 题）</td><td><b>13%</b></td></tr>
+<tr><td>5</td><td>第 4 章 数字特征</td><td>隐形支撑（贯穿题 14~19）</td><td><b>12%</b></td></tr>
+<tr><td>6</td><td>第 2 章 一维随机变量</td><td>选择 2~3 题</td><td><b>10%</b></td></tr>
+</tbody>
+</table>
+<div class="tip"><strong>结论</strong>：第 6、3 章合计 50% 时间，绝对重点。第 4 章不单独成大题，但是所有大题的工具。</div>
+</div>
+
+<h2 id="t1">题型 1 · 全概率 + Bayes ★★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：题 13 铁打，出现 13+ 次，几乎 100% 命中（14-15-1 ~ 23-24-2 几乎全覆盖）。</p>
+<div class="fb"><div class="t">标准解法</div>
+<ol>
+<li>设 $B_i$ 为类别（构成 $\Omega$ 完备划分，$\sum P(B_i)=1$），$A$ 为待求事件。</li>
+<li>全概率：$P(A)=\sum_i P(B_i)P(A\mid B_i)$。</li>
+<li>Bayes：$P(B_k\mid A)=\dfrac{P(B_k)P(A\mid B_k)}{P(A)}$，分母<strong>直接用第 (1) 问的 $P(A)$，不要重算</strong>。</li>
+</ol>
+</div>
+<div class="ex"><strong>真题原型（23-24-2 题 13，三门高射炮）</strong>：甲乙丙命中率 $0.4/0.5/0.7$ 独立射击。一门中摧毁 $0.2$，两门中 $0.6$，三门全中必摧毁。求 (1) 被摧毁概率；(2) 已知被摧毁恰两门击中的概率。
+<div class="sol"><div class="st">解</div>
+<p>设 $B_k$ = 恰 $k$ 门击中。$P(B_3)=0.4\times0.5\times0.7=0.14$；$P(B_1),P(B_2)$ 各枚举 3 种组合相加。</p>
+<p>$P(A)=P(B_1)(0.2)+P(B_2)(0.6)+P(B_3)(1)$；$P(B_2\mid A)=\dfrac{P(B_2)(0.6)}{P(A)}$。</p>
+</div></div>
+<div class="warn"><strong>易错</strong>：
+<ul>
+<li>"恰好两门击中"对应 3 种组合，须枚举别漏。</li>
+<li>22-23-2 是"至少发生 1 起事故" $=1-P(0\text{ 起})=1-e^{-\lambda}$（泊松 $P(X=0)=e^{-\lambda}$），要先转化。</li>
+<li>23-24-1 次品检验：抽 3 件全判正品才通过，含"次品误判正品 0.01 / 正品误判次品 0.05"，按抽到的次品/正品数分情况。</li>
+</ul>
+<strong>变体</strong>：三类驾驶员泊松事故数、三台机器次品率、甲乙丙盒摸球、口袋两种硬币、红蓝网络攻防、射手三级、保险三类人、100 件产品次品检验。
+</div>
+</div>
+
+<h2 id="t2">题型 2 · 矩估计 + 极大似然 ★★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：题 18 铁打，出现 14 次，100% 命中。</p>
+<div class="fb"><div class="t">标准解法</div>
+<ol>
+<li><strong>矩估计</strong>：算 $E(X)=g(\theta)$，令 $g(\hat\theta)=\bar X$ 反解。一阶矩不含 $\theta$（如对称分布期望为 0）时用二阶矩 $E(X^2)$ 或 $D(X)$。</li>
+<li><strong>MLE</strong>：$L(\theta)=\prod_{i=1}^n f(x_i;\theta)$，取 $\ln L$，对 $\theta$ 求导令 $=0$ 解 $\hat\theta$。</li>
+<li><strong>边界情形（关键考点）</strong>：定义域含 $\theta$（如 $x>\theta$、$U(0,\theta)$），$\ln L$ 对 $\theta$ 求导<strong>恒同号</strong>，MLE 取<strong>样本极值</strong> $\min X_i$ 或 $\max X_i$，<strong>绝不求导</strong>。</li>
+</ol>
+</div>
+<div class="ex"><strong>真题原型（23-24-2 题 18）</strong>：$f(x,\theta)=2\theta^2 x^{-3},\ x>\theta>0$。
+<div class="sol"><div class="st">解</div>
+<p>矩估计：$E(X)=\displaystyle\int_\theta^\infty x\cdot 2\theta^2 x^{-3}\dd x=2\theta^2\cdot\frac1\theta=2\theta$，故 $\hat\theta_{矩}=\bar X/2$。</p>
+<p>MLE：$\ln L=n\ln2+2n\ln\theta-3\sum\ln x_i$，$\dfrac{\partial}{\partial\theta}=\dfrac{2n}{\theta}>0$ 恒正 → $L$ 关于 $\theta$ 单增，但约束 $\theta<\min x_i$，故 $\hat\theta_{MLE}=\min_i X_i$。</p>
+</div></div>
+<div class="fb" style="border-color:#27ae60"><div class="t">⭐ 常见分布矩估计 / MLE 速查（必背）</div>
+<table>
+<thead><tr><th>分布</th><th>矩估计</th><th>MLE</th></tr></thead>
+<tbody>
+<tr><td>$B(1,p)$</td><td>$\hat p=\bar X$</td><td>$\hat p=\bar X$</td></tr>
+<tr><td>$P(\lambda)$</td><td>$\hat\lambda=\bar X$</td><td>$\hat\lambda=\bar X$</td></tr>
+<tr><td>$G(p)$</td><td>$\hat p=1/\bar X$</td><td>$\hat p=1/\bar X$</td></tr>
+<tr><td>$E(\lambda)$</td><td>$\hat\lambda=1/\bar X$</td><td>$\hat\lambda=1/\bar X$</td></tr>
+<tr><td>$U(a,b)$</td><td>$\hat a=\bar X-\sqrt3 S,\ \hat b=\bar X+\sqrt3 S$</td><td>$\hat a=\min X_i,\ \hat b=\max X_i$</td></tr>
+<tr><td>$U(0,\theta)$</td><td>$\hat\theta=2\bar X$</td><td>$\hat\theta=\max X_i$</td></tr>
+<tr><td>$N(\mu,\sigma^2)$</td><td>$\hat\mu=\bar X,\ \hat\sigma^2=\frac1n\sum(X_i-\bar X)^2$</td><td>同左</td></tr>
+</tbody>
+</table>
+</div>
+<div class="warn"><strong>易错</strong>：定义域含 $\theta$ 时 MLE 不靠求导；矩估计一阶矩不含 $\theta$ 时必须用二阶矩。<br><strong>变体</strong>：$U(0,3\theta)$、$f=\beta e^{-\beta(x-\alpha)}$ 串联系统、$F=1-x^{-\alpha}$、$f=\theta x^{\theta-1}/2^\theta$ on $(0,2)$、带平移指数 $\mu,\beta$。</div>
+</div>
+
+<h2 id="t3">题型 3 · 中心极限定理（CLT）★★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：题 16 必出，出现 14 次，全部年份均考。</p>
+<div class="fb"><div class="t">标准解法</div>
+<ol>
+<li>设 $S_n=\sum_{i=1}^n X_i$，算 $E(S_n)=n\mu$，$D(S_n)=n\sigma^2$。</li>
+<li>$\dfrac{S_n-n\mu}{\sqrt n\,\sigma}\approx N(0,1)$，即 $S_n\approx N(n\mu,n\sigma^2)$；均值 $\bar X\approx N(\mu,\sigma^2/n)$。</li>
+<li>标准化查 $\Phi$ 表：$P(S_n\le a)=\Phi\!\left(\dfrac{a-n\mu}{\sqrt n\,\sigma}\right)$。</li>
+</ol>
+</div>
+<div class="ex"><strong>真题原型（23-24-1 题 14，40 台设备维修）</strong>：每台两阶段，时间分别 $\sim E(10),E(8)$ 独立。单台期望 $\frac1{10}+\frac18$，方差 $\frac1{100}+\frac1{64}$。40 台和 $S_{40}\approx N(40\mu,40\sigma^2)$，求 $P(S_{40}\le 8)=\Phi(\cdots)$。</div>
+<div class="fb" style="border-color:#c0392b"><div class="t">"$n$ 至少为多少"反查型（出题人偏好）</div>
+<p>要求 $P(|\bar X-\mu|<\varepsilon)\ge\gamma$，即 $2\Phi\!\left(\dfrac{\varepsilon\sqrt n}{\sigma}\right)-1\ge\gamma$，反查 $\Phi^{-1}$ 解出 $n$。</p>
+<p>例（19-20-1）：灌装 $N(\mu,1)$，$P(|\bar X-\mu|\le0.3)\ge0.95$，$n\ge(1.96/0.3)^2\approx 43$。</p>
+</div>
+<div class="warn"><strong>易错</strong>：(1) 单位换算（8 小时 = 480 分）；(2) 离散分布（0/1/2 电脑数）要先算单台 $E,D$；(3) 二项 $B(n,p)$ 用棣莫弗-拉普拉斯 $\dfrac{Y-np}{\sqrt{np(1-p)}}\approx N(0,1)$；(4) 连续性修正一般不要求，按题。</div>
+</div>
+
+<h2 id="t4">题型 4 · 切比雪夫不等式 ★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：题 16 常与 CLT 双胞胎，出现 12 次。</p>
+<div class="fb"><div class="t">核心公式</div>
+$$\Prob(|X-\mu|\ge\varepsilon)\le\frac{\D(X)}{\varepsilon^2}\quad\Longleftrightarrow\quad \Prob(|X-\mu|<\varepsilon)\ge 1-\frac{\D(X)}{\varepsilon^2}$$
+<p><strong>解法</strong>：算 $S_n$ 的 $E,D$ → 套公式给<strong>下界</strong>（"概率至少为"）。</p>
+</div>
+<div class="ex"><strong>真题原型（21-22-2 题 9，10000 盏灯）</strong>：每盏开灯概率 $0.7$ 独立。$S\sim B(10000,0.7)$，$E(S)=7000$，$D(S)=10000\times0.7\times0.3=2100$。
+<div class="sol"><div class="st">解</div>
+$$P(6900\le S\le 7100)=P(|S-7000|\le100)\ge 1-\frac{2100}{100^2}=1-0.21=0.79$$
+</div></div>
+<div class="warn"><strong>易错</strong>：(1) 只给下界，问"至少"；(2) 区间最好关于 $\mu$ 对称才能用 $\varepsilon$；(3) 与 CLT 同题时切比雪夫结果偏保守（更松）。</div>
+</div>
+
+<h2 id="t5">题型 5 · 二维联合密度（边缘/条件/条件分布函数）★★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：题 14 铁打，出现 14 次，全部年份。</p>
+<div class="fb"><div class="t">标准解法</div>
+<ol>
+<li><strong>归一化常数</strong>：$\iint_D f=1$ 解 $c$。</li>
+<li><strong>边缘密度</strong>：$f_X(x)=\int_{\{y:f>0\}}f(x,y)\dd y$（<strong>画区域图定限</strong>）。</li>
+<li><strong>条件密度</strong>：$f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}$。</li>
+<li><strong>条件分布函数</strong>：$F_{X\mid Y}(x\mid y)=\int_{-\infty}^x f_{X\mid Y}(t\mid y)\dd t$。</li>
+</ol>
+</div>
+<div class="ex"><strong>真题原型（23-24-2 题 14）</strong>：$f(x,y)=e^{-x},\ 0<y<x$。
+<div class="sol"><div class="st">解</div>
+<p>(1) $f_Y(y)=\int_y^\infty e^{-x}\dd x=e^{-y}\ (y>0)$；$f_{X\mid Y}(x\mid y)=\dfrac{e^{-x}}{e^{-y}}=e^{-(x-y)}\ (x>y)$。</p>
+<p>(2) $F_{X\mid Y}(2\mid y=1)=\int_1^2 e^{-(t-1)}\dd t=1-e^{-1}$。</p>
+</div></div>
+<div class="fb" style="border-color:#c0392b"><div class="t">⚠️ 关键区别（23-24-2 专考）</div>
+$$P(X\le2\mid Y\le1)=\frac{\iint_{x\le2,\,y\le1}f}{\int_0^1 f_Y(y)\dd y}\quad\ne\quad \int_{-\infty}^2 f_{X\mid Y}(x\mid 1)\dd x$$
+<p>前者是<strong>事件条件概率</strong>（用区域二重积分），后者是<strong>条件密度积分</strong>（点条件 $Y=1$）。</p>
+</div>
+<div class="warn"><strong>出题人三大爱用区域</strong>：$\{0<y<x\}$、$\{y^2<x<1\}$、$\{0<x<y<1\}$。<strong>易错</strong>：(1) 条件密度支撑随条件变量变；(2) 事件条件 vs 点条件区别；(3) 区域图务必画。</div>
+</div>
+
+<h2 id="t6">题型 6 · 两变量函数分布：卷积 / max / min ★★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：题 15 铁打，出现 13 次。</p>
+<div class="fb"><div class="t">核心公式</div>
+<ul>
+<li>卷积（独立）：$f_{X+Y}(z)=\int_{-\infty}^{+\infty}f_X(x)f_Y(z-x)\dd x$，积分限由 $x\in\text{supp}(X)$ 且 $z-x\in\text{supp}(Y)$ 共定。</li>
+<li>一般 $Z=X+Y$（不独立）：$f_Z(z)=\int_{-\infty}^{+\infty}f(x,z-x)\dd x$。</li>
+<li>$\max$：$F_{\max}(z)=F_X(z)F_Y(z)$（独立）；i.i.d. 时 $=F(z)^n$。</li>
+<li>$\min$：$1-F_{\min}(z)=(1-F_X(z))(1-F_Y(z))$；i.i.d. 时 $F_{\min}(z)=1-(1-F(z))^n$。</li>
+<li>商 $Z=X/Y$：$f_Z(z)=\int|y|f(yz,y)\dd y$。</li>
+</ul>
+</div>
+<div class="ex"><strong>真题原型（23-24-2 题 15，矩形周长）</strong>：$X,Y\sim U(0,1)$ 独立，周长 $Z=2(X+Y)$。
+<div class="sol"><div class="st">解</div>
+<p>先求 $W=X+Y$ 三角分布：$f_W(w)=w\ (0<w<1)$，$=2-w\ (1<w<2)$。</p>
+<p>$Z=2W$，$f_Z(z)=\frac12 f_W(z/2)$：$f_Z(z)=\frac z4\ (0<z<2)$，$=1-\frac z4\ (2<z<4)$。<strong>⚠️ 线性变换乘 $1/2$</strong>。</p>
+</div></div>
+<div class="warn"><strong>易错</strong>：(1) $Z=2(X+Y)$ 等线性变换密度要乘 $\frac1{|a|}$；(2) 卷积分段定限须画图；(3) min 用 $1-\prod(1-F)$ 别写错。<br><strong>变体</strong>：$Z=\max(X,Y)$ 分布函数、Rayleigh 5 次最小、串联 min 失效、$Z=X+\frac12 Y$、$Z=X+2Y$、$Z=Y/X$ 商。</div>
+</div>
+
+<h2 id="t7">题型 7 · 抽样分布构造（$\chi^2/t/F$）★★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：选择必出，出现 14 次（全部年份选择题）。<strong style="color:#c0392b">这是 FXY 反复回头的弱点区，重点看。</strong></p>
+<div class="fb" style="border-color:#27ae60"><div class="t">⭐ 三大分布定义（必背）</div>
+<ul>
+<li>$\chi^2(n)$：$X_i\overset{iid}\sim N(0,1)$ → $\sum_{i=1}^n X_i^2\sim\chi^2(n)$。$E=n,\,D=2n$，<strong>可加</strong>。</li>
+<li>$t(n)=\dfrac{X}{\sqrt{Y/n}}$，$X\sim N(0,1)$，$Y\sim\chi^2(n)$ 独立。偶函数，$t_{1-\alpha}(n)=-t_\alpha(n)$。</li>
+<li>$F(m,n)=\dfrac{U/m}{V/n}$，$U\sim\chi^2(m)$，$V\sim\chi^2(n)$ 独立。$1/F\sim F(n,m)$，$F_{1-\alpha}(m,n)=1/F_\alpha(n,m)$。</li>
+</ul>
+</div>
+<figure class="plot">
+<img src="img/ch6-2_three_dist.png" alt="三大抽样分布密度曲线">
+<figcaption>三张脸记牢：$\chi^2$ 右偏 · $t$ 厚尾对称（虚线 $N(0,1)$）· $F$ 在 $x>0$ 右偏。完整凑构造讲解见 <a href="ch6-2.html">6.2</a>。</figcaption>
+</figure>
+<div class="fb" style="border-color:#c0392b"><div class="t">单正态总体抽样定理（命根）</div>
+<p>$X\sim N(\mu,\sigma^2)$，样本 $\bar X,S^2$：</p>
+<ol>
+<li>$\dfrac{\bar X-\mu}{\sigma/\sqrt n}\sim N(0,1)$</li>
+<li>$\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$，且 $\bar X\perp S^2$</li>
+<li>$\dfrac{\bar X-\mu}{S/\sqrt n}\sim t(n-1)$</li>
+<li>$\sum\left(\dfrac{X_i-\mu}{\sigma}\right)^2\sim\chi^2(n)$（已知 $\mu$ 不损自由度）</li>
+</ol>
+</div>
+<div class="fb"><div class="t">两正态总体</div>
+<p>$F=\dfrac{S_1^2/\sigma_1^2}{S_2^2/\sigma_2^2}\sim F(n_1-1,n_2-1)$；$\sigma_1=\sigma_2$ 时 $\dfrac{\bar X-\bar Y-(\mu_1-\mu_2)}{S_w\sqrt{1/n_1+1/n_2}}\sim t(n_1+n_2-2)$，$S_w^2=\dfrac{(n_1-1)S_1^2+(n_2-1)S_2^2}{n_1+n_2-2}$。</p>
+</div>
+<div class="ex"><strong>真题原型（20-21-2 题 1）</strong>：$X\sim N(0,\sigma^2)$，9 个样本。$Y=k(\sum X_i)^2\sim\chi^2$，$Z=l\sum X_i^2\sim\chi^2$ 求 $k,l$。
+<div class="sol"><div class="st">解</div>
+<p>$\sum X_i\sim N(0,9\sigma^2)$，$\dfrac{(\sum X_i)^2}{9\sigma^2}\sim\chi^2(1)$ → $k=\dfrac{1}{9\sigma^2}$；$\sum(\frac{X_i}{\sigma})^2\sim\chi^2(9)$ → $l=\dfrac{1}{\sigma^2}$。</p>
+</div></div>
+<div class="tip"><strong>凑分布速杀套路</strong>：看到<strong>平方 → 凑 $\chi^2$</strong>；<strong>比值且分子分母都有平方 → 凑 $F$</strong>；<strong>正态除以含 $S$ 的根式 → 凑 $t$</strong>。<strong>$F$ 数自由度</strong>＝分子平方项数 vs 分母各组 $(n_i-1)$ 相加（如 $3S_1^2+5S_2^2$ → $\chi^2(3)+\chi^2(5)=\chi^2(8)$）。</div>
+<div class="warn"><strong>易错</strong>：(1) $S^2$ 关联自由度是 $n-1$（用 $\bar X$ 代 $\mu$ 损 1 个）；(2) 标准化除的是 $\sigma$（标准差）不是 $\sigma^2$；(3) $F$ 自由度顺序不能反，倒数关系查左尾；(4) 凑分布前必须先<strong>证分子分母独立</strong>（正态下协方差 $=0$ 即独立）。</div>
+</div>
+
+<h2 id="t8">题型 8 · 参数假设检验（压轴题 19）★★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：题 19 压轴，出现 13 次。</p>
+<div class="fb" style="border-color:#c0392b"><div class="t">检验统计量速查（必背）</div>
+<table>
+<thead><tr><th>对象</th><th>条件</th><th>统计量</th><th>双侧拒绝域 $H_1:\ne$</th></tr></thead>
+<tbody>
+<tr><td>$\mu$</td><td>$\sigma^2$ 已知</td><td>$U=\frac{\bar X-\mu_0}{\sigma/\sqrt n}\sim N(0,1)$</td><td>$|U|>u_{\alpha/2}$</td></tr>
+<tr><td>$\mu$</td><td>$\sigma^2$ 未知</td><td>$T=\frac{\bar X-\mu_0}{S/\sqrt n}\sim t(n-1)$</td><td>$|T|>t_{\alpha/2}(n-1)$</td></tr>
+<tr><td>$\sigma^2$</td><td>$\mu$ 已知</td><td>$\chi^2=\frac{\sum(X_i-\mu)^2}{\sigma_0^2}\sim\chi^2(n)$</td><td>$>\chi^2_{\alpha/2}(n)$ 或 $<\chi^2_{1-\alpha/2}(n)$</td></tr>
+<tr><td>$\sigma^2$</td><td>$\mu$ 未知</td><td>$\chi^2=\frac{(n-1)S^2}{\sigma_0^2}\sim\chi^2(n-1)$</td><td>$>\chi^2_{\alpha/2}(n-1)$ 或 $<\chi^2_{1-\alpha/2}(n-1)$</td></tr>
+</tbody>
+</table>
+</div>
+<div class="fb"><div class="t">单侧拒绝域 + P 值法（22-24 新趋势）</div>
+<ul>
+<li>$H_1:\mu>\mu_0$ → $T>t_\alpha(n-1)$；$H_1:\mu<\mu_0$ → $T<-t_\alpha(n-1)$。</li>
+<li>$H_1:\sigma^2>\sigma_0^2$ → $\chi^2>\chi^2_\alpha(n-1)$；$H_1:\sigma^2<\sigma_0^2$ → $\chi^2<\chi^2_{1-\alpha}(n-1)$。</li>
+<li><strong>P 值法</strong>：算 $T_{obs}$，双侧 P 值 $=2P(t>|T_{obs}|)$。<strong>P 值 $\le\alpha$ 则拒绝 $H_0$</strong>。</li>
+</ul>
+</div>
+<div class="ex"><strong>真题原型（23-24-2 题 19，车轴直径，频数表）</strong>：要求 $\mu=4.0$，$\sigma^2\le0.1$，25 件频数表。
+<div class="sol"><div class="st">解</div>
+<p>① 先合并算 $\bar x=\frac{\sum n_i x_i}{25}$，$s^2=\frac{1}{24}\sum n_i(x_i-\bar x)^2$（<strong>除 $n-1=24$，不能用频数当 $n$</strong>）。</p>
+<p>② P 值法：$T=\frac{\bar x-4}{s/5}\sim t(24)$，对比 $t_{0.05}(24)=1.711$ 估 P 值判拒绝。</p>
+<p>③ 经典法：$H_0:\sigma^2\le0.1$ 单侧，$\chi^2=\frac{24s^2}{0.1}\sim\chi^2(24)$，拒绝域 $\chi^2>\chi^2_{0.05}(24)=36.415$。</p>
+</div></div>
+<div class="warn"><strong>易错</strong>：(1) 单/双侧别错；(2) $\sigma^2$"不超过"是单侧 $H_0:\sigma^2\le\sigma_0^2$，拒绝域右侧；(3) P 值小 = 拒绝；(4) 频数表先合并算样本量。⚠️ 所有临界值<strong>以试卷附表为准</strong>。</div>
+</div>
+
+<h2 id="t9">题型 9 · 估计量评价：无偏矫正 + 有效排序 + 一致性 ★★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：题 17 铁打，出现 13 次。<strong style="color:#c0392b">FXY 头号弱点（$S^2$ 推导），重点攻。</strong></p>
+<div class="fb" style="border-color:#27ae60"><div class="t">⭐ 核心结论（必背）</div>
+<ul>
+<li><strong>无偏</strong>：$E(\hat\theta)=\theta$。$\frac1n\sum X_i^k$ 无偏估计 $E(X^k)$；$\bar X$ 无偏 $\mu$，$S^2=\frac1{n-1}\sum(X_i-\bar X)^2$ 无偏 $\sigma^2$。</li>
+<li><strong>关键恒等式</strong>：$E(\bar X^2)=\D(\bar X)+(E\bar X)^2=\dfrac{\sigma^2}{n}+\mu^2$（零均值时 $=\sigma^2/n$）。</li>
+<li><strong>矫正</strong>：若 $E(\hat\theta)=c\theta$，矫正为 $\hat\theta/c$。</li>
+<li><strong>有效</strong>：无偏估计中方差小者更有效。零均值高斯 $E(X^2)=\sigma^2,\ E(X^4)=3\sigma^4$。</li>
+<li><strong>一致（相合）</strong>：$\hat\theta_n\xrightarrow{P}\theta$。充分条件：无偏 + $D(\hat\theta_n)\to0$，或辛钦大数律。</li>
+</ul>
+</div>
+<div class="ex"><strong>真题原型（23-24-2 题 17，最经典）</strong>：$X\sim N(0,\sigma^2)$，对 $\sigma^2$：$S_1^2=\frac1n\sum X_i^2$，$S_2^2=\frac1n\sum(X_i-\bar X)^2$，$S_3^2=\bar X^2$。判无偏、矫正、差→好排序。
+<div class="sol"><div class="st">解</div>
+<p>① $E(S_1^2)=\sigma^2$ 无偏；$E(S_2^2)=\frac{n-1}{n}\sigma^2$ 矫正为 $\frac{n}{n-1}S_2^2$；$E(S_3^2)=E(\bar X^2)=\sigma^2/n$ 矫正为 $n\bar X^2$。</p>
+<p>② 方差：$D(S_1^2)=\frac{2\sigma^4}{n}$，$D(\frac{n}{n-1}S_2^2)=\frac{2\sigma^4}{n-1}$，$D(n\bar X^2)=2\sigma^4$。</p>
+<p>③ 差→好（方差大→小）：$n\bar X^2 > \frac{n}{n-1}S_2^2 > S_1^2$，即 $S_1^2$ 最有效。</p>
+</div></div>
+<div class="warn"><strong>易错</strong>：(1) 矫正前后是两个估计量；(2) 牢记 $E(\bar X^2)=\sigma^2/n+\mu^2$；(3) 用 CR 下界判最有效（达下界 = 有效）。</div>
+</div>
+
+<h2 id="t10">题型 10 · 二维正态 + 不相关 vs 独立 ★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：出现 11 次（选择高频）。</p>
+<div class="fb" style="border-color:#27ae60"><div class="t">⭐ 核心结论（必背）</div>
+<ul>
+<li>二维正态 $N(\mu_1,\sigma_1^2;\mu_2,\sigma_2^2;\rho)$：边缘均正态，<strong>独立 $\Leftrightarrow$ 不相关 $\Leftrightarrow\rho=0$</strong>（仅此分布！）。</li>
+<li>$\D(aX+bY)=a^2\sigma_1^2+b^2\sigma_2^2+2ab\,\rho\sigma_1\sigma_2$；$\Cov(X,Y)=\rho\sigma_1\sigma_2$。</li>
+<li>非正态：不相关 $\nRightarrow$ 独立（反例：圆盘均匀分布）。$|\rho|=1\Leftrightarrow Y=aX+b$ a.s.</li>
+</ul>
+</div>
+<div class="warn"><strong>⚠️ 22-23-2[10] 经典陷阱（务必看清）</strong>：题给 $X\sim N(\mu,\sigma^2)$、$Y\sim N(\mu,\sigma^2)$、$\rho_{X,Y}=-0.3$，<strong>只给边缘正态，没说联合正态</strong>。四命题：
+<ul>
+<li>① $(X,Y)$ 服从二维正态 —— <strong>错</strong>（边缘正态 $\nRightarrow$ 联合正态）。</li>
+<li>② $D(X-2Y)=5\sigma^2-4(-0.3)\sigma^2=6.2\sigma^2$ —— <strong>对</strong>。</li>
+<li>③ $X+Y$ 与 $X-Y$ 不相关：$\Cov(X+Y,X-Y)=D(X)-D(Y)=0$ —— <strong>对</strong>（同方差即成立，不需正态）。</li>
+<li>④ $X+Y$ 与 $X-Y$ <strong>相互独立</strong> —— <strong>错</strong>！独立需<strong>联合正态</strong>，而 ① 已说明不一定。</li>
+</ul>
+正确 <strong>②③</strong>。教训：不相关 $\Rightarrow$ 独立<strong>只在确认联合正态时</strong>成立，边缘各自正态不够。
+</div>
+</div>
+
+<h2 id="t11">题型 11 · 一维函数分布 $Y=g(X)$ + 顺序统计量 ★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：$Y=g(X)$ 出现 10 次；离散 $\max/\min$ 选择高频。</p>
+<div class="fb"><div class="t">两种方法</div>
+<ul>
+<li><strong>分布函数法</strong>：先 $F_Y(y)=P(g(X)\le y)$，再 $f_Y(y)=F_Y'(y)$。</li>
+<li><strong>公式法</strong>（$g$ 严格单调可导，反函数 $h$）：$f_Y(y)=f_X(h(y))|h'(y)|$；分段单调则 $\sum_i f_X(h_i(y))|h_i'(y)|$。</li>
+</ul>
+</div>
+<div class="ex"><strong>真题原型（22-23-2 题 4）</strong>：$f(x)=\frac12\lambda e^{-\lambda|x|}$（双侧指数），$Y=X^2$。
+<div class="sol"><div class="st">解</div>
+<p>$Y=X^2$ 双值，$x=\pm\sqrt y$：$f_Y(y)=f_X(\sqrt y)\frac1{2\sqrt y}+f_X(-\sqrt y)\frac1{2\sqrt y}=\dfrac{\lambda}{2\sqrt y}e^{-\lambda\sqrt y}\ (y>0)$。</p>
+</div></div>
+<div class="fb" style="border-color:#27ae60"><div class="t">离散顺序统计量 $\max/\min$（i.i.d. 样本）</div>
+<ul>
+<li>$M=\max X_i$：$P(M\le m)=[F_X(m)]^n$，差分得 $P(M=m)=[F_X(m)]^n-[F_X(m^-)]^n$。</li>
+<li>$L=\min X_i$：$P(L\ge m)=[P(X\ge m)]^n$。</li>
+<li><strong>连续型次序统计量</strong>：$f_{X_{(1)}}(x)=n[1-F(x)]^{n-1}f(x)$；指数总体下 $X_{(1)}$ 仍指数，速率 $\to n\lambda$。</li>
+</ul>
+</div>
+<div class="warn"><strong>易错</strong>：(1) $Y=X^2$ 双值反函数要两项加；(2) $Y=\min(X,c)$ 是<strong>混合型</strong>（$Y=c$ 处有跳跃单点概率）；(3) 离散分布律要用<strong>累积差分</strong>，不能直接乘。</div>
+</div>
+
+<h2 id="t12">题型 12 · 事件运算 / 独立性 / 命题判断 ★★★★</h2>
+<div class="card">
+<p><strong>频次</strong>：每年 1~2 题（选择前段，第 11~12 题常为"判命题正确个数"）。</p>
+<div class="fb"><div class="t">核心</div>
+<ul>
+<li>"恰有一个发生" $=A\bar B\bar C\cup\bar AB\bar C\cup\bar A\bar BC$；两事件恰一个 $=P(A)+P(B)-2P(AB)$。</li>
+<li>互斥 $AB=\varnothing$ ≠ 对立；互斥且概率非零 ≠ 独立。</li>
+<li>三事件相互独立需 <strong>4 个等式</strong>（3 个两两 + $P(ABC)=P(A)P(B)P(C)$）。</li>
+<li>De Morgan：$\overline{A\cup B}=\bar A\bar B$，$\overline{AB}=\bar A\cup\bar B$。独立事件的函数仍独立。</li>
+</ul>
+</div>
+<div class="warn"><strong>易错</strong>：逐条画 Venn 图验证，别凭直觉。</div>
+</div>
+
+<h2 id="must">三、必背全集</h2>
+<div class="card">
+<h3>七大分布期望 / 方差表</h3>
+<table>
+<thead><tr><th>分布</th><th>$E(X)$</th><th>$D(X)$</th></tr></thead>
+<tbody>
+<tr><td>0-1 $B(1,p)$</td><td>$p$</td><td>$p(1-p)$</td></tr>
+<tr><td>二项 $B(n,p)$</td><td>$np$</td><td>$np(1-p)$</td></tr>
+<tr><td>泊松 $P(\lambda)$</td><td>$\lambda$</td><td>$\lambda$</td></tr>
+<tr><td>几何 $G(p)$</td><td>$1/p$</td><td>$(1-p)/p^2$</td></tr>
+<tr><td>均匀 $U(a,b)$</td><td>$(a+b)/2$</td><td>$(b-a)^2/12$</td></tr>
+<tr><td>指数 $E(\lambda)$</td><td>$1/\lambda$</td><td>$1/\lambda^2$</td></tr>
+<tr><td>正态 $N(\mu,\sigma^2)$</td><td>$\mu$</td><td>$\sigma^2$</td></tr>
+</tbody>
+</table>
+
+<h3>关键恒等式 / 判据</h3>
+<div class="fb" style="border-color:#27ae60">
+<ol>
+<li>$E(\bar X^2)=\dfrac{\sigma^2}{n}+\mu^2$（题 17 命根）</li>
+<li>配对问题（hat problem）$E(S_n)=1,\ D(S_n)=1$（与 $n$ 无关）</li>
+<li>零均值高斯 $N(0,\sigma^2)$：$E(X^2)=\sigma^2$，$E(X^4)=3\sigma^4$</li>
+<li>正态下 $\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$，反解 $D(S^2)=\dfrac{2\sigma^4}{n-1}$</li>
+<li>不相关 4 等价：$\rho=0\Leftrightarrow\Cov=0\Leftrightarrow E(XY)=EX\,EY\Leftrightarrow D(X+Y)=DX+DY$</li>
+<li>切比雪夫：$\Prob(|X-\mu|\ge\varepsilon)\le D(X)/\varepsilon^2$；指数无记忆：$P(X>s+t\mid X>s)=P(X>t)$</li>
+<li>可加性：$P(\lambda_1)+P(\lambda_2)=P(\lambda_1+\lambda_2)$；$\chi^2(m)+\chi^2(n)=\chi^2(m+n)$；独立正态线性组合仍正态</li>
+<li>$3\sigma$：$P(|X-\mu|<\sigma)=0.6826$，$<2\sigma=0.9544$，$<3\sigma=0.9974$</li>
+</ol>
+</div>
+
+<h3>常用标准正态分位数 <span style="color:#c0392b;font-size:.85em">（⚠️ 以试卷附表为准）</span></h3>
+<div class="fb">
+<ul>
+<li>单侧：$u_{0.05}=1.645$，$u_{0.025}=1.96$，$u_{0.01}=2.326$，$u_{0.005}=2.576$</li>
+<li>$\Phi(1.645)=0.95$，$\Phi(1.96)=0.975$，$\Phi(2.576)=0.995$</li>
+<li>⚠️ $t_\alpha(n)$、$\chi^2_\alpha(n)$、$F_\alpha(m,n)$ <strong>必查试卷附表，不要背</strong>（每套附表不同）。</li>
+</ul>
+</div>
+</div>
+
+<h2 id="roi">四、最高 ROI 5 题（务必重做）</h2>
+<div class="card">
+<div class="ex"><strong>★★★★★ 1. 23-24-2 题 17</strong>（估计量有效性排序）—— $N(0,\sigma^2)$ 三个 $\sigma^2$ 估计量无偏 + 矫正 + 排序，连续 3 套出此模板，正中 FXY 弱点。</div>
+<div class="ex"><strong>★★★★★ 2. 23-24-2 题 19</strong>（双假设检验 P 值 + 经典）—— 车轴直径频数表，$\mu$ 用 P 值法、$\sigma^2$ 用经典法，覆盖假设检验全套。</div>
+<div class="ex"><strong>★★★★★ 3. 23-24-2 题 13</strong>（三门高射炮）—— 全概率 + Bayes 标准模板，28 分铁打题之一。</div>
+<div class="ex"><strong>★★★★ 4. 22-23-2 题 19</strong>（二维样本协方差矫正 + 一致性）—— 二维正态 + 估计量评价 + 协方差综合。</div>
+<div class="ex"><strong>★★★★ 5. 20-21-2 题 18</strong>（$n$ 球投匣依概率收敛）—— 切比雪夫 + 配对问题（$E(S_n)=D(S_n)=1$）。</div>
+<div class="tip"><strong>应试节奏</strong>：先做铁打三题（13 全概率 / 18 矩估计 MLE / 19 假设检验，共 28 分稳拿）→ 题 14/15/16/17 模板化练熟（36 分主体）→ 选择 36 分逐条 Venn 验证 + 抽样分布记死公式。压轴卡壳也要写完"无偏性证明"或"切比雪夫套用"一步保底 3~4 分。</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

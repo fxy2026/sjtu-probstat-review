@@ -71,6 +71,11 @@
 </div>
 
 <div class="tip"><strong>两法关系</strong>：在相同 $\alpha$ 下二者完全等价，只是操作顺序不同。P 值给"反对 $H_0$ 的强度"的连续度量。</div>
+
+<figure class="plot">
+<img src="img/ch8-1_reject_region.png" alt="正态检验统计量的双侧与单侧拒绝域">
+<figcaption>拒绝域（红色）在 $H_0$ 下统计量分布上的位置：<strong>双侧</strong>把 $\alpha$ 拆成两边各 $\alpha/2$，临界值用 $u_{\alpha/2}$（如 $0.05$ 取 $1.96$）；<strong>单侧</strong>把整个 $\alpha$ 放一边，临界值用 $u_\alpha$（如 $0.05$ 取 $1.645$）。这就是"双侧 $\alpha/2$、单侧 $\alpha$"的来历——看 $H_1$ 的方向决定红块放哪。</figcaption>
+</figure>
 </div>
 
 <h2 id="s3">三、正态总体常用检验（必背！）</h2>
@@ -105,6 +110,10 @@
 </tbody>
 </table>
 <p><strong>$\chi^2$ 不对称</strong>：双侧拒绝域两个端点不互为相反数。</p>
+<figure class="plot">
+<img src="img/ch8-1_chi2_reject.png" alt="卡方检验双侧拒绝域两端点不对称">
+<figcaption>$\chi^2$ 分布<strong>右偏不对称</strong>，所以 $\sigma^2$ 双侧检验的两个临界点不互为相反数（$\text{df}=15,\ \alpha=0.05$ 时左端 $\chi^2_{0.975}=6.26$、右端 $\chi^2_{0.025}=27.49$，要分别查表）。这跟 $U/t$ 检验的对称临界值（$\pm u_{\alpha/2}$）完全不同，是高频失分点。</figcaption>
+</figure>
 </div>
 
 <h3>3.3 两个正态总体的检验</h3>

@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="zh-CN"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🔴 我的薄弱点（FXY 专属）| 概率统计</title>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css">
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/contrib/auto-render.min.js"
+  onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}],macros:{'\\dd':'\\mathrm{d}','\\RR':'\\mathbb{R}','\\E':'\\mathrm{E}','\\D':'\\mathrm{D}','\\Var':'\\mathrm{Var}','\\Cov':'\\mathrm{Cov}','\\Prob':'\\mathrm{P}'},throwOnError:false});"></script>
+<link rel="stylesheet" href="style.css"><link rel="stylesheet" href="toc.css"></head>
+<body>
+<div class="nav-bar"><a href="index.html">📖 目录</a><a href="真题题型全库.html">← 真题题型全库</a><a href="cheatsheet.html">考前救命卡 →</a></div>
+<h1>🔴 我的薄弱点（FXY 专属精析）</h1>
+
+<div class="banner" style="background:linear-gradient(135deg,#c0392b,#922b21);color:#fff;padding:14px 20px;border-radius:8px;margin:12px 0 20px;">
+<b>一句话定位</b>：你的<b>概率部分（Ch1-5）基本稳</b>，主战场风险全在 <b>数理统计 Ch6-8</b>——<b>抽样分布推导 + 参数估计</b>是你 18 天里反复回头问的同一片区域。<br>
+基于 14 篇 AI 真实问答（05-11 → 05-29）+ 8 天学习回顾掌握度自动整理。系统 5/27 标"近两周第 <b>4</b> 次问样本统计量期望/方差"——这是最硬的持续薄弱信号。<br>
+图例：❌未掌握 · ⚠️需巩固 · 🔶部分掌握 · ✅已掌握。
+</div>
+
+<h2 id="top">🔴 头号薄弱点（优先攻）</h2>
+
+<h3>① 样本方差 $S^2$ 期望/方差推导 + 无偏性 <span style="color:#c0392b">❌→⚠️（反复 4 次，最强信号）</span></h3>
+<div class="card">
+<div class="warn"><strong>为什么弱</strong>：5/13 第一次问推导 → 5/16 再问 → 5/17 再问（系统标"第 3 次"）→ 5/27 又问（"第 4 次"）。学习回顾连续标"$S^2$ 方差推导过程与公式较为复杂"。这是<strong>压轴题 19 的核心</strong>，年年考且正中你弱项。</div>
+<div class="fb" style="border-color:#c0392b"><div class="t">必背三步（限时默写，目标 5 分钟）</div>
+<ol>
+<li>恒等变形分子：$\sum(X_i-\bar X)^2=\sum(X_i-\mu)^2-n(\bar X-\mu)^2$（加减 $\mu$ 配方，交叉项因 $\sum(X_i-\bar X)=0$ 归零）；</li>
+<li>取期望：$E\!\left[\sum(X_i-\bar X)^2\right]=n\sigma^2-n\cdot\dfrac{\sigma^2}{n}=(n-1)\sigma^2$；</li>
+<li>故 $E(S^2)=\dfrac{1}{n-1}(n-1)\sigma^2=\sigma^2$（这就是分母为何是 $n-1$）。</li>
+</ol>
+<p><strong>正态下 $D(S^2)$ 捷径</strong>：用 $\dfrac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$，其方差 $2(n-1)$，反解 $D(S^2)=\dfrac{2\sigma^4}{n-1}$（不用硬算四阶矩）。</p>
+</div>
+<figure class="plot">
+<img src="img/ch6-1_s2_unbiased.png" alt="S^2 与 S_n^2 抽样分布对比">
+<figcaption>图证"分母为何是 $n-1$"：除 $n-1$（蓝）均值正中 $\sigma^2$，除 $n$（橙）整体偏小。详见 <a href="ch6-1.html">6.1</a>。</figcaption>
+</figure>
+<div class="warn"><strong>易错提醒</strong>：⚠️ $S^2$ 分母是 $n-1$ 不是 $n$；⚠️ 一般总体 $D(S^2)$ 带 $\mu_4$ 太复杂，考场只在正态下用 $\frac{2\sigma^4}{n-1}$；⚠️ 矩估计的 $\widehat{\sigma^2}$ 分母却是 $n$（有偏），两者别混。</div>
+<div class="tip"><strong>针对动作</strong>：限时默写 $E(S^2)=\sigma^2$ 全过程；做压轴 20-21 / 19-20 / 22-23 各一道。</div>
+</div>
+
+<h3>② 正态总体三大抽样分布构造（χ²/t/F）<span style="color:#c0392b">⚠️（反复 2 次）</span></h3>
+<div class="card">
+<div class="warn"><strong>为什么弱</strong>：5/17 问 $Y=(\frac{X_1+X_2}{X_1-X_2})^2$ 服从什么、5/20 问 t/F 选择题"为什么选 B/C"、5/22 问 $Y_1\sim t(n-1)$ 怎么凑。核心卡点是<strong>自由度怎么数 + 怎么把式子凑进定义模板</strong>。</div>
+<div class="fb" style="border-color:#c0392b"><div class="t">三个模板背死</div>
+<ul>
+<li>$\chi^2(k)=$ $k$ 个独立 $N(0,1)$ 的平方和；</li>
+<li>$t(k)=\dfrac{N(0,1)}{\sqrt{\chi^2(k)/k}}$（分子分母独立）；</li>
+<li>$F(d_1,d_2)=\dfrac{\chi^2(d_1)/d_1}{\chi^2(d_2)/d_2}$（分子分母独立）。</li>
+</ul>
+<p><strong>套路</strong>：看到<strong>平方 → 凑 $\chi^2$</strong>；<strong>比值且分子分母都有平方 → 凑 $F$</strong>；<strong>正态除以含 $S$ 的根式 → 凑 $t$</strong>。</p>
+</div>
+<div class="tip"><strong>你自己悟出的秒杀技（保留）</strong>：$F$ 题数自由度 = 分子平方项数 vs 分母各组 $(n_i-1)$ 相加。如 $3S_1^2+5S_2^2\to\chi^2(3)+\chi^2(5)=\chi^2(8)$。<br>
+<strong>$F$ 两大性质（考场救命）</strong>：$\frac1X\sim F(d_2,d_1)$ → $P(F(n,n)>1)=0.5$；$F_{1-\alpha}(m,n)=\frac{1}{F_\alpha(n,m)}$（查表只给上侧，要反查）。</div>
+<div class="warn"><strong>易错提醒</strong>：⚠️ 用 $\bar X$ 代 $\mu$ 损失 1 个自由度 → $\frac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$ 不是 $\chi^2(n)$；⚠️ 标准化除的是 $\sigma$（标准差）不是 $\sigma^2$；⚠️ $F$ 自由度顺序不能反；⚠️ 凑分布前必须先<strong>证分子分母独立</strong>（正态下协方差 $=0$ 即独立）。</div>
+<div class="tip"><strong>针对动作</strong>：把 4 个抽样分布选择题（5/20 那批）默做一遍，重点练"数自由度 + 证独立"。</div>
+</div>
+
+<h3>③ 参数估计：矩估计 + MLE（边界型）+ 无偏/有效 <span style="color:#c0392b">⚠️（临考前最热，5/27→5/29 连问）</span></h3>
+<div class="card">
+<div class="warn"><strong>为什么弱</strong>：5/27 问无偏纠正、有效性比较；5/29 问双参数平移指数的矩估计 + MLE，且连续追问"MLE 没掌握""泊松忘了""次序统计量密度怎么来"——这是你<strong>最近、最未消化</strong>的一块。</div>
+<div class="fb" style="border-color:#c0392b"><div class="t">必背套路</div>
+<ul>
+<li><strong>矩估计</strong>：总体矩 = 样本矩 → 解参数。双参数必须联立一阶矩（期望）+ 二阶矩（方差），<strong>只用一个方程是高频错误</strong>。</li>
+<li><strong>MLE 常规型</strong>：写 $L$ → 取 $\ln L$ → 求导 $=0$ → 解。</li>
+<li><strong>MLE 边界型（最易错）</strong>：参数在定义域（如 $x>\mu$）时<strong>绝不求导</strong>！看 $L$ 关于参数的单调性 + 约束 $\mu\le\min x_i$ → 取 $\hat\mu_L=X_{(1)}$。</li>
+<li><strong>无偏 → 有效</strong>：无偏 = $E(\hat\theta)=\theta$；有偏乘系数倒数修正；两无偏估计比有效性 = <strong>比方差，小者更有效</strong>。</li>
+</ul>
+</div>
+<figure class="plot">
+<img src="img/ch7-1_mle_boundary.png" alt="边界型 MLE 似然单调，取样本极值">
+<figcaption>边界型 MLE 的几何真相：$L(\theta)$ 单调，最大值落在约束端点 $\max X_i$（或 $\min X_i$），求导永远取不到。完整讲解见 <a href="ch7-1.html">7.1</a>。</figcaption>
+</figure>
+<div class="fb"><div class="t">次序统计量（你 5/29 专门追问）</div>
+<p>$P(X_{(1)}>x)=[1-F(x)]^n$ → $f_{X_{(1)}}(x)=n[1-F(x)]^{n-1}f(x)$；指数总体下 $X_{(1)}$ 仍是指数，速率放大 $n$ 倍（$\lambda\to n\lambda$），故 $E(X_{(1)})=$ 原平移 $+\frac{1}{n\lambda}$。</p>
+</div>
+<div class="warn"><strong>易错提醒</strong>：⚠️ 指数两种参数写法（$\lambda$ vs $\theta=1/\lambda$）别混，$X\sim E(1/\theta)$ 时 $E(X)=\theta,D(X)=\theta^2$；⚠️ $\bar X^2$ 不是 $\lambda^2$ 的无偏估计（差 $\frac{\lambda}{n}$ 偏差，因 $E(Y^2)=[E(Y)]^2+D(Y)$）；⚠️ 估计量里不能含 $E$ 或未知参数（必须纯样本可算）。</div>
+<div class="tip"><strong>针对动作</strong>：5/29 那道双参数平移指数（矩估计 + MLE + 无偏修正 + 有效性）是一题打通全链，自己从空白重做一遍。</div>
+</div>
+
+<h3>④ 卡方分布性质 + 可加性 + 矩母函数 <span style="color:#c0392b">⚠️（反复 2 次，MGF 首次接触）</span></h3>
+<div class="card">
+<div class="warn"><strong>为什么弱</strong>：5/16 问卡方期望/方差/可加性；5/24 又问可加性，且坦白"矩母函数我都没学啊"。</div>
+<div class="fb"><div class="t">正确思路</div>
+<p>卡方一切性质源于定义"独立 $N(0,1)$ 平方和"。$E(\chi^2(n))=n$（$E(Z^2)=1$）；$D(\chi^2(n))=2n$（$E(Z^4)=3,\ D(Z^2)=2$）。可加性两法：① 构造法（平方和直接拼）；② MGF 法 $M_{\chi^2(k)}(t)=(1-2t)^{-k/2}$，独立和 MGF 相乘 → 指数相加。</p>
+</div>
+<div class="note"><strong>考试定位（别花过多时间）</strong>：矩母函数是进阶内容，SJTU 卷面<strong>未必直接考</strong>；卡方期望方差 / 可加性是 Ch6 工具必拿。MGF 当作"理解 $D(S^2)$ 推导"的辅助即可。</div>
+<div class="warn"><strong>易错提醒</strong>：⚠️ 可加性必须<strong>独立</strong>；⚠️ 不是所有分布都可加（正态/卡方/泊松可加）；⚠️ MGF 注意定义域 $t<1/2$；⚠️ 大样本近似 $\chi^2(n)\approx N(n,2n)$ 别忘标准化。</div>
+<div class="tip"><strong>针对动作</strong>：默写卡方 $E/D$ 和可加性构造法证明（MGF 法了解即可）。</div>
+</div>
+
+<h3>⑤ 协方差/相关系数 + 多变量方差（交叉项陷阱）<span style="color:#e67e22">⚠️→🔶（5/11 集中暴露，已基本打通）</span></h3>
+<div class="card">
+<div class="warn"><strong>为什么弱</strong>：5/11 坦白"协方差啥的我都有点遗忘了""相关系数我完全忘记了"；追问 $D(\sum X_i)$ 为什么不等于 $n^2\sigma^2$。5/17 又问 $\rho(X_i-\bar X,X_j-\bar X)$。</div>
+<div class="fb"><div class="t">正确思路</div>
+<p>$\Cov(X,Y)=E(XY)-E(X)E(Y)$；$\rho=\dfrac{\Cov}{\sqrt{D(X)D(Y)}}\in[-1,1]$；放缩 $|\Cov|\le\sqrt{D(X)D(Y)}$。</p>
+$$\D\Big(\sum X_i\Big)=\sum \D(X_i)+2\sum_{i<j}\Cov(X_i,X_j)$$
+<p>独立时交叉项 $=0$ → $n\sigma^2$，<strong>不是 $n^2\sigma^2$</strong>（$n^2\sigma^2$ 是 $D(nX)$，常数提取要平方）。</p>
+</div>
+<div class="warn"><strong>易错提醒</strong>：⚠️ "$n$ 个变量相加"（方差 $n\sigma^2$，有抵消）vs "1 个变量乘 $n$"（方差 $n^2\sigma^2$，无抵消）——你 5/11 在销量题里栽过的坑；⚠️ 独立 ⇒ 不相关，反之仅二维正态成立；⚠️ $\sum(X_i-\bar X)=0$ 零和约束导致 $\rho(X_i-\bar X,X_j-\bar X)=-\frac{1}{n-1}$（负相关）。</div>
+<div class="tip"><strong>针对动作</strong>：这块经 5/11、5/17 两轮已基本打通，确认 $D(\sum)$ vs $D(nX)$ 区别 + 默写 Cov 展开公式即可。</div>
+</div>
+
+<h2 id="blind">⚠️ 隐性盲区（AI 问答里没练过 = 必须主动补）</h2>
+<div class="card">
+<div class="warn" style="border-left-color:#c0392b"><strong>假设检验 / 置信区间构造</strong>：AI 问答里<strong>几乎没有</strong>正态双检验（$\mu$ 用 t、$\sigma^2$ 用 $\chi^2$）和置信区间构造的提问记录——这恰恰是隐性风险。作战手册把"正态双检验 + 置信区间"列为<strong>必拿 ~45 分</strong>，但你没在 AI 里练过。
+<p>t 分布区间你 5/24 顺带推过（$\mu=\bar X\pm t\cdot\frac{s}{\sqrt n}$），要主动补<strong>检验四步流程</strong>：提假设 → 选统计量 → 定拒绝域 → 下结论。</p>
+</div>
+</div>
+
+<h2 id="done">✅ 已掌握（确认巩固即可）</h2>
+<div class="card">
+<div class="tip">
+<ul>
+<li>CLT 应用与标准化求概率（5/14✅）</li>
+<li>切比雪夫不等式估概率 + 离散收紧技巧（5/11）</li>
+<li>对称分布几何法求 $E/D$（5/11）</li>
+<li>$E(\bar X)=\mu$，$D(\bar X)=\sigma^2/n$（5/16/17/19✅）</li>
+<li>统计量判定黄金法则：只含样本、不含未知参数（$\mu,\sigma$）才是统计量（5/17✅）</li>
+<li>泊松/0-1/指数分布数字特征（临考再扫一遍）</li>
+<li>正态抽样分布定理三结论：①$\bar X\sim N(\mu,\sigma^2/n)$ ②$\frac{(n-1)S^2}{\sigma^2}\sim\chi^2(n-1)$ ③$\bar X\perp S^2$（5/20✅，会陈述）</li>
+<li>矩估计基本流程（5/20/22✅）；协方差/相关系数定义与放缩（已补回）</li>
+<li>最大值/最小值次序统计量分布推导（5/27/29 已打通）</li>
+</ul>
+</div>
+</div>
+
+<h2 id="priority">🎯 复习优先级表</h2>
+<div class="card">
+<table>
+<thead><tr><th>知识点</th><th>掌握度</th><th>考试权重</th><th>优先级</th><th>针对动作</th></tr></thead>
+<tbody>
+<tr><td>$S^2$ 期望/方差推导 + 无偏性</td><td style="color:#c0392b">❌→⚠️(4 次)</td><td>重点攻(压轴 19)</td><td><b style="color:#c0392b">🔴 最高</b></td><td>限时默写 $E(S^2)=\sigma^2$，做压轴 3 套</td></tr>
+<tr><td>抽样分布 χ²/t/F 构造</td><td style="color:#c0392b">⚠️(2 次)</td><td>必拿(双检验基石)</td><td><b style="color:#c0392b">🔴 最高</b></td><td>重做 4 道选择题，练数自由度 + 证独立</td></tr>
+<tr><td>MLE 边界型 + 矩估计双参数</td><td style="color:#c0392b">⚠️(最近热)</td><td>必拿(题 18)</td><td><b style="color:#c0392b">🔴 高</b></td><td>重做 5/29 双参数平移指数全链</td></tr>
+<tr><td>无偏性纠正 + 有效性比较</td><td>⚠️</td><td>重点攻(压轴)</td><td><b style="color:#e67e22">🟠 高</b></td><td>默写纠正系数 + 一道方差比较</td></tr>
+<tr><td>假设检验流程 + 置信区间</td><td style="color:#e67e22">⚠️(数据空白)</td><td>必拿(~45 分)</td><td><b style="color:#e67e22">🟠 高</b></td><td><b>主动补</b>：t/χ² 双检验四步 + 区间各 5 道</td></tr>
+<tr><td>卡方性质 + 可加性</td><td>⚠️(2 次)</td><td>必拿(Ch6 工具)</td><td>🟠 中</td><td>默写卡方 $E/D$ + 可加性构造法</td></tr>
+<tr><td>协方差/相关系数/多变量方差</td><td>🔶</td><td>拉档(Ch4)</td><td>🟡 中</td><td>确认 $D(\sum)$ vs $D(nX)$ + Cov 展开</td></tr>
+<tr><td>大数定律证明</td><td>🔶</td><td>拉档(证明题)</td><td>🟡 中</td><td>过套路：同分布辛钦 / 不同分布马尔可夫</td></tr>
+<tr><td>矩母函数</td><td>⚠️(首次)</td><td>低频(未必直接考)</td><td>🟢 低</td><td>了解 MGF 两超能力即可，别深挖</td></tr>
+<tr><td>CLT/切比雪夫/正态标准化</td><td>✅/🔶</td><td>必拿</td><td>🟢 低</td><td>临考扫一遍，确认标准化除 $\sigma$ 不除 $\sigma^2$</td></tr>
+</tbody>
+</table>
+<div class="note"><strong>复习节奏（间隔重复 1/3/5/7）</strong>：概统 6/24 考，优先级前三块（$S^2$ 推导 / 抽样分布构造 / MLE）是"年年考且正中弱项"的压轴来源，6 月地基期就排进高数之外的轮转；假设检验 + 置信区间是 AI 盲区 + 必拿大分，<strong>必须主动补真题不能等</strong>。其余 ✅/🔶 临考扫一遍防遗忘即可。</div>
+</div>
+
+<script src="toc.js"></script>
+<script src="progress.js"></script>
+<button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>
+<script>window.addEventListener('scroll',function(){var b=document.getElementById('back-to-top');if(b)b.style.opacity=window.pageYOffset>300?'1':'0';},{passive:true});</script>
+</body></html>

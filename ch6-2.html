@@ -35,6 +35,11 @@ $$\sum_{i=1}^n X_i^2\sim\chi^2(n)$$
 </div>
 
 <div class="tip"><strong>核心关联</strong>：$N(0, 1)^2 = \chi^2(1)$（即 $X\sim N(0,1)\Rightarrow X^2\sim\chi^2(1)$）。这是凑构造卡方的基本砖。</div>
+
+<figure class="plot">
+<img src="img/ch6-2_three_dist.png" alt="三大抽样分布密度曲线">
+<figcaption>三大分布形状对比：$\chi^2$ 右偏（自由度越大越对称）· $t$ 厚尾对称（虚线为 $N(0,1)$，尾部更肥）· $F$ 定义在 $x>0$ 上右偏。把这三张脸记牢，选择题"哪个统计量服从什么"先看形状再凑定义。</figcaption>
+</figure>
 </div>
 
 <h2 id="s2">二、$t$ 分布（Student）</h2>
@@ -143,6 +148,10 @@ $$\dfrac{(\bar X-\bar Y)-(\mu_1-\mu_2)}{S_w\sqrt{1/n_1+1/n_2}}\sim t(n_1+n_2-2)$
 <div class="sol"><div class="st">解</div>
 <p>由倒数关系 $1/F\sim F(m, m)$ 即与 $F$ 同分布。所以 $P(F > 1) = P(1/F > 1) = P(F < 1)$，故 $P(F > 1) = 1/2$。</p>
 <p>这是<strong>纯概念题</strong>，知道 $F(m, m)$ 对称即可秒杀。</p>
+<figure class="plot">
+<img src="img/ch6-2_F_symmetry.png" alt="F(m,m) 关于 x=1 两侧面积各 1/2">
+<figcaption>$F(m,m)$ 自由度相同时，$1/F$ 与 $F$ 同分布 → 以 $x=1$ 为界，左右两块面积各 $1/2$，所以 $P(F>1)=1/2$（23-24-2 第 10 题）。注意密度本身并不对称，对称的是"$x=1$ 两侧概率"。</figcaption>
+</figure>
 </div></div>
 </div>
 

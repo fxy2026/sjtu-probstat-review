@@ -119,6 +119,59 @@ $$P(|S_n-1|\geq n\epsilon)\leq\dfrac{D(S_n)}{(n\epsilon)^2} = \dfrac{1}{n^2\epsi
 </div>
 </div>
 
+<h2 id="real-exam">六、历年真题原型</h2>
+<div class="card">
+<div class="ex"><strong>题 ★★★★ 21-22-2 第 9 题（10000 盏灯，Chebyshev 给下界）</strong>：每盏灯独立开灯，概率 $0.7$。求"同时开着的灯数在 $6900$ 到 $7100$ 之间"的概率至少为多少。
+<div class="sol"><div class="st">解</div>
+<p>设开灯数 $S = \sum_{i=1}^{10000}X_i\sim B(10000,0.7)$。</p>
+<p>$E(S) = np = 10000\times 0.7 = 7000$，$\D(S) = np(1-p) = 10000\times 0.7\times 0.3 = 2100$。</p>
+<p>事件 $\{6900\leq S\leq 7100\}$ 即 $\{|S-7000|\leq 100\}$，套 Chebyshev：</p>
+$$P(|S-7000|\leq 100)\geq 1-\dfrac{\D(S)}{100^2} = 1-\dfrac{2100}{10000} = 1-0.21 = 0.79$$
+<p>故概率<strong>至少 0.79</strong>（下界）。题目问"至少"就用 Chebyshev，不用 CLT。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★ 配对问题 / 依概率收敛（20-21-2 第 18 题型，压轴常客）</strong>：$n$ 个球随机放入 $n$ 个盒（每盒恰一球的全排列），配对数 $S_n = \sum_{i=1}^n X_i$（$X_i$ = 第 $i$ 球归位）。已知 $E(S_n) = 1,\D(S_n) = 1$（<strong>与 $n$ 无关</strong>）。证明 $\lim_{n\to\infty}P(|S_n-1|\geq n\epsilon) = 0$。
+<div class="sol"><div class="st">解</div>
+<p>$E(X_i) = 1/n$，$E(X_iX_j) = \dfrac{1}{n(n-1)}$，由此可算出 $E(S_n) = 1,\D(S_n) = 1$（与 $n$ 无关，必背）。Chebyshev：</p>
+$$P(|S_n-1|\geq n\epsilon)\leq\dfrac{\D(S_n)}{(n\epsilon)^2} = \dfrac{1}{n^2\epsilon^2}\to 0\quad(n\to\infty)$$
+<p>即 $S_n/n\xrightarrow{P}0$。证毕。<strong>关键</strong>：$\D(S_n) = 1$ 是与 $n$ 无关的常数，所以除以 $(n\epsilon)^2$ 后趋于 0。</p>
+</div></div>
+</div>
+
+<h2 id="must-memorize">七、必背块</h2>
+<div class="card">
+<div class="fb" style="border-color:#27ae60">
+<ul>
+<li>Chebyshev：$P(|X-\mu|\geq\epsilon)\leq\dfrac{\sigma^2}{\epsilon^2}$，等价 $P(|X-\mu|<\epsilon)\geq 1-\dfrac{\sigma^2}{\epsilon^2}$。</li>
+<li>$k\sigma$ 形式：$P(|X-\mu|<k\sigma)\geq 1-\dfrac{1}{k^2}$（$k=2\Rightarrow\geq 3/4$，$k=3\Rightarrow\geq 8/9$）。</li>
+<li>二项专用：$S\sim B(n,p)$ 时 $E(S) = np,\,\D(S) = np(1-p)$，直接代入 Chebyshev。</li>
+<li>配对问题 $E(S_n) = 1,\,\D(S_n) = 1$（与 $n$ 无关，必背常数）。</li>
+<li>依概率收敛：$Y_n\xrightarrow{P}a\Leftrightarrow\lim_n P(|Y_n-a|\geq\epsilon) = 0$（$\forall\epsilon>0$）。</li>
+<li>Chebyshev 推论：$\D(Y_n)\to 0$ 且 $E(Y_n) = a$（或 $\to a$）$\Rightarrow Y_n\xrightarrow{P}a$。证依概率收敛的标准武器。</li>
+</ul>
+</div>
+</div>
+
+<h2 id="pitfalls">八、易错点</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>Chebyshev 给的是 $\geq$ 下界，不是 $=$</strong>。题目问"至少多少概率"才用它；问"近似多少"用 CLT。</li>
+<li><strong>$\epsilon$ 是绝对偏差不是相对偏差</strong>；当 $\epsilon\leq\sigma$ 时下界 $\leq 0$ 无意义（射手例就是这种"偏差太小"的情形）。</li>
+<li><strong>区间最好关于 $\mu$ 对称</strong>才能直接套 $|X-\mu|<\epsilon$；不对称时取离 $\mu$ 较近的半边当 $\epsilon$（更保守）。</li>
+<li><strong>大数律是依概率收敛，不是几乎处处（a.s.）</strong>，强大数律才是 a.s.。</li>
+</ul>
+</div>
+</div>
+
+<div class="warn" style="border-color:#e74c3c;background:#fff5f5">
+<strong>🔴 你在这卡过（薄弱点精析，5/11 暴露）</strong>：在销量题里把"$n$ 个变量相加"的方差错算成"$1$ 个变量乘 $n$"，混淆 $\D(\sum X_i)$ 与 $\D(nX)$。
+<ul>
+<li><strong>怎么破</strong>：套 Chebyshev 前先把 $\D(S_n)$ 算对 —— 独立同分布求和是 $\D(\sum_{i=1}^n X_i) = n\sigma^2$（<strong>不是 $n^2\sigma^2$</strong>，那是 $\D(nX)$）。算错方差会让整道 Chebyshev 下界全错。</li>
+<li>好消息：精析记录你 5/11 已实算掌握 Chebyshev 估概率本身（✅），离散整数变量还能把 $>10$ 收紧成 $\geq 11$ 抠出更精确下界。这块只需确认"方差先算对"即可。</li>
+</ul>
+</div>
+
 <script src="toc.js"></script>
 <script src="progress.js"></script>
 <button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>

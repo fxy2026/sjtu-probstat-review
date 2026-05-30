@@ -158,6 +158,56 @@ $$F(x_1, \ldots, x_n) = \prod_{i=1}^n F_{X_i}(x_i)$$
 </div>
 </div>
 
+<h2 id="s8">八、真题原型（不相关 ≠ 独立 · 经典陷阱）</h2>
+<div class="card">
+<div class="ex"><strong>题 ★★★★ 22-23-2 第 10 题（四命题判断，独立性压轴陷阱）</strong>：已知 $X\sim N(\mu,\sigma^2)$、$Y\sim N(\mu,\sigma^2)$，相关系数 $\rho_{X,Y}=-0.3$。<strong>注意：只给两个边缘正态，没说 $(X,Y)$ 联合正态。</strong>判断下列命题对错：
+<ol>
+<li>$(X,Y)$ 服从二维正态分布；</li>
+<li>$\D(X-2Y)=6.2\sigma^2$；</li>
+<li>$X+Y$ 与 $X-Y$ 不相关；</li>
+<li>$X+Y$ 与 $X-Y$ 相互独立。</li>
+</ol>
+<div class="sol"><div class="st">解</div>
+<p><strong>① 错</strong>：边缘都正态 $\nRightarrow$ 联合正态（可构造边缘正态但联合非正态的反例），故不能断定 $(X,Y)$ 二维正态。</p>
+<p><strong>② 对</strong>：$\D(X-2Y)=\D X+4\D Y-2\cdot 2\,\Cov(X,Y)=\sigma^2+4\sigma^2-4\rho\sigma^2=5\sigma^2-4(-0.3)\sigma^2=6.2\sigma^2$。</p>
+<p><strong>③ 对</strong>：$\Cov(X+Y,X-Y)=\D(X)-\D(Y)=\sigma^2-\sigma^2=0$，故不相关。<strong>只要边缘同方差即成立，不需要正态。</strong></p>
+<p><strong>④ 错</strong>：独立比不相关强，需要 $(X,Y)$ <strong>联合正态</strong>才能由"不相关"推出"独立"；而①已说明联合不一定正态，故 $X+Y\perp X-Y$ 无法保证。</p>
+<p>正确命题为 <strong>②③</strong>（选 D）。</p>
+<p><strong>核心教训</strong>：$\rho=0\Rightarrow$ 独立 这一步<strong>只在确认 $(X,Y)$ 联合正态时</strong>才成立；"两个边缘各自正态"不够！</p>
+</div></div>
+</div>
+
+<h2 id="s9">九、必背块 · 独立性判据</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 一页背全</div>
+<ul>
+<li>独立 $\Leftrightarrow F(x,y)=F_X(x)F_Y(y)\Leftrightarrow f(x,y)=f_X(x)f_Y(y)$（连续）$\Leftrightarrow p_{ij}=p_{i\cdot}p_{\cdot j}$（离散）。</li>
+<li><strong>实战判据</strong>：独立 $\Leftrightarrow$ 密度<strong>可分离</strong> $f=r(x)g(y)$ <strong>且支撑为矩形</strong>（两条件缺一不可）。支撑非矩形（如 $x<y$、$x^2<y$）直接判不独立。</li>
+<li>独立 $\Rightarrow$ 不相关（$\Cov=0$）；<strong>反向仅二维正态成立</strong>。一般"不相关 $\nRightarrow$ 独立"。</li>
+<li>二维正态：独立 $\Leftrightarrow$ 不相关 $\Leftrightarrow\rho=0$（仅此分布三者等价）。</li>
+<li><strong>传递性</strong>：$X\perp Y\Rightarrow u(X)\perp v(Y)$（如 $X^2\perp Y^3$、$|X|\perp e^Y$）。</li>
+<li>独立时：$\E(XY)=\E X\,\E Y$，$\D(X\pm Y)=\D X+\D Y$。</li>
+<li>$n$ 维相互独立 $\Rightarrow$ 任意子集独立、各自函数独立、联合 $=$ 边缘乘积。</li>
+<li>边缘正态 $\nRightarrow$ 联合正态（22-23-2[10] 陷阱）。</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s10">十、🔴 你在这卡过</h2>
+<div class="card">
+<div class="warn" style="border-color:#c0392b;background:#fdecea">
+<p>🔴 <strong>你在这卡过（薄弱点精析 · 头号#5 协方差/相关系数 + 多变量方差，5/11、5/17 两轮暴露）</strong>：</p>
+<ul>
+<li><strong>卡点 1 —— "不相关"与"独立"混为一谈</strong>：你 5/11 坦白"协方差啥的我都有点遗忘了""相关系数我完全忘记了"。<br>
+<strong>怎么破</strong>：记死单向箭头——<em>独立 ⇒ 不相关（永远对）；不相关 ⇒ 独立（只有二维正态才对）</em>。上面 22-23-2[10] 命题④就是反例钉子：边缘正态但联合不一定正态，不相关推不出独立。考场看到"不相关→独立"先问一句"它俩是联合正态吗？"。</li>
+<li><strong>卡点 2 —— $\D(\sum X_i)$ 写成 $n^2\sigma^2$</strong>（你 5/11 在销量题里栽过）：$\D(\sum_{i=1}^n X_i)=\sum\D(X_i)+2\sum_{i<j}\Cov(X_i,X_j)$，独立时交叉项 $=0\Rightarrow n\sigma^2$；而 $\D(nX)=n^2\D(X)=n^2\sigma^2$。<br>
+<strong>怎么破</strong>：分清<em>"$n$ 个变量相加"（有抵消，$n\sigma^2$）</em> vs <em>"1 个变量乘 $n$"（无抵消，常数提取要平方，$n^2\sigma^2$）</em>。</li>
+<li><strong>卡点 3 —— 看到 $f$ 可拆就判独立</strong>：$f=8xy$ 形式上是 $8x\cdot y$，但支撑 $0<x<y<1$ 是三角形，不独立（本页第五节例题已演示）。<br>
+<strong>怎么破</strong>：判独立<em>第一步永远先看支撑是不是矩形</em>，非矩形立刻判不独立，根本不用算密度。</li>
+</ul>
+</div>
+</div>
+
 <script src="toc.js"></script>
 <script src="progress.js"></script>
 <button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>

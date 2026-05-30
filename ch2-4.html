@@ -167,6 +167,44 @@ $$Y = F_X(X)\sim U(0,1)$$
 </div>
 </div>
 
+<h2 id="exam">★ 历年真题原型（补充）</h2>
+<div class="card">
+<div class="ex"><strong>真题原型 19-20-1 第 12 题（$Y=\sqrt X$，公式法）★★</strong>：$X\sim U(0,4)$，求 $Y = \sqrt X$ 的密度。
+<div class="sol"><div class="st">解（公式法：$g$ 严格增）</div>
+<p>$f_X(x) = \dfrac{1}{4}\,(0<x<4)$。$g(x) = \sqrt x$ 严格增，反函数 $x = h(y) = y^2$，$h'(y) = 2y$。值域 $y\in(0,2)$。</p>
+$$f_Y(y) = f_X(h(y))\cdot|h'(y)| = \dfrac{1}{4}\cdot 2y = \dfrac{y}{2}\quad(0<y<2)$$
+<p>验证 $\int_0^2\frac{y}{2}\dd y = 1$ ✓。<strong>关键</strong>：定义域由 $g$ 的值域定（$x\in(0,4)\Rightarrow y\in(0,2)$），别漏写。</p>
+</div></div>
+
+<div class="ex"><strong>真题原型 18-19-2 第 9 题（$Y=e^X$，公式法）★★</strong>：$X$ 密度 $f_X(x) = 6x(1-x)\,(0<x<1)$，求 $Y = e^X$ 的密度。
+<div class="sol"><div class="st">解（公式法：$g$ 严格增）</div>
+<p>$g(x) = e^x$ 严格增，反函数 $x = h(y) = \ln y$，$h'(y) = 1/y$。$x\in(0,1)\Rightarrow y\in(1, e)$。</p>
+$$f_Y(y) = f_X(\ln y)\cdot\dfrac{1}{y} = \dfrac{6\ln y\,(1-\ln y)}{y}\quad(1 < y < e)$$
+<p>验证 $\int_1^e f_Y\dd y = 1$ ✓。<strong>关键</strong>：把 $f_X$ 里的 $x$ 整体换成 $h(y)=\ln y$，再乘 $|h'(y)| = 1/y$。</p>
+</div></div>
+</div>
+
+<h2 id="must">★ 必背块</h2>
+<div class="card">
+<div class="fb" style="border-color:#27ae60"><div class="t">方法选择 + 公式（背死）</div>
+<ul>
+<li><strong>公式法</strong>（$g$ 严格单调可导）：$f_Y(y) = f_X(h(y))\,|h'(y)|$，$h$ 是反函数</li>
+<li><strong>分段单调</strong>（$X^2,|X|,\sin X$ 等）：$f_Y(y) = \sum_i f_X(h_i(y))\,|h_i'(y)|$</li>
+<li><strong>分布函数法</strong>（万能）：先 $F_Y(y) = P(g(X)\leq y)$ 反解成 $x$ 区域，再求导</li>
+<li><strong>线性变换</strong>：$Y = aX+b\Rightarrow f_Y(y) = \dfrac{1}{|a|}f_X\!\left(\dfrac{y-b}{a}\right)$</li>
+</ul>
+</div>
+<div class="fb" style="border-color:#27ae60"><div class="t">必背二级结论</div>
+<ul>
+<li><strong>正态保正态</strong>：$X\sim N(\mu,\sigma^2)\Rightarrow aX+b\sim N(a\mu+b, a^2\sigma^2)$</li>
+<li><strong>$X\sim N(0,1)\Rightarrow X^2\sim\chi^2(1)$</strong>，密度 $\dfrac{1}{\sqrt{2\pi y}}e^{-y/2}\,(y>0)$</li>
+<li><strong>$X\sim N(\mu,\sigma^2)\Rightarrow e^X$ 服从对数正态</strong></li>
+<li><strong>$X\sim$ 任意连续 $F_X\Rightarrow F_X(X)\sim U(0,1)$</strong>（概率积分变换）；$U\sim U(0,1)\Rightarrow -\ln U/\lambda\sim E(\lambda)$</li>
+<li><strong>$\min(X,c)/\max(X,c)$ 是混合型</strong>：$y=c$ 处有质点 $P(Y=c)>0$，密度只在 $y\neq c$ 处定义</li>
+</ul>
+</div>
+</div>
+
 <h2 id="patterns">七、真题套路 · 二级结论 · 速算技巧</h2>
 <div class="card">
 <h3>题型决策树（按 $g(x)$ 类型）</h3>

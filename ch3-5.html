@@ -201,6 +201,67 @@ $$f_Z(z) = \int_{-\infty}^{+\infty}|x|\,f(x, xz)\dd x$$
 </div>
 </div>
 
+<h2 id="s9">九、真题原型（题 15 同型多练）</h2>
+<div class="card">
+<div class="ex"><strong>题 ★★★ 23-24-2 第 15 题（矩形周长，线性变换）</strong>：矩形两边长 $X,Y\sim U(0,1)$ 独立，周长 $Z=2(X+Y)$，求 $Z$ 的密度。
+<div class="sol"><div class="st">解</div>
+<p><strong>第一步</strong> 先求 $W=X+Y$ 的密度（三角分布）：$f_W(w)=w\ (0<w<1)$，$f_W(w)=2-w\ (1<w<2)$。</p>
+<p><strong>第二步</strong> $Z=2W$ 是线性变换，$f_Z(z)=\dfrac{1}{2}f_W\!\big(\dfrac{z}{2}\big)$（<strong>乘 $1/|a|=1/2$</strong>）：</p>
+<ul>
+<li>$0<z<2$（对应 $0<w<1$）：$f_Z(z)=\dfrac{1}{2}\cdot\dfrac{z}{2}=\dfrac{z}{4}$；</li>
+<li>$2<z<4$（对应 $1<w<2$）：$f_Z(z)=\dfrac{1}{2}\big(2-\dfrac{z}{2}\big)=1-\dfrac{z}{4}$；</li>
+<li>其它 $f_Z(z)=0$。</li>
+</ul>
+<p><strong>验算</strong>：$\int_0^2\frac{z}{4}\dd z+\int_2^4(1-\frac{z}{4})\dd z=\frac{1}{2}+\frac{1}{2}=1$ ✓。</p>
+<p><strong>陷阱</strong>：忘乘 $1/2$ 会得到积分 $=2\neq1$ 的"密度"，立即露馅——所以养成算完积分验 $=1$ 的习惯。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★ 23-24-1 第 17 题（Rayleigh 型，$5$ 次取 min）</strong>：某型号 $5$ 个独立同型元件，单个寿命 $X\sim$ Rayleigh，分布函数 $F(x)=1-e^{-x^2/2}\ (x>0)$。系统取 $N=\min(X_1,\dots,X_5)$（串联，最先失效者决定），求 $N$ 的分布与密度。
+<div class="sol"><div class="st">解</div>
+<p>$\min$ 用"$1-$ 各自补集乘积"：$1-F_N(n)=\prod_{i=1}^5[1-F(n)]=\big(e^{-n^2/2}\big)^5=e^{-5n^2/2}$。</p>
+<p>故 $F_N(n)=1-e^{-5n^2/2}\ (n>0)$，密度 $f_N(n)=F_N'(n)=5n\,e^{-5n^2/2}\ (n>0)$。</p>
+<p><strong>结论</strong>：$5$ 个 i.i.d. Rayleigh 取 min 仍是 Rayleigh 型，参数从 $1$ 放大到 $5$（指数里乘 $5$）。和指数分布"取 min 参数乘 $n$"是同一回事。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★ 22-23-2 第 15 题（不独立 $Z=X+2Y$）</strong>：$(X,Y)$ 联合密度 $f(x,y)$ 给定（非独立），求 $Z=X+2Y$ 的密度。
+<div class="sol"><div class="st">解</div>
+<p>不独立 $\Rightarrow$ <strong>不能用卷积</strong>，用一般和公式（分布函数法 / 直接换元）：</p>
+$$f_Z(z)=\int_{-\infty}^{+\infty} f\!\Big(z-2y,\ y\Big)\dd y$$
+<p>即固定 $Z=z$，令 $x=z-2y$ 代回联合密度，对 $y$ 积分；积分限由"$(z-2y,y)$ 落在 $f>0$ 的支撑内"确定（<strong>务必画区域图分段</strong>）。</p>
+<p><strong>对照</strong>：若 $X,Y$ 独立才可写成卷积 $\int f_X(z-2y)f_Y(y)\dd y$；本题非独立，必须保留联合密度 $f(z-2y,y)$。</p>
+</div></div>
+</div>
+
+<h2 id="s10">十、必背块 · 函数分布速查</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 一页背全（题 15 全靠这几条）</div>
+<ul>
+<li><strong>和（独立）</strong>卷积：$f_{X+Y}(z)=\displaystyle\int f_X(x)f_Y(z-x)\dd x$；<strong>和（不独立）</strong>：$f_Z(z)=\displaystyle\int f(x,z-x)\dd x$。</li>
+<li><strong>线性变换</strong>：$Z=aW+b\Rightarrow f_Z(z)=\dfrac{1}{|a|}f_W\!\big(\dfrac{z-b}{a}\big)$（周长 $Z=2W$ 乘 $1/2$）。</li>
+<li><strong>$\max$</strong>（独立）：$F_M(z)=\prod F_{X_i}(z)$，i.i.d. 为 $F(z)^n$。</li>
+<li><strong>$\min$</strong>（独立）：$F_N(z)=1-\prod[1-F_{X_i}(z)]$，i.i.d. 为 $1-(1-F(z))^n$。</li>
+<li><strong>商</strong>：$f_{Y/X}(z)=\displaystyle\int|x|\,f(x,xz)\dd x$（别漏 $|x|$）。</li>
+<li><strong>可加性（须独立）</strong>：$N+N=N$（参数相加）、$P(\lambda_1)+P(\lambda_2)=P(\lambda_1+\lambda_2)$、$B(n_1,p)+B(n_2,p)=B(n_1+n_2,p)$（同 $p$）、$\chi^2(m)+\chi^2(n)=\chi^2(m+n)$、$\Gamma$ 同 $\beta$ 可加；<strong>指数无可加性</strong>（但 $n$ 个 $E(\lambda)$ 之和 $\sim\Gamma(n,\lambda)$）。</li>
+<li><strong>必记导出</strong>：$n$ 个 i.i.d. $E(\lambda)$ 取 min $\sim E(n\lambda)$；$X,Y\sim N(0,1)$ 独立 $\Rightarrow X^2+Y^2\sim\chi^2(2)=E(1/2)$，$\sqrt{X^2+Y^2}\sim$ Rayleigh（密度 $re^{-r^2/2}$）。</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s11">十一、🔴 你在这卡过</h2>
+<div class="card">
+<div class="warn" style="border-color:#c0392b;background:#fdecea">
+<p>🔴 <strong>你在这卡过（卷积分段 + 独立性前提 + 取 min/次序统计量，关联薄弱点精析 #3/#5）</strong>：</p>
+<ul>
+<li><strong>卡点 1 —— 线性变换忘乘 $1/|a|$</strong>（周长 $Z=2(X+Y)$ 题）：直接拿 $W=X+Y$ 的三角密度当 $Z$ 的密度，漏了 $1/2$。<br>
+<strong>怎么破</strong>：凡是 $Z=aW$（倍数/周长/缩放）都要乘 $\dfrac{1}{|a|}$；<em>算完密度立刻积分验 $=1$</em>——忘乘 $1/2$ 时积分会算出 $2$，当场暴露。本页第九节那道题就给了验算示范。</li>
+<li><strong>卡点 2 —— 不独立也硬套卷积</strong>（关联你 5/11 协方差遗忘、$D(X+Y)$ 误用）：$Z=X+2Y$ 当 $X,Y$ 不独立时写成 $\int f_X\cdot f_Y$。<br>
+<strong>怎么破</strong>：<em>卷积是独立专属</em>；不独立用一般公式 $f_Z(z)=\int f(z-2y,y)\dd y$，保留联合密度。同理 $\D(X+Y)=\D X+\D Y$ 也只在不相关时成立，一般要加 $2\Cov$。</li>
+<li><strong>卡点 3 —— min 公式写反 / 次序统计量推导</strong>（你 5/27、5/29 专门追问 $X_{(1)}$ 密度怎么来）：$\min$ 要用"$1-$ 补集连乘"，不是直接连乘 $F$。<br>
+<strong>怎么破</strong>：背 $P(\min>x)=[1-F(x)]^n$（最小值 $>x$ $\Leftrightarrow$ 每个都 $>x$），再求导得 $f_{\min}(x)=n[1-F(x)]^{n-1}f(x)$；指数/Rayleigh 取 min 参数放大（本页第九节 Rayleigh 5 次 min = 参数乘 5 即是此理）。</li>
+</ul>
+</div>
+</div>
+
 <script src="toc.js"></script>
 <script src="progress.js"></script>
 <button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>

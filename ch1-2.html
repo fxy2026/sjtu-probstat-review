@@ -187,6 +187,74 @@ $$P = \dfrac{\int_0^\pi(l\sin\theta/2)\dd\theta}{\dfrac{a}{2}\cdot\pi} = \dfrac{
 </div>
 </div>
 
+<h2 id="strengthen">🔥 章节强化：真题原型 + 必背 + 易错</h2>
+<div class="card">
+<h3>📜 历年真题原型（古典 / 几何 / 容斥）</h3>
+
+<div class="ex"><strong>真题原型 1 · 古典概型 · 组合计数</strong>：袋中 5 红 3 白共 8 球，<strong>不放回</strong>任取 3 个，求恰好取到 2 红 1 白的概率。
+<div class="sol"><div class="st">解</div>
+<p>样本空间（无序）：$\dbinom{8}{3}=56$。有利情形（2 红 1 白）：$\dbinom{5}{2}\dbinom{3}{1}=10\times3=30$。</p>
+<p>$$P=\frac{\binom{5}{2}\binom{3}{1}}{\binom{8}{3}}=\frac{30}{56}=\frac{15}{28}\approx0.536$$</p>
+<p>⚠️ 分子分母口径必须一致（都按无序组合）。</p>
+</div></div>
+</div>
+
+<div class="ex"><strong>真题原型 2 · 几何概型 · 会面问题</strong>：两人约定在 $[0,60]$ 分钟内某地会面，先到者等候 20 分钟，求能会面的概率。
+<div class="sol"><div class="st">解</div>
+<p>设到达时刻 $x,y\in[0,60]$，会面条件 $|x-y|\le20$。总面积 $60^2=3600$；不能会面是两个直角三角形，面积 $2\cdot\frac12\cdot40^2=1600$。</p>
+<p>$$P=\frac{3600-1600}{3600}=\frac{2000}{3600}=\frac{5}{9}\approx0.556$$</p>
+<p>套路：画 $x\text{-}y$ 正方形，把约束 $|x-y|\le20$ 化成带状区域，再算面积比。</p>
+</div></div>
+</div>
+
+<div class="ex"><strong>真题原型 3 · 容斥（加法公式）</strong>：已知 $P(A)=0.6,\ P(B)=0.5,\ P(A\cup B)=0.8$，求 $P(A\bar B)$。
+<div class="sol"><div class="st">解</div>
+<p>先由加法公式求交：$P(AB)=P(A)+P(B)-P(A\cup B)=0.6+0.5-0.8=0.3$。</p>
+<p>再用差化积：$P(A\bar B)=P(A)-P(AB)=0.6-0.3=0.3$。</p>
+</div></div>
+</div>
+</div>
+
+<h2 id="must-know">⭐ 必背块</h2>
+<div class="card">
+<div class="fb" style="border-color:#27ae60"><div class="t">两种"等可能"概型 + 加法公式</div>
+$$P=\frac{\text{有利样本点数}}{\text{样本空间总数}}\ (\text{古典}),\qquad P=\frac{\mu(G)}{\mu(\Omega)}\ (\text{几何，度量比})$$
+$$P(A\cup B)=P(A)+P(B)-P(AB)$$
+$$P(A\cup B\cup C)=\sum P(A)-\sum P(AB)+P(ABC)$$
+</div>
+<div class="fb"><div class="t">计数 / 基本性质</div>
+<ul>
+<li>有序用排列 $A_n^k=\dfrac{n!}{(n-k)!}$；无序用组合 $\dbinom{n}{k}=\dfrac{n!}{k!(n-k)!}$。</li>
+<li>对立：$P(\bar A)=1-P(A)$；差：$P(A-B)=P(A)-P(AB)$。</li>
+<li>单调性：$A\subset B\Rightarrow P(A)\le P(B)$，且 $P(B-A)=P(B)-P(A)$。</li>
+<li>公理：非负 $P(A)\ge0$、规范 $P(\Omega)=1$、可列可加。</li>
+</ul>
+</div>
+</div>
+
+<h2 id="pitfalls">⚠️ 易错点</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>有序 / 无序口径不一致</strong>：分母按排列算，分子也必须按排列；混用是古典概型失分头号原因。</li>
+<li><strong>几何概型不画图直接列式</strong>：会面 / 投点类先把约束化成平面区域再算面积比，凭感觉必错。</li>
+<li><strong>差事件 $P(A-B)$ 误写成 $P(A)-P(B)$</strong>：正确是 $P(A)-P(AB)$；只有 $B\subset A$ 时才退化为 $P(A)-P(B)$。</li>
+</ul>
+</div>
+</div>
+
+<div class="card warn">
+<h3>🔴 你在这卡过（薄弱点精析 · 计数易绕晕）</h3>
+<p><strong>具体：</strong>分球入盒 / "恰有一个空盒"这类组合计数题，容易直接套公式导致重复或遗漏，甚至算出概率 $>1$ 才发现错。</p>
+<p><strong>怎么破——先定"分布型"，再计数：</strong></p>
+<p>例：4 个盒放 3 个球，求"恰有一个空盒"的概率。"恰一个空盒" $\Leftrightarrow$ 球分布是 $(1,1,1,0)$ 型（三个非空盒各 1 球，1 盒空）；$(2,1,0,0)$ 型会空两个盒，不符。</p>
+<ul>
+<li>选哪盒空：$\dbinom{4}{1}=4$；3 个球放进剩下 3 盒各一个：$3!=6$；有利数 $=4\times6=24$。</li>
+<li>样本空间 $4^3=64$，故 $P=\dfrac{24}{64}=\dfrac{3}{8}=0.375$。</li>
+<li><strong>口诀：</strong>先想"球怎么分组"（分布型），再"组放哪些盒"，最后乘盒内/球间排列，别一上来就盲套组合。</li>
+</ul>
+</div>
+
 <script src="toc.js"></script>
 <script src="progress.js"></script>
 <button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>

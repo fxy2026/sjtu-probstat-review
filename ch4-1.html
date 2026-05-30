@@ -76,6 +76,13 @@ $$E(3^X) = \sum_{k=0}^\infty 3^k\dfrac{\lambda^k e^{-\lambda}}{k!} = e^{-\lambda
 <p>$D(X) = 2-1 = 1$。<strong>$E(X) = D(X) = 1$，与 $n$ 无关</strong>！</p>
 <p>这是 hat-matching 标志性结论，多年压轴题都会用。</p>
 </div></div>
+
+<div class="ex" style="border-color:#c0392b"><strong>真题原型 ★★（几何分布期望 · LOTUS 反向用）</strong>：重复独立试验，每次成功概率 $p$，$X$ 为首次成功所需次数（$X\sim G(p)$）。求 $E(X)$，并求 $E(2^{-X})$（设 $p$ 使级数收敛）。
+<div class="sol"><div class="st">解</div>
+<p><strong>(1) $E(X)$</strong>：$E(X)=\sum_{k=1}^{\infty}k(1-p)^{k-1}p$。令 $q=1-p$，利用 $\sum_{k\ge 1}kq^{k-1}=\dfrac{1}{(1-q)^2}$，得 $E(X)=p\cdot\dfrac{1}{p^2}=\dfrac1p$。</p>
+<p><strong>(2) LOTUS</strong>：$E(2^{-X})=\sum_{k=1}^{\infty}2^{-k}q^{k-1}p=\dfrac{p}{q}\sum_{k\ge1}\Big(\dfrac q2\Big)^k=\dfrac pq\cdot\dfrac{q/2}{1-q/2}=\dfrac{p}{2-q}=\dfrac{p}{1+p}$。</p>
+<p>验证：$p=1$ 时 $X\equiv1$，$E(2^{-X})=1/2=\dfrac{1}{1+1}$ ✓。这是"识别分布 + LOTUS 直接对级数求和"的标准压轴步骤。</p>
+</div></div>
 </div>
 
 <h2 id="s4">四、七大分布期望总表（必背！）</h2>
@@ -123,6 +130,21 @@ $$E(X) = \int_0^\infty x\lambda e^{-\lambda x}\dd x = \dfrac{1}{\lambda}\quad(\t
 <li>$E(X^2)\neq[E(X)]^2$ —— "平方的期望" vs "期望的平方"</li>
 <li>$E(X+Y) = E(X)+E(Y)$ <strong>不需要独立</strong>（这条多人忘）</li>
 <li>用示性函数法求计数期望（配对数、空盒数、首达时间等）</li>
+<li><strong>级数/积分求 $E$ 时先判收敛再换序</strong>：交换求和与积分次序、提常数前先确认绝对收敛，否则结论可能错</li>
+<li><strong>$E(3^X)$ 这类指数型不要硬展开</strong>：凑成已知分布的归一化级数（如 Poisson 的 $\sum (3\lambda)^k/k!=e^{3\lambda}$）一步到位</li>
+</ul>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 必背速查（期望）</div>
+<ul>
+<li><strong>定义</strong>：$E(X)=\sum_k x_kp_k$（离散）/ $\int x f(x)\dd x$（连续），均需<strong>绝对收敛</strong></li>
+<li><strong>LOTUS</strong>：$E[g(X)]=\sum g(x_k)p_k$ 或 $\int g(x)f(x)\dd x$（不必先求 $g(X)$ 分布）</li>
+<li><strong>线性性（免费，无需独立）</strong>：$E(aX+bY+c)=aE(X)+bE(Y)+c$</li>
+<li><strong>独立才有</strong>：$X\perp Y\Rightarrow E(XY)=E(X)E(Y)$（反之不真）</li>
+<li><strong>示性函数</strong>：$E(I_A)=P(A)$；计数量 $X=\sum I_{A_i}\Rightarrow E(X)=\sum P(A_i)$</li>
+<li><strong>七大分布 $E$</strong>：0-1→$p$；$B(n,p)$→$np$；$P(\lambda)$→$\lambda$；$G(p)$→$1/p$；$U(a,b)$→$\frac{a+b}2$；$E(\lambda)$→$1/\lambda$；$N(\mu,\sigma^2)$→$\mu$；$\chi^2(n)$→$n$</li>
+<li><strong>hat-matching</strong>：$n$ 球归位配对数 $X$，$E(X)=1$（与 $n$ 无关）</li>
+<li><strong>$E|X|$（$X\sim N(0,\sigma^2)$）</strong>$=\sigma\sqrt{2/\pi}$</li>
 </ul>
 </div>
 

@@ -195,6 +195,54 @@ $$Y\mid X = x\sim N\!\left(\mu_2+\rho\dfrac{\sigma_2}{\sigma_1}(x-\mu_1),\,\sigm
 </div>
 </div>
 
+<h2 id="s7">七、必背块 · 条件分布核心公式</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 一页背全（题 14 全靠这几条）</div>
+<ul>
+<li>条件密度：$f_{X\mid Y}(x\mid y)=\dfrac{f(x,y)}{f_Y(y)}$，对 $x$ 积分 $=1$；支撑随 $y$ 变。</li>
+<li>反推联合（乘法公式）：$f(x,y)=f_X(x)\,f_{Y\mid X}(y\mid x)=f_Y(y)\,f_{X\mid Y}(x\mid y)$。</li>
+<li>条件分布函数：$F_{X\mid Y}(x\mid y)=\displaystyle\int_{-\infty}^x f_{X\mid Y}(u\mid y)\,\dd u$。</li>
+<li>二维正态条件分布仍正态：$X\mid Y=y\sim N\!\Big(\mu_1+\rho\dfrac{\sigma_1}{\sigma_2}(y-\mu_2),\ \sigma_1^2(1-\rho^2)\Big)$。</li>
+<li>条件均值 = 本身均值 + 回归项；条件方差 = 本身方差 $\times(1-\rho^2)$（越相关越小）。</li>
+<li><strong>判别口诀</strong>：$\{Y=b\}$ 单点 → 用条件密度积分；$\{Y\le b\}$ 事件 → 用二重积分比 $P(\cdot,\cdot)/P(Y\le b)$。</li>
+<li>条件期望线性：$\E(aX+b\mid Y)=a\,\E(X\mid Y)+b$；全期望公式 $\E(X)=\E[\E(X\mid Y)]$。</li>
+</ul>
+</div>
+</div>
+
+<h2 id="s8">八、真题原型补充（同型多练）</h2>
+<div class="card">
+<div class="ex"><strong>题 ★★★ 23-24-1 第 16 题（$cxy$ 型）</strong>：$(X,Y)$ 联合密度 $f(x,y)=cxy$，区域 $0<x<y<1$。
+<ol><li>求常数 $c$ 与边缘 $f_Y(y)$；</li><li>求条件密度 $f_{X\mid Y}(x\mid y)$。</li></ol>
+<div class="sol"><div class="st">解</div>
+<p><strong>(1)</strong> 归一化：$\displaystyle\iint_D cxy\,\dd x\dd y=c\int_0^1 y\!\left(\int_0^y x\,\dd x\right)\dd y=c\int_0^1 y\cdot\dfrac{y^2}{2}\,\dd y=c\cdot\dfrac{1}{8}=1$，故 $c=8$。</p>
+<p>边缘 $f_Y(y)=\displaystyle\int_0^y 8xy\,\dd x=8y\cdot\dfrac{y^2}{2}=4y^3,\ 0<y<1$。</p>
+<p><strong>(2)</strong> $f_{X\mid Y}(x\mid y)=\dfrac{8xy}{4y^3}=\dfrac{2x}{y^2},\quad 0<x<y$。（注意支撑上界是 $y$，随条件变量变化！）</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★ 22-23-2 第 14 题（$\frac{27}{4}x^2y^2$ 型，曲边支撑）</strong>：$f(x,y)=\dfrac{27}{4}x^2y^2$，区域 $x^2<y<1$（即 $0<x<1,\ x^2<y<1$）。求 $f_X(x)$ 与 $f_{Y\mid X}(y\mid x)$。
+<div class="sol"><div class="st">解</div>
+<p>固定 $x$，$y$ 从 $x^2$ 到 $1$：$f_X(x)=\displaystyle\int_{x^2}^1 \dfrac{27}{4}x^2y^2\,\dd y=\dfrac{27}{4}x^2\cdot\dfrac{1-x^6}{3}=\dfrac{9}{4}x^2(1-x^6),\ 0<x<1$。</p>
+<p>$f_{Y\mid X}(y\mid x)=\dfrac{\frac{27}{4}x^2y^2}{\frac{9}{4}x^2(1-x^6)}=\dfrac{3y^2}{1-x^6},\quad x^2<y<1$。</p>
+<p><strong>关键</strong>：曲边支撑 $x^2<y<1$ 决定边缘积分下限是 $x^2$ 不是 $0$——务必先画区域图。</p>
+</div></div>
+</div>
+
+<h2 id="s9">九、🔴 你在这卡过</h2>
+<div class="card">
+<div class="warn" style="border-color:#c0392b;background:#fdecea">
+<p>🔴 <strong>你在这卡过（薄弱点精析 · 5/11、5/17 两轮暴露 + 条件概率辨识）</strong>：</p>
+<ul>
+<li><strong>卡点 1 —— "事件条件" 和 "点条件" 分不清</strong>（23-24-2 题14 专测、你做该题时混过）：看到 $P(Y\le1\mid X\le2)$ 误用条件密度 $\int_0^1 f_{Y\mid X}(y\mid 2)\dd y$。<br>
+<strong>怎么破</strong>：背死口诀——<em>"$=$ 用密度，$\le/<$ 用积分比"</em>。$\{X=2\}$ 是单点 → 条件密度；$\{X\le2\}$ 是事件 → $\dfrac{P(Y\le1,X\le2)}{P(X\le2)}$ 二重积分比。本页第二节给的同一道题两个答案 $0.5$ vs $0.836$ 就是反例钉子，记住"差很多=两回事"。</li>
+<li><strong>卡点 2 —— 二维正态条件方差忘乘 $(1-\rho^2)$</strong>（关联 5/11、5/17 协方差/相关系数遗忘）：$D(X\mid Y=y)$ 写成 $\sigma_1^2$。<br>
+<strong>怎么破</strong>：条件方差永远比边缘方差小（多了 $Y$ 的信息），衰减因子 $(1-\rho^2)\le1$ 不会漏；$|\rho|=1$ 时方差为 $0$（$X$ 被 $Y$ 完全线性决定）可做自检。</li>
+<li><strong>卡点 3 —— 条件密度支撑写错</strong>：算出 $f_{Y\mid X}=2x/y^2$ 却忘了标 $0<x<y$，定义域漏写直接扣分。<br>
+<strong>怎么破</strong>：条件密度是把联合密度沿 $Y=y$ 这条线"切片"再归一化，<em>切片落在哪段，支撑就是哪段</em>，永远随条件变量变。</li>
+</ul>
+</div>
+</div>
+
 <script src="toc.js"></script>
 <script src="progress.js"></script>
 <button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>

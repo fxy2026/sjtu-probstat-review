@@ -123,6 +123,56 @@ $$M_k = \dfrac{1}{n}\sum_{i=1}^n X_i^k\xrightarrow{P}E(X^k)$$
 </div>
 </div>
 
+<h2 id="real-exam">七、历年真题原型</h2>
+<div class="card">
+<div class="ex"><strong>题 ★★★ 辛钦大数律推论（23-24-2[8] / 20-21-2[9] / 23-24-1[8] 同型，选择高频）</strong>：$X_1,\ldots,X_n$ i.i.d.，$g$ 连续。当 $n\to\infty$ 时 $\dfrac{1}{n}\sum_{i=1}^n g(X_i)$ 依概率收敛于什么？
+<div class="sol"><div class="st">解</div>
+<p>令 $Y_i = g(X_i)$，则 $Y_1,\ldots,Y_n$ 仍 i.i.d.，只要 $E[g(X)]$ 存在，由辛钦大数律：</p>
+$$\dfrac{1}{n}\sum_{i=1}^n g(X_i)\xrightarrow{P}E[g(X)] = \int_{-\infty}^{+\infty}g(x)f(x)\,\dd x$$
+<p>这就是"样本 $k$ 阶矩 $\to$ 总体 $k$ 阶矩"（取 $g(x) = x^k$）的一般化，也是<strong>矩估计法</strong>的理论依据。选项里凡是写"收敛到 $E[g(X)]$"的就对。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★ 用 Chebyshev 证某序列服从大数律（证明题套路）</strong>：$X_1,X_2,\ldots$ 两两不相关，$E(X_i) = \mu_i$，$\D(X_i)\leq M$（公共上界）。证 $\dfrac{1}{n}\sum X_i-\dfrac{1}{n}\sum\mu_i\xrightarrow{P}0$。
+<div class="sol"><div class="st">解</div>
+<p>令 $\bar X = \dfrac{1}{n}\sum X_i$。两两不相关 $\Rightarrow$ 协方差项全为 0，故</p>
+$$\D(\bar X) = \dfrac{1}{n^2}\sum_{i=1}^n\D(X_i)\leq\dfrac{nM}{n^2} = \dfrac{M}{n}\to 0$$
+<p>由 Chebyshev：对任意 $\epsilon>0$，$P(|\bar X-E\bar X|\geq\epsilon)\leq\dfrac{\D(\bar X)}{\epsilon^2}\leq\dfrac{M}{n\epsilon^2}\to 0$。即依概率收敛于 $E\bar X = \dfrac{1}{n}\sum\mu_i$。证毕。</p>
+</div></div>
+</div>
+
+<h2 id="must-memorize">八、必背块（三大大数律条件）</h2>
+<div class="card">
+<div class="fb" style="border-color:#27ae60">
+<ul>
+<li><strong>Bernoulli</strong>：$n$ 重独立同 $p$ 试验 $\Rightarrow\dfrac{n_A}{n}\xrightarrow{P}p$（频率稳定于概率）。</li>
+<li><strong>Chebyshev</strong>：两两不相关 + 方差有公共上界 $\Rightarrow\dfrac{1}{n}\sum X_i-\dfrac{1}{n}\sum E(X_i)\xrightarrow{P}0$（<strong>不要求同分布</strong>）。</li>
+<li><strong>辛钦(Khintchine)</strong>：i.i.d. + 期望存在 $\Rightarrow\bar X_n\xrightarrow{P}\mu$（<strong>不要求方差</strong>）。</li>
+<li>辛钦推论：$M_k = \dfrac{1}{n}\sum X_i^k\xrightarrow{P}E(X^k)$，连续映射下 $\dfrac{1}{n}\sum g(X_i)\xrightarrow{P}E[g(X)]$。</li>
+<li>三者都是<strong>依概率收敛</strong>（不是几乎处处）。</li>
+</ul>
+</div>
+</div>
+
+<h2 id="pitfalls">九、易错点</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>Chebyshev 大数律不要求同分布</strong>（只要"两两不相关 + 方差有界"）；<strong>辛钦不要求方差</strong>（只要"i.i.d. + 期望存在"）。两者条件取舍方向相反，别记反。</li>
+<li><strong>大数律 = 依概率收敛，不是 a.s.</strong>；只有强大数律（Kolmogorov）才是几乎处处。</li>
+<li>证大数律时方差要算对：两两不相关才能把 $\D(\sum)$ 化成 $\sum\D$（去掉协方差项），否则要保留 $2\sum_{i<j}\Cov$。</li>
+</ul>
+</div>
+</div>
+
+<div class="warn" style="border-color:#e74c3c;background:#fff5f5">
+<strong>🔴 你在这卡过（薄弱点精析，5/14 标❌后经 5/11 打通）</strong>：你在笔记里写"各种公式把我脑子搞炸了"，大数律证明套路一度标 ❌。
+<ul>
+<li><strong>怎么破（套路二选一）</strong>：① <strong>同分布</strong> $\to$ 辛钦（只需验 i.i.d. + 期望存在，最省事）；② <strong>不同分布</strong> $\to$ Chebyshev/马尔可夫条件，证 $\lim\dfrac{1}{n^2}\sum\D(X_i) = 0$。</li>
+<li><strong>陷阱（相邻不独立时）</strong>：方差要加协方差项，用放缩 $|\Cov(X_i,X_j)|\leq\sigma^2$，除以 $n^2$ 后极限仍为 0 —— 协方差项有 $O(n)$ 个，除 $n^2$ 照样趋零。</li>
+<li>记忆锚：看到"<strong>独立同分布求均值</strong>"就上辛钦；看到"<strong>方差有界但不同分布</strong>"就上 Chebyshev。</li>
+</ul>
+</div>
+
 <script src="toc.js"></script>
 <script src="progress.js"></script>
 <button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>

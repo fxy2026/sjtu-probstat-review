@@ -84,6 +84,14 @@ $$X^* = \dfrac{X-EX}{\sigma_X},\quad E(X^*) = 0,\;D(X^*) = 1$$
 $$E(\bar X^2) = D(\bar X)+(E(\bar X))^2 = \dfrac{\sigma^2}{n}+\mu^2$$
 <p><strong>这是 23-24 系列连考 3 套的关键公式！</strong> 用于判断 $\bar X^2$ 是否为 $\mu^2$ 的无偏估计。</p>
 </div></div>
+
+<div class="ex" style="border-color:#c0392b"><strong>真题原型 ★★（公式法求方差 · 连续型）</strong>：$X\sim U(0,2)$（即 $f(x)=\frac12,\,0<x<2$），求 $D(X)$ 与 $D(X^2)$。
+<div class="sol"><div class="st">解</div>
+<p><strong>用 $D=E(X^2)-(EX)^2$，避免定义法。</strong></p>
+<p>$E(X)=1$，$E(X^2)=\int_0^2 x^2\cdot\tfrac12\dd x=\tfrac12\cdot\tfrac{8}{3}=\tfrac43$。故 $D(X)=\tfrac43-1=\tfrac13$，与公式 $\frac{(b-a)^2}{12}=\frac{4}{12}=\frac13$ 吻合 ✓。</p>
+<p>$E(X^4)=\int_0^2 x^4\cdot\tfrac12\dd x=\tfrac12\cdot\tfrac{32}{5}=\tfrac{16}{5}$。故 $D(X^2)=E(X^4)-[E(X^2)]^2=\tfrac{16}{5}-\tfrac{16}{9}=\tfrac{144-80}{45}=\tfrac{64}{45}$。</p>
+<p><strong>套路</strong>：求 $g(X)$ 的方差永远 $D(g)=E(g^2)-(E g)^2$，分别按 LOTUS 算两个矩。</p>
+</div></div>
 </div>
 
 <h2 id="s5">五、易错点清单</h2>
@@ -96,6 +104,20 @@ $$E(\bar X^2) = D(\bar X)+(E(\bar X))^2 = \dfrac{\sigma^2}{n}+\mu^2$$
 <li><strong>用 $D = E(X^2)-[E(X)]^2$ 通常比定义法简洁</strong></li>
 <li>独立性条件遗漏 → 不能用 $D(X+Y) = D(X)+D(Y)$</li>
 <li>$D(\bar X) = \sigma^2/n$（除以 $n$，不是 $\sqrt n$）</li>
+<li><strong>求 $D(g(X))$ 别套错</strong>：必须 $E(g^2)-(Eg)^2$，不能写成 $g(D(X))$ 或对 $D(X)$ 做函数变换</li>
+<li><strong>$\bar X$ 与 $S^2$ 的"除数"易混</strong>：$\bar X$ 除 $n$、样本方差 $S^2$ 除 $n-1$（才无偏），别写反</li>
+</ul>
+</div>
+
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 必背速查（方差）</div>
+<ul>
+<li><strong>核心</strong>：$D(X)=E(X^2)-[E(X)]^2$（计算首选）；$\sigma_X=\sqrt{D(X)}$</li>
+<li><strong>性质</strong>：$D(C)=0$；$D(CX)=C^2D(X)$；$D(X+C)=D(X)$</li>
+<li><strong>独立同号</strong>：$X\perp Y\Rightarrow D(X\pm Y)=D(X)+D(Y)$（加减都变加！）</li>
+<li><strong>一般</strong>：$D(X\pm Y)=D(X)+D(Y)\pm2\Cov(X,Y)$；$D(\sum a_iX_i)=\sum a_i^2D(X_i)$（独立）</li>
+<li><strong>七大分布 $D$</strong>：0-1→$p(1-p)$；$B(n,p)$→$np(1-p)$；$P(\lambda)$→$\lambda$；$G(p)$→$\frac{1-p}{p^2}$；$U(a,b)$→$\frac{(b-a)^2}{12}$；$E(\lambda)$→$1/\lambda^2$；$N(\mu,\sigma^2)$→$\sigma^2$；$\chi^2(n)$→$2n$</li>
+<li><strong>样本</strong>：$D(\bar X)=\sigma^2/n$；$E(\bar X^2)=\sigma^2/n+\mu^2$；$E(S^2)=\sigma^2$（无偏）</li>
+<li><strong>hat-matching</strong>：配对数 $D(X)=1$（与 $n$ 无关）</li>
 </ul>
 </div>
 

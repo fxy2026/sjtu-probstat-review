@@ -90,8 +90,54 @@ $$f_X(x) = \int_{-\sqrt{1-x^2}}^{\sqrt{1-x^2}}\dfrac{1}{\pi}\dd y = \dfrac{2\sqr
 </div></div>
 </div>
 
+<h2 id="exam">★ 历年真题原型（补充）</h2>
+<div class="card">
+<div class="ex"><strong>真题原型 23-24-2 第 14 题（三角区域 · 边缘密度）★★★（题 14 铁打，14/14 套必出）</strong>：$f(x, y) = e^{-x}$，区域 $0 < y < x$。求边缘密度 $f_X, f_Y$。
+<div class="sol"><div class="st">解（画区域图定限是关键）</div>
+<p><strong>区域</strong>：$0 < y < x < +\infty$，是第一象限对角线下方的无界三角区。</p>
+<p><strong>求 $f_X(x)$</strong>：固定 $x>0$，$y$ 从 $0$ 到 $x$（积分上限随 $x$ 变！）：</p>
+$$f_X(x) = \int_0^x e^{-x}\dd y = x\,e^{-x}\quad(x>0)$$
+<p><strong>求 $f_Y(y)$</strong>：固定 $y>0$，$x$ 从 $y$ 到 $+\infty$：</p>
+$$f_Y(y) = \int_y^{+\infty}e^{-x}\dd x = e^{-y}\quad(y>0)$$
+<p><strong>验证归一化</strong>：$\displaystyle\int_0^{+\infty}x\,e^{-x}\dd x = 1$ ✓（$\Gamma(2)=1!=1$）。</p>
+<p><strong>陷阱提醒</strong>：$f_X = x e^{-x}$（伽马型）≠ $f_Y = e^{-y}$（指数型），<u>两个边缘不对称</u>——因为区域 $0<y<x$ 本身不对称。积分上下限<strong>随被固定的变量变化</strong>，必须先画图。</p>
+</div></div>
+
+<div class="ex"><strong>真题原型 23-24-2 第 14 题续（条件密度 + 事件条件 vs 点条件）★★★</strong>：同上 $f(x,y)=e^{-x},\,0<y<x$，求 $f_{X\mid Y}(x\mid y)$ 与 $F_{X\mid Y}(2\mid y=1)$。
+<div class="sol"><div class="st">解</div>
+<p><strong>条件密度</strong>：$f_{X\mid Y}(x\mid y) = \dfrac{f(x,y)}{f_Y(y)} = \dfrac{e^{-x}}{e^{-y}} = e^{-(x-y)}\,(x>y)$，即给定 $Y=y$ 后 $X$ 服从"平移指数"。</p>
+<p><strong>条件分布函数</strong>：$F_{X\mid Y}(2\mid 1) = \displaystyle\int_1^2 e^{-(t-1)}\dd t = 1-e^{-1}\approx 0.632$。</p>
+<div class="warn" style="margin-top:8px"><strong>务必区分</strong>：$P(X\le 2\mid Y\le 1)$（<strong>事件</strong>条件，用区域二重积分 $\frac{\iint_{x\le2,y\le1}f}{\int_0^1 f_Y}$）$\ \neq\ \int_{-\infty}^2 f_{X\mid Y}(x\mid 1)\dd x$（<strong>点</strong>条件 $Y=1$，用条件密度积分）。23-24-2 专考这个区别。</div>
+</div></div>
+</div>
+
+<h2 id="must">★ 必背块</h2>
+<div class="card">
+<div class="fb" style="border-color:#27ae60"><div class="t">题 14 三步走（必拿 9 分）</div>
+<ol>
+<li><strong>归一化求常数</strong>：$\iint_D c\cdot g(x,y)\dd x\dd y = 1$ 解 $c$（先画区域定限）</li>
+<li><strong>边缘密度</strong>：$f_X(x) = \int_{\{y:f>0\}}f(x,y)\dd y$（积分限随 $x$ 变）</li>
+<li><strong>条件密度</strong>：$f_{X\mid Y}(x\mid y) = \dfrac{f(x,y)}{f_Y(y)}$；条件分布函数 $F_{X\mid Y}(x\mid y) = \int_{-\infty}^x f_{X\mid Y}(t\mid y)\dd t$</li>
+</ol>
+</div>
+<div class="fb" style="border-color:#27ae60"><div class="t">必背结论</div>
+<ul>
+<li><strong>边缘从联合 → 唯一</strong>；<strong>联合从边缘 → 不唯一</strong>（相同边缘可有不同联合）</li>
+<li><strong>二维正态边缘是一维正态</strong>；<u>反之不真</u>（边缘正态 $\nRightarrow$ 联合正态）</li>
+<li><strong>$\rho = 0\Leftrightarrow$ 独立 仅在二维正态成立</strong>；一般只有"独立 $\Rightarrow$ 不相关"</li>
+<li><strong>二维均匀 $f = 1/S_G$</strong>；单位圆均匀边缘 $f_X = \frac{2\sqrt{1-x^2}}{\pi}$（<u>不是均匀</u>）</li>
+<li><strong>可分离 + 矩形支撑 $\Rightarrow$ 独立</strong>：$f(x,y) = f_X(x)f_Y(y)$</li>
+</ul>
+</div>
+</div>
+
 <h2 id="s6">六、易错点清单</h2>
 <div class="card">
+<div class="warn" style="border-color:#c0392b;background:#fdeaea">
+<div class="t" style="color:#c0392b">🔴 你在这卡过（5/11）：协方差 / 相关系数 / "不相关 vs 独立"</div>
+<p>5/11 你坦白"协方差啥的我都有点遗忘了""相关系数我完全忘记了"。结合 22-23-2[10] 经典陷阱（只给边缘正态 + $\rho=-0.3$）：</p>
+<p><strong>怎么破（三句锁死）</strong>：① <strong>独立 $\Rightarrow$ 不相关</strong>恒成立；<strong>不相关 $\Rightarrow$ 独立 只在确认"联合正态"时</strong>才成立，光边缘正态<u>不够</u>。② 22-23-2[10] 答案是②③：$X+Y$ 与 $X-Y$ <strong>不相关</strong>（$\Cov(X+Y,X-Y)=D(X)-D(Y)=0$，只需边缘同方差），但<strong>不独立</strong>（独立需联合正态，题没保证）。③ $\Cov(X,Y)=E(XY)-E(X)E(Y)$，$\rho=\frac{\Cov}{\sqrt{D(X)D(Y)}}\in[-1,1]$，$\Cov(X,Y)=\rho\sigma_X\sigma_Y$。</p>
+</div>
 <div class="warn">
 <ul>
 <li><strong>边缘分布不能唯一决定联合分布</strong>：相同边缘可能对应不同联合（最常见的考点）</li>

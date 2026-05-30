@@ -267,6 +267,66 @@ $$P(D\mid T^+) = \dfrac{0.005\cdot 0.95}{0.005\cdot 0.95 + 0.995\cdot 0.04} = \d
 </div>
 </div>
 
+<h2 id="strengthen">🔥 章节强化：真题原型 + 必背 + 易错</h2>
+<div class="banner" style="background:linear-gradient(135deg,#922b21,#c0392b);color:#fff;padding:12px 18px;border-radius:8px;margin:12px 0;">
+<b>本节是大题 13 铁打考点</b>：全概率 + Bayes 在 20+ 套真题里出现 13+ 次，几乎 <b>100% 命中</b>，9 分稳拿，必练熟。
+</div>
+<div class="card">
+<h3>📜 历年真题原型（全概率 + Bayes）</h3>
+
+<div class="ex"><strong>真题原型 1（23-24-2 题13 · 三门高射炮）</strong>：甲乙丙命中率 $0.4/0.5/0.7$，独立射击。一门击中摧毁概率 $0.2$，两门 $0.6$，三门全中必摧毁。求 (1) 飞机被摧毁的概率；(2) 已知被摧毁，恰两门击中的概率。
+<div class="sol"><div class="st">解</div>
+<p>设 $B_k$ = 恰 $k$ 门击中（$k=0,1,2,3$，构成完备划分），$A$ = 飞机被摧毁。</p>
+<p>$P(B_3)=0.4\times0.5\times0.7=0.14$。</p>
+<p>$P(B_2)=0.4\cdot0.5\cdot0.3+0.4\cdot0.5\cdot0.7+0.6\cdot0.5\cdot0.7=0.06+0.14+0.21=0.41$。</p>
+<p>$P(B_1)=0.4\cdot0.5\cdot0.3+0.6\cdot0.5\cdot0.3+0.6\cdot0.5\cdot0.7=0.06+0.09+0.21=0.36$。</p>
+<p>(1) 全概率：$P(A)=P(B_1)\cdot0.2+P(B_2)\cdot0.6+P(B_3)\cdot1=0.36\cdot0.2+0.41\cdot0.6+0.14=0.072+0.246+0.14=0.458$。</p>
+<p>(2) Bayes：$P(B_2\mid A)=\dfrac{P(B_2)\cdot0.6}{P(A)}=\dfrac{0.246}{0.458}\approx0.537$（分母直接用 (1) 的结果，<strong>不要重算</strong>）。</p>
+</div></div>
+</div>
+
+<div class="ex"><strong>真题原型 2（17-18-1 变体 · 口袋两种硬币）</strong>：盒中 $N$ 枚硬币，其中 1 枚两面都是正面，其余正常。任取一枚连掷 $n$ 次全为正面，求该枚是双面正币的概率。
+<div class="sol"><div class="st">解</div>
+<p>设 $B_1$ = 取到双面正币（$P(B_1)=\tfrac1N$），$B_2$ = 取到正常币（$P(B_2)=\tfrac{N-1}{N}$），$A$ = 连掷 $n$ 次全正。</p>
+<p>$P(A\mid B_1)=1$，$P(A\mid B_2)=(\tfrac12)^n$。</p>
+<p>$$P(B_1\mid A)=\frac{\frac1N\cdot1}{\frac1N\cdot1+\frac{N-1}{N}\cdot\frac{1}{2^n}}=\frac{2^n}{2^n+N-1}$$</p>
+<p>$n$ 越大，越确信取到的是双面正币（极限趋于 1）。</p>
+</div></div>
+</div>
+</div>
+
+<h2 id="must-know">⭐ 必背块</h2>
+<div class="card">
+<div class="fb" style="border-color:#27ae60"><div class="t">条件概率三大公式</div>
+<ul>
+<li><strong>条件概率</strong>：$P(A\mid B)=\dfrac{P(AB)}{P(B)}\ (P(B)>0)$。</li>
+<li><strong>乘法公式</strong>：$P(AB)=P(B)P(A\mid B)$；推广 $P(A_1A_2A_3)=P(A_1)P(A_2\mid A_1)P(A_3\mid A_1A_2)$。</li>
+<li><strong>全概率</strong>（$\{B_i\}$ 为 $\Omega$ 的完备划分，$\sum P(B_i)=1$）：$P(A)=\sum_i P(B_i)P(A\mid B_i)$。</li>
+<li><strong>Bayes</strong>：$P(B_k\mid A)=\dfrac{P(B_k)P(A\mid B_k)}{\sum_i P(B_i)P(A\mid B_i)}=\dfrac{P(B_k)P(A\mid B_k)}{P(A)}$。</li>
+</ul>
+</div>
+<div class="fb"><div class="t">解题四步（大题 13 模板）</div>
+<ol>
+<li><strong>设划分</strong>：$B_i$ 是"原因/类别"，须互斥且并为 $\Omega$，先验 $P(B_i)$。</li>
+<li><strong>算条件概率</strong>：$P(A\mid B_i)$（"在第 $i$ 类下结果发生"）。</li>
+<li><strong>全概率求 $P(A)$</strong>：加权求和。</li>
+<li><strong>Bayes 求后验</strong>：分母复用第 3 步的 $P(A)$，不重算。</li>
+</ol>
+</div>
+</div>
+
+<h2 id="pitfalls">⚠️ 易错点</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>划分不完备 / 不互斥</strong>：$\{B_i\}$ 必须既两两互斥又并为 $\Omega$，否则 $\sum P(B_i)\ne1$，全概率算错。</li>
+<li><strong>"恰 $k$ 个击中"漏枚举组合</strong>：三门恰一门 / 恰两门各有 3 种组合，须逐项相加别漏（高射炮题失分点）。</li>
+<li><strong>Bayes 分母重算</strong>：分母就是全概率算出的 $P(A)$，直接代入，重新积分/求和易出错。</li>
+<li><strong>"至少发生一起"先转对立</strong>：如泊松事故"至少一起" $=1-P(0)=1-e^{-\lambda}$，先化简再代入划分。</li>
+</ul>
+</div>
+</div>
+
 <script src="toc.js"></script>
 <script src="progress.js"></script>
 <button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>

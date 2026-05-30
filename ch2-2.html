@@ -177,6 +177,65 @@ $$E(e^{3X}) = \sum_{k=0}^n e^{3k}C_n^k p^k(1-p)^{n-k} = (pe^3+1-p)^n$$
 </div>
 </div>
 
+<h2 id="real">★ 历年真题原型（强化）</h2>
+<div class="card">
+<div class="ex"><strong>真题原型 1（22-23-2 题2 · 二项矩母函数 $E(e^Y)$，先算 $p$）</strong>：设连续型 $X$ 密度 $f(x)=2x\ (0<x<1)$，令 $p=P(X>0.5)$。再设 $Y\sim B(5,p)$，求 $E(e^Y)$。
+<div class="sol"><div class="st">解</div>
+<p>先求 $p$：$p=P(X>0.5)=\displaystyle\int_{0.5}^1 2x\,\dd x=[x^2]_{0.5}^1=1-0.25=\tfrac34$。</p>
+<p>套二项矩母函数 $E(e^{aY})=(pe^a+1-p)^n$，此处 $a=1,n=5$：</p>
+$$E(e^Y)=\left(p\,e+1-p\right)^5=\left(\tfrac34 e+\tfrac14\right)^5$$
+<p>关键：<strong>不要展开求和</strong>，识别"二项分布求 $E(e^{aY})$"直接套矩母函数 $(pe^a+1-p)^n$。</p>
+</div></div>
+
+<div class="ex"><strong>真题原型 2（23-24-2 题5 · 离散样本 $\max$ 的期望）</strong>：$X$ 取 $-1,0,1$，概率分别 $\tfrac12,\tfrac14,\tfrac14$。$X_1,X_2,X_3$ 独立同分布，$M=\max(X_1,X_2,X_3)$，求 $E(M)$。
+<div class="sol"><div class="st">解</div>
+<p>先求 $\max$ 的<strong>累积</strong>分布：$P(M\le m)=[F_X(m)]^3$。</p>
+$$P(M\le-1)=\left(\tfrac12\right)^3=\tfrac{8}{64},\quad P(M\le0)=\left(\tfrac34\right)^3=\tfrac{27}{64},\quad P(M\le1)=1$$
+<p><strong>差分</strong>得分布律：$P(M=-1)=\tfrac{8}{64}$，$P(M=0)=\tfrac{27-8}{64}=\tfrac{19}{64}$，$P(M=1)=\tfrac{64-27}{64}=\tfrac{37}{64}$。</p>
+$$E(M)=-1\cdot\tfrac{8}{64}+0\cdot\tfrac{19}{64}+1\cdot\tfrac{37}{64}=\tfrac{29}{64}$$
+<p>关键：$\max$ 分布律必须用 $[F(m)]^n$ <strong>累积后差分</strong>，不能逐点直接乘概率。</p>
+</div></div>
+</div>
+
+<h2 id="must">★ 必背块（离散分布核心）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 五分布 $E/D$（送分，背到秒答）</div>
+<ul>
+<li>0-1 $B(1,p)$：$E=p,\ D=p(1-p)$</li>
+<li>二项 $B(n,p)$：$E=np,\ D=np(1-p)$</li>
+<li>泊松 $P(\lambda)$：$E=D=\lambda$（期望=方差，独有！）</li>
+<li>几何 $G(p)$：$E=1/p,\ D=(1-p)/p^2$</li>
+<li>超几何（不放回）：$E=nM/N$</li>
+</ul>
+</div>
+<div class="fb"><div class="t">矩母函数 $E(e^{aX})$（高频小题）</div>
+<ul>
+<li>$X\sim B(n,p)$：$(pe^a+1-p)^n$</li>
+<li>$X\sim P(\lambda)$：$e^{\lambda(e^a-1)}$（推论：$E(t^X)=e^{\lambda(t-1)}$，故 $E(3^X)=e^{2\lambda}$）</li>
+</ul>
+</div>
+<div class="fb"><div class="t">其他必背判据</div>
+<ul>
+<li><strong>二项最可能值</strong>：$(n+1)p$ 是整数时<strong>双峰</strong>（$k^*$ 与 $k^*-1$）；否则 $k^*=\lfloor(n+1)p\rfloor$。</li>
+<li><strong>泊松近似</strong>：$n\ge20,\ p\le0.05$ 时 $B(n,p)\approx P(np)$。</li>
+<li><strong>几何无记忆性</strong>（离散唯一）：$P(X>m+n\mid X>m)=P(X>n)$。</li>
+<li><strong>可加性</strong>（独立）：$B(n_1,p)+B(n_2,p)=B(n_1+n_2,p)$（须同 $p$）；$P(\lambda_1)+P(\lambda_2)=P(\lambda_1+\lambda_2)$。</li>
+<li><strong>离散 $\max/\min$ 分布律</strong>：$P(M\le m)=[F(m)]^n$ 累积差分；$P(L\ge m)=[P(X\ge m)]^n$ 互补差分。</li>
+</ul>
+</div>
+</div>
+
+<h2 id="pitfall">★ 易错点（强化 · 3 条）</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>① 二项可加性必须同 $p$</strong>：$B(n_1,p)+B(n_2,p)=B(n_1+n_2,p)$ 只在 $p$ 相同、且<strong>独立</strong>时成立；$p$ 不同则不再是二项。</li>
+<li><strong>② 几何从 1 开始</strong>：$P(X=k)=p(1-p)^{k-1},\ k=1,2,\dots$（首次成功次数），不是从 0；起点错则 $E=1/p$ 也会跟着错。</li>
+<li><strong>③ $\max$ 分布律不能直接乘</strong>：先写 $P(M\le m)=[F(m)]^n$ 再相邻<strong>差分</strong>；$\min$ 要用 $P(L\ge m)=[P(X\ge m)]^n$ 的互补差分（用 $\ge$ 别用 $\le$）。这是 23-24-2、22-23-2 选择题的同款考点。</li>
+</ul>
+</div>
+</div>
+
 <h2 id="patterns">七、真题套路 · 二级结论 · 速算技巧</h2>
 <div class="card">
 <h3>识别分布的速查表</h3>

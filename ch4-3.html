@@ -126,10 +126,30 @@ $$\rho_{XZ} = \dfrac{6}{\sqrt{4\cdot 12}} = \dfrac{6}{4\sqrt 3} = \dfrac{\sqrt 3
 <p>二维正态下 $\rho\neq 0$ → <strong>不独立</strong>（也不相关）。</p>
 <p>这是 23-24-2 同时考两道选择题的"参数组合"。</p>
 </div></div>
+
+<div class="ex" style="border-color:#c0392b"><strong>真题原型 ★★★（22-23-2[10] 经典陷阱：$X+Y$ 与 $X-Y$）</strong>：$X\sim N(\mu,\sigma^2),\,Y\sim N(\mu,\sigma^2)$，$\rho_{XY}=-0.3$（<strong>只说边缘正态，没说联合正态</strong>）。判 4 命题：① $(X,Y)$ 服从二维正态；② $D(X-2Y)=6.2\sigma^2$；③ $X+Y$ 与 $X-Y$ 不相关；④ $X+Y$ 与 $X-Y$ 相互独立。
+<div class="sol"><div class="st">解</div>
+<p><strong>① 错</strong>：边缘正态 $\nRightarrow$ 联合正态。</p>
+<p><strong>② 对</strong>：$D(X-2Y)=D(X)+4D(Y)-2\cdot2\,\Cov(X,Y)=\sigma^2+4\sigma^2-4\rho\sigma^2=5\sigma^2-4(-0.3)\sigma^2=6.2\sigma^2$。</p>
+<p><strong>③ 对</strong>：$\Cov(X+Y,X-Y)=D(X)-D(Y)=0$（同方差即成立，不需正态）→ 不相关。</p>
+<p><strong>④ 错</strong>：独立需<strong>联合正态</strong>，而①已说明不一定联合正态，不相关 $\nRightarrow$ 独立。</p>
+<p>正确答案 <strong>②③</strong>。<strong>教训</strong>：不相关 $\Rightarrow$ 独立这一步<strong>只在确认联合正态时</strong>成立；边缘各自正态不够。</p>
+</div></div>
 </div>
 
 <h2 id="s5">五、易错点清单</h2>
 <div class="card">
+<div class="fb" style="border-color:#c0392b;background:#fdecea"><div class="t">🔴 你在这卡过（5/11 集中暴露）</div>
+<p>5/11 你坦白"协方差啥的我都有点遗忘了""相关系数我完全忘记了"，并追问 <strong>$D(\sum X_i)$ 为什么不等于 $n^2\sigma^2$</strong>（销量题栽过的坑）；5/17 又问 $\rho(X_i-\bar X,\,X_j-\bar X)$。</p>
+<p><strong>怎么破</strong>：</p>
+<ul>
+<li><strong>"相加" vs "乘 $n$"分清</strong>：$n$ 个独立同分布相加 $D(\sum X_i)=n\sigma^2$（有抵消）；同一变量放大 $n$ 倍 $D(nX)=n^2\sigma^2$（无抵消，常数提取要<strong>平方</strong>）。$\Rightarrow D(\bar X)=\frac1{n^2}\cdot n\sigma^2=\frac{\sigma^2}n$。</li>
+<li><strong>一般展开式背死</strong>：$D(\sum X_i)=\sum D(X_i)+2\sum_{i<j}\Cov(X_i,X_j)$；独立时交叉项全 $=0$。</li>
+<li><strong>零和约束副产物</strong>：因 $\sum(X_i-\bar X)=0$，有 $\rho(X_i-\bar X,\,X_j-\bar X)=-\dfrac{1}{n-1}$（负相关，"零和游戏"逼偏差互相填坑）。</li>
+<li><strong>关键放缩</strong>：$|\Cov(X,Y)|\le\sqrt{D(X)D(Y)}$（Cauchy-Schwarz），由此 $|\rho|\le1$。</li>
+</ul>
+</div>
+
 <div class="warn">
 <ul>
 <li><strong>"不相关 = 独立"——错！</strong> 只有二维正态下等价</li>

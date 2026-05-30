@@ -120,8 +120,60 @@ $$= \underbrace{\int\dfrac{y}{\sqrt{2\pi}\sigma}e^{-y^2/(2\sigma^2)}\dd y}_{=0\,
 </div></div>
 </div>
 
+<h2 id="exam">★ 历年真题原型</h2>
+<div class="card">
+<div class="ex"><strong>真题原型 23-24-1 第 17 题（Rayleigh 分布 · 5 个取 min）★★★</strong>：$X_1,\dots,X_5$ 独立同分布，密度 $f(x) = \dfrac{x}{\sigma^2}e^{-x^2/(2\sigma^2)}\,(x>0)$（瑞利分布），求 $Y = \min(X_1,\dots,X_5)$ 的分布函数。
+<div class="sol"><div class="st">解（min 题的标准三步）</div>
+<p><strong>第一步：求单个 $X$ 的生存函数 $P(X>x)$。</strong></p>
+$$P(X>x) = \int_x^{+\infty}\dfrac{t}{\sigma^2}e^{-t^2/(2\sigma^2)}\dd t = e^{-x^2/(2\sigma^2)}\quad(x>0)$$
+<p>（换元 $u = t^2/(2\sigma^2)$ 直接积出，等价于 $F(x) = 1-e^{-x^2/(2\sigma^2)}$。）</p>
+<p><strong>第二步：min 的生存函数 = 各生存函数之积（独立）。</strong></p>
+$$P(Y>y) = \prod_{i=1}^5 P(X_i>y) = \left[e^{-y^2/(2\sigma^2)}\right]^5 = e^{-5y^2/(2\sigma^2)}\quad(y>0)$$
+<p><strong>第三步：写分布函数。</strong></p>
+$$F_Y(y) = 1-P(Y>y) = 1-e^{-5y^2/(2\sigma^2)}\quad(y>0)$$
+<p><strong>结论</strong>：$Y$ 仍是瑞利分布，参数由 $\sigma^2$ 变成 $\sigma^2/5$（"min 让尺度参数缩小为 $1/n$"）。这与"$n$ 个独立指数取 min 仍是指数、率放大 $n$ 倍"是同一个套路。</p>
+</div></div>
+
+<div class="ex"><strong>正态标准化 + 求最小 $n$（5/17 同型，年年送分）★★</strong>：$X\sim N(\mu, \sigma^2)$，$\sigma = 2$，独立抽 $n$ 个取均值 $\bar X$，要求 $P(|\bar X-\mu|<1)\geq 0.95$，求最小 $n$。
+<div class="sol"><div class="st">解</div>
+<p>$\bar X\sim N\!\left(\mu, \dfrac{\sigma^2}{n}\right)$，标准化<strong>分母用标准差 $\dfrac{\sigma}{\sqrt n}$（不是方差 $\dfrac{\sigma^2}{n}$！）</strong>：</p>
+$$P(|\bar X-\mu|<1) = 2\Phi\!\left(\dfrac{1}{\sigma/\sqrt n}\right)-1 = 2\Phi\!\left(\dfrac{\sqrt n}{2}\right)-1\geq 0.95$$
+$$\Rightarrow\Phi\!\left(\dfrac{\sqrt n}{2}\right)\geq 0.975 = \Phi(1.96)\Rightarrow\dfrac{\sqrt n}{2}\geq 1.96\Rightarrow n\geq (3.92)^2 = 15.37$$
+<p>取 $n = 16$。<strong>关键</strong>：$\Phi(1.96) = 0.975$ 要背；标准化除的是 $\sigma/\sqrt n$。</p>
+</div></div>
+</div>
+
+<h2 id="must">★ 必背块</h2>
+<div class="card">
+<div class="fb" style="border-color:#27ae60"><div class="t">三大连续分布速记表（$E$、$D$ 必背）</div>
+<table>
+<thead><tr><th>分布</th><th>密度 / 关键</th><th>$E(X)$</th><th>$D(X)$</th></tr></thead>
+<tbody>
+<tr><td>均匀 $U(a,b)$</td><td>$\dfrac{1}{b-a}$ on $(a,b)$</td><td>$\dfrac{a+b}{2}$</td><td>$\dfrac{(b-a)^2}{12}$</td></tr>
+<tr><td>指数 $E(\lambda)$</td><td>$\lambda e^{-\lambda x}$，$F = 1-e^{-\lambda x}$</td><td>$\dfrac{1}{\lambda}$</td><td>$\dfrac{1}{\lambda^2}$</td></tr>
+<tr><td>正态 $N(\mu,\sigma^2)$</td><td>钟形，第二参数是<strong>方差</strong></td><td>$\mu$</td><td>$\sigma^2$</td></tr>
+<tr><td>瑞利 $f=\frac{x}{\sigma^2}e^{-x^2/2\sigma^2}$</td><td>$P(X>x) = e^{-x^2/2\sigma^2}$</td><td>$\sigma\sqrt{\frac{\pi}{2}}$</td><td>$\frac{4-\pi}{2}\sigma^2$</td></tr>
+</tbody>
+</table>
+</div>
+<div class="fb" style="border-color:#27ae60"><div class="t">必背常数 / 判据</div>
+<ul>
+<li><strong>$3\sigma$ 原则</strong>：$P(|X-\mu|<\sigma)=0.6826$，$<2\sigma=0.9544$，$<3\sigma=0.9974$</li>
+<li><strong>分位数</strong>：$u_{0.05}=1.645,\ u_{0.025}=1.96,\ u_{0.01}=2.33,\ u_{0.005}=2.575$；常用 $\Phi(1.96)=0.975$</li>
+<li><strong>对称</strong>：$\Phi(-x) = 1-\Phi(x)$，$u_{1-\alpha} = -u_\alpha$</li>
+<li><strong>无记忆性（连续唯一）</strong>：$P(X>s+t\mid X>s) = P(X>t)$（指数）</li>
+<li><strong>$n$ 个独立 $E(\lambda)$ 取 min</strong> $\sim E(n\lambda)$；瑞利取 min 尺度 $\sigma^2\to\sigma^2/n$</li>
+</ul>
+</div>
+</div>
+
 <h2 id="s5">五、易错点清单</h2>
 <div class="card">
+<div class="warn" style="border-color:#c0392b;background:#fdeaea">
+<div class="t" style="color:#c0392b">🔴 你在这卡过（5/17）：正态标准化 + 求最小 $n$</div>
+<p>学习回顾 5/17 标 🔶：<strong>"$P(|\bar X-\mu|<1)\geq 0.95$ 求最小 $n$ 时，标准化分母用错"</strong>。</p>
+<p><strong>怎么破</strong>：① 永远记住标准化分母是<strong>标准差</strong> $\dfrac{\sigma}{\sqrt n}$，<u>不是方差 $\dfrac{\sigma^2}{n}$</u>（这是你最常栽的一步）；② 把不等式化成 $2\Phi(\cdot)-1\geq c$ → $\Phi(\cdot)\geq\frac{1+c}{2}$ → 反查临界 $z^*$；③ $\Phi(1.96)=0.975$ 当死常数背。见上方"正态标准化 + 求最小 $n$"原型。</p>
+</div>
 <div class="warn">
 <ul>
 <li>连续型 $P(X = a) = 0$ 但事件未必不发生</li>

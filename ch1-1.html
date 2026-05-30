@@ -194,6 +194,66 @@ $$\overline{\bar A\bar B}\cup ABC = (A\cup B)\cup ABC = A\cup B$$
 </div>
 </div>
 
+<h2 id="strengthen">🔥 章节强化：真题原型 + 必背 + 易错</h2>
+<div class="card">
+<h3>📜 历年真题原型（事件表示 / 命题判断）</h3>
+
+<div class="ex"><strong>真题原型 1（23-24-2 题12 · 4 命题判正确个数）</strong>：判断下列命题正确的个数。
+<ol>
+<li>$P(AB\mid A)\ge P(AB\mid A\cup B)$</li>
+<li>$P(A\mid B)=1\Rightarrow P(\bar B\mid\bar A)=1$</li>
+<li>$A\bar B=\bar AB\Rightarrow A=B$</li>
+<li>"$A,B$ 恰有一个发生"的概率 $=P(A)+P(B)-2P(AB)$</li>
+</ol>
+<div class="sol"><div class="st">解</div>
+<p>① $A\subset A\cup B$，分母变大则条件概率变小，故 $P(AB\mid A)\ge P(AB\mid A\cup B)$，✓。</p>
+<p>② $P(A\mid B)=1\Rightarrow B\subset A\Rightarrow\bar A\subset\bar B\Rightarrow P(\bar B\mid\bar A)=1$，✓。</p>
+<p>③ 由 $A\bar B=\bar AB$，两边求并 $A=A(B\cup\bar B)=AB\cup A\bar B=AB\cup\bar AB=(A\cup\bar A)B=B$，✓。</p>
+<p>④ 恰一个发生 $=A\bar B\cup\bar AB$，两项互斥，概率 $=P(A)-P(AB)+P(B)-P(AB)=P(A)+P(B)-2P(AB)$，✓。</p>
+<p>结论：4 个全对，<strong>选 D</strong>。</p>
+</div></div>
+</div>
+
+<div class="ex"><strong>真题原型 2（事件表示 · 每年选择题套路）</strong>：设 $A,B,C$ 为三事件，用运算表示"$A,B,C$ 中<strong>恰有一个</strong>发生"及"<strong>至少两个</strong>发生"。
+<div class="sol"><div class="st">解</div>
+<p>恰有一个发生：$A\bar B\bar C\cup\bar AB\bar C\cup\bar A\bar BC$（先选谁发生，其余取补，三项互斥求并）。</p>
+<p>至少两个发生：$AB\cup AC\cup BC$（两两交的并，已自动含三个全发生的情形）。</p>
+<p>其概率：恰一个 $=P(A)+P(B)+P(C)-2[P(AB)+P(AC)+P(BC)]+3P(ABC)$。</p>
+</div></div>
+</div>
+</div>
+
+<h2 id="must-know">⭐ 必背块</h2>
+<div class="card">
+<div class="fb" style="border-color:#27ae60"><div class="t">核心运算律 / 判据</div>
+<ul>
+<li><strong>De Morgan</strong>：$\overline{A\cup B}=\bar A\bar B$，$\overline{AB}=\bar A\cup\bar B$（可推广到可列）。</li>
+<li><strong>差化积</strong>：$A-B=A\bar B=A-AB$；差事件<strong>不要求</strong> $B\subset A$。</li>
+<li><strong>包含取补反向</strong>：$A\subset B\Rightarrow\bar B\subset\bar A$。</li>
+<li><strong>对立 vs 互斥</strong>：对立必互斥（$A\bar A=\varnothing$），互斥未必对立（缺 $A\cup B=\Omega$）。</li>
+<li><strong>恰一个对称性</strong>：$n$ 事件中"恰 $k$ 个发生"与"恰 $n-k$ 个发生"的项数相同。</li>
+</ul>
+</div>
+<div class="fb"><div class="t">三事件"恰 $k$ 个"模板（背死）</div>
+<ul>
+<li>都发生 $ABC$；都不发生 $\bar A\bar B\bar C=\overline{A\cup B\cup C}$；不都发生 $\overline{ABC}=\bar A\cup\bar B\cup\bar C$。</li>
+<li>恰一个 $A\bar B\bar C\cup\bar AB\bar C\cup\bar A\bar BC$；恰两个 $AB\bar C\cup A\bar BC\cup\bar ABC$。</li>
+<li>至少一个 $A\cup B\cup C$；至少两个 $AB\cup AC\cup BC$。</li>
+</ul>
+</div>
+</div>
+
+<h2 id="pitfalls">⚠️ 易错点</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>"不都发生" ≠ "都不发生"</strong>：前者 $=\overline{ABC}$（漏一个就算），后者 $=\overline{A\cup B\cup C}$（必须三个都不发生）。<strong>每年选择题必考</strong>。</li>
+<li><strong>De Morgan 漏补号</strong>：翻交并时必须把每一项也取补，$\overline{A\cup B}=\bar A\bar B$ 不是 $\bar A\cup\bar B$。</li>
+<li><strong>互斥 ≠ 对立 ≠ 不独立</strong>：互斥是集合关系 $AB=\varnothing$；独立是概率关系 $P(AB)=P(A)P(B)$；概率非零的互斥事件一定不独立，别混。</li>
+</ul>
+</div>
+</div>
+
 <script src="toc.js"></script>
 <script src="progress.js"></script>
 <button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>

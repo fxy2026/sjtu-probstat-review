@@ -204,6 +204,50 @@ $$P(|\bar X|<0.1)\approx 2\Phi(0.1\sqrt{3n})-1\geq 0.95\Rightarrow\Phi(0.1\sqrt{
 </div>
 </div>
 
+<h2 id="real-exam">九、更多历年真题原型</h2>
+<div class="card">
+<div class="ex"><strong>题 ★★★★ 23-24-1 第 14 题（40 台设备维修，双阶段指数）</strong>：每台设备维修分两阶段，耗时分别 $\sim E(\lambda_1=10)$、$\sim E(\lambda_2=8)$ 独立。40 台设备的总维修时间记为 $S_{40}$，求其近似分布（用于估 $P(S_{40}\leq a)$）。
+<div class="sol"><div class="st">解</div>
+<p>单台维修时间 $T_i$ = 两阶段之和。指数 $E(\lambda)$ 的 $E = 1/\lambda,\,\D = 1/\lambda^2$，故单台：</p>
+$$\mu = E(T_i) = \dfrac{1}{10}+\dfrac{1}{8} = 0.225,\qquad \sigma^2 = \D(T_i) = \dfrac{1}{100}+\dfrac{1}{64} = 0.0256\ldots$$
+<p>（两阶段独立故方差直接相加。）40 台独立同分布，由 Lindeberg-Lévy CLT：</p>
+$$S_{40} = \sum_{i=1}^{40}T_i\;\overset{\text{近似}}{\sim}\;N(40\mu,\,40\sigma^2)$$
+<p>再标准化 $Z = \dfrac{S_{40}-40\mu}{\sqrt{40}\,\sigma}\approx N(0,1)$，把所求概率写成 $\Phi$ 查表。<strong>要点</strong>：离散/复合结构先算<strong>单台</strong> $E,\D$，再乘 $n$；标准化分母是 $\sqrt n\sigma$。</p>
+</div></div>
+
+<div class="ex"><strong>题 ★★★★ 反查 $n$ 型（19-20-1 灌装 $N(\mu,1)$，高频出题人偏好）</strong>：每瓶灌装量 $\sim N(\mu,1)$ 独立。要求 $P(|\bar X-\mu|\leq 0.3)\geq 0.95$，求最少瓶数 $n$。
+<div class="sol"><div class="st">解</div>
+<p>$\bar X\sim N(\mu,\sigma^2/n)$，$\sigma^2 = 1\Rightarrow\sigma = 1$。标准化分母用<strong>标准差</strong> $\dfrac{\sigma}{\sqrt n} = \dfrac{1}{\sqrt n}$：</p>
+$$P(|\bar X-\mu|\leq 0.3) = 2\Phi\!\left(\dfrac{0.3\sqrt n}{1}\right)-1\geq 0.95\;\Rightarrow\;\Phi(0.3\sqrt n)\geq 0.975$$
+<p>查表 $\Phi(1.96) = 0.975$，故 $0.3\sqrt n\geq 1.96\Rightarrow\sqrt n\geq 6.533\Rightarrow n\geq 42.7$，<strong>向上取整 $n = 43$</strong>。</p>
+</div></div>
+</div>
+
+<h2 id="must-memorize">十、必背块（CLT 核心）</h2>
+<div class="card">
+<div class="fb" style="border-color:#27ae60">
+<ul>
+<li>i.i.d. 之和：$\dfrac{\sum X_i-n\mu}{\sqrt n\sigma}\xrightarrow{d}N(0,1)$，即 $\sum X_i\overset{\text{近似}}{\sim}N(n\mu,n\sigma^2)$。</li>
+<li>样本均值：$\bar X\overset{\text{近似}}{\sim}N(\mu,\sigma^2/n)$，标准化 $\dfrac{\bar X-\mu}{\sigma/\sqrt n}$。</li>
+<li>De Moivre-Laplace：$B(n,p)$ 大 $n$ 时 $\dfrac{Y-np}{\sqrt{np(1-p)}}\approx N(0,1)$。</li>
+<li>三选一：$np\leq 10$（$p$ 小）用 Poisson $P(np)$；$0.1<p<0.9$ 用正态 $N(np,np(1-p))$。</li>
+<li>反查 $n$：$2\Phi\!\left(\dfrac{\epsilon\sqrt n}{\sigma}\right)-1\geq\gamma$，反解后<strong>向上取整</strong>。</li>
+<li>常用 $\Phi$ 值：$\Phi(1.645) = 0.95$，$\Phi(1.96) = 0.975$，$\Phi(2.326) = 0.99$，$\Phi(2.576) = 0.995$。⚠️ 考前以试卷附表为准。</li>
+<li>$3\sigma$ 原则：$P(|X-\mu|<3\sigma) = 0.9974$。</li>
+</ul>
+</div>
+</div>
+
+<div class="warn" style="border-color:#e74c3c;background:#fff5f5">
+<strong>🔴 你在这卡过（薄弱点精析，5/17 栽坑）</strong>：求最小 $n$ 时把标准化分母写成<strong>方差</strong> $\dfrac{\sigma^2}{n}$（如写成 $\dfrac{36}{n}$），导致整题错。
+<ul>
+<li><strong>怎么破</strong>：标准化定义是 $Z = \dfrac{X-EX}{\sqrt{\D X}}$ —— 减期望、<strong>除标准差</strong>。$\bar X$ 的方差是 $\dfrac{\sigma^2}{n}$，标准差是它开根号 $= \dfrac{\sigma}{\sqrt n}$。除方差量纲都不对（$Z$ 应无量纲）。</li>
+<li>具体：$X\sim N(\mu,36)$ 时 $\sigma = 6$（先开根号！），$\bar X$ 标准差 $= \dfrac{6}{\sqrt n}$，不是 $\dfrac{36}{n}$。</li>
+<li>连带（卡方查表，5/22 同款坑）：$P(\sum X_i^2\geq 4)$ 要先<strong>除方差</strong>再查，$4/0.25 = 16$（不是 $4\times 0.25$）。</li>
+<li>记忆锚：<strong>"标准化永远除标准差 $\sigma/\sqrt n$，不除方差"</strong>。CLT 应用里 95% 的算错都来自这一步。</li>
+</ul>
+</div>
+
 <script src="toc.js"></script>
 <script src="progress.js"></script>
 <button id="back-to-top" title="返回顶部" onclick="window.scrollTo({top:0,behavior:'smooth'})" style="position:fixed;bottom:30px;right:30px;width:44px;height:44px;border-radius:50%;border:none;background:#1a5276;color:#fff;font-size:20px;cursor:pointer;box-shadow:0 4px 12px rgba(0,0,0,0.2);opacity:0;transition:opacity .3s;z-index:1000;">↑</button>

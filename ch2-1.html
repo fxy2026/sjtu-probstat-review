@@ -106,6 +106,31 @@ $$P(|X|<1) = F(1-0)-F(-1) = F(1)-F(-1) = \dfrac{1}{2}+\dfrac{1}{4}-\left(\dfrac{
 </div>
 </div>
 
+<h2 id="must">★ 必背块（分布函数核心）</h2>
+<div class="card">
+<div class="fb" style="border-color:#c0392b"><div class="t">⭐ 三性质 + 概率公式（默写到秒答）</div>
+<ol>
+<li><strong>三性质</strong>：单调不减；<strong>右连续</strong> $F(x+0)=F(x)$；$F(-\infty)=0,\ F(+\infty)=1$。满足这三条 $\Leftrightarrow$ 是某随机变量的分布函数。</li>
+<li>$P(a<X\le b)=F(b)-F(a)$（左开右闭最干净）。</li>
+<li>$P(X=a)=F(a)-F(a-0)$ = <strong>在 $a$ 处的跳跃高度</strong>。</li>
+<li>$P(X<a)=F(a-0)$；$P(X\le a)=F(a)$；$P(X\ge a)=1-F(a-0)$；$P(X>a)=1-F(a)$。</li>
+<li><strong>凸组合</strong>：$aF_1+bF_2$ 是分布函数 $\Leftrightarrow a,b\ge0$ 且 $a+b=1$。</li>
+<li><strong>连续型</strong> $P(X=a)=0$，含不含端点都一样；<strong>混合型</strong>在跳跃点 $P(X=a)>0$。</li>
+</ol>
+</div>
+</div>
+
+<h2 id="pitfall">★ 易错点（强化 · 3 条）</h2>
+<div class="card">
+<div class="warn">
+<ul>
+<li><strong>① 右连续，不是左连续</strong>：这是分布函数定义的硬规定（因 $F(x)=P(X\le x)$ 用了 $\le$）。判"是否分布函数"时左连续的反例直接淘汰。</li>
+<li><strong>② 含等号归右值</strong>：$P(X\le a)=F(a)$，$P(X<a)=F(a-0)$，二者之差正是质点概率 $P(X=a)$。混合型题里这一点差就是整道题的分。</li>
+<li><strong>③ 待定常数别漏归一化</strong>：求 $A,B$ 必用 $F(-\infty)=0$ 与 $F(+\infty)=1$ 两个边界联立；只用一个会少一个方程。如 $F=A+B\arctan x$ → $A=1/2,B=1/\pi$（Cauchy 分布）。</li>
+</ul>
+</div>
+</div>
+
 <h2 id="patterns">五、真题套路 · 二级结论 · 速算技巧</h2>
 <div class="card">
 <h3>必背二级结论</h3>
